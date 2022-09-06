@@ -1,21 +1,101 @@
+import { ISchoolRequest } from "../../interfaces/schools";
 import { IFeedbackRequest } from "../../interfaces/feedback";
 import { ISessionRequest } from "../../interfaces/sessions";
 
 
-export const mockedFeedback:IFeedbackRequest = {
-    name:"gabriel",
-    feedback:"vc não fez a atividade"
-}
+export const mockedFeedback: IFeedbackRequest = {
+    name: "gabriel",
+    feedback: "você não fez a atividade"
+};
 
-export const mockedFeedbackBranco:IFeedbackRequest = {
-    name:"",
-    feedback:""
-}
+export const mockedFeedbackBranco: IFeedbackRequest = {
+    name: "",
+    feedback: ""
+};
 
+export const mockedSchool: ISchoolRequest = {
+  name: "Centro Educacional Salesiano",
+  email: "salesiano@email.com",
+  password: "123456",
+  type: "school",
+  director: "Gabriel Salesiano",
+  address: {
+    state: "BA",
+    city: "Serrinha",
+    district: "Primeira Travessa Antonio Pinheiro da Mota",
+    number: "166",
+    zipCode: "48700000",
+  },
+};
+
+export const mockedSchoolInvalidId: ISchoolRequest = {
+  name: "Escola Educacional Plinio",
+  email: "plinio@email.com",
+  password: "123456",
+  type: "school",
+  director: "Rogerio Plinio",
+  address: {
+    state: "SE",
+    city: "Alagados",
+    district: "Rua 1",
+    number: "186",
+    zipCode: "48754000",
+  },
+};
 
 export const mockedSchoolLogin: ISessionRequest = {
   email: "salesiano@email.com",
   password: "123456",
+};
+
+export const mockedSchoolInvalidIdLogin: ISessionRequest = {
+  email: "plinio@email.com",
+  password: "123456",
+};
+
+export const mockedSchoolInvalidZipCode: ISchoolRequest = {
+  name: "Centro Educacional Salesiano",
+  email: "salesiano@email.com",
+  password: "123456",
+  type: "school",
+  director: "Gabriel Salesiano",
+  address: {
+    state: "BA",
+    city: "Serrinha",
+    district: "Primeira Travessa Antonio Pinheiro da Mota",
+    number: "166",
+    zipCode: "12345678910",
+  },
+};
+
+export const mockedSchoolInvalidState: ISchoolRequest = {
+  name: "Centro Educacional Salesiano",
+  email: "salesiano@email.com",
+  password: "123456",
+  type: "school",
+  director: "Gabriel Salesiano",
+  address: {
+    state: "BAHIA",
+    city: "Serrinha",
+    district: "Primeira Travessa Antonio Pinheiro da Mota",
+    number: "166",
+    zipCode: "48700000",
+  },
+};
+
+export const mockedUpdatedSchool: ISchoolRequest = {
+  name: "Kenzie Salesiano Academy",
+  email: "salesiano@email.com",
+  password: "123456",
+  type: "school",
+  director: "Luccas Salesiano",
+  address: {
+    state: "BA",
+    city: "Serrinha",
+    district: "Primeira Travessa Antonio Pinheiro da Mota",
+    number: "166",
+    zipCode: "48700000",
+  },
 };
 
 export const mockedTeacherLogin: ISessionRequest = {
@@ -26,4 +106,10 @@ export const mockedTeacherLogin: ISessionRequest = {
 export const mockedStudentLogin: ISessionRequest = {
   email: "joana@mail.com",
   password: "123456",
-}
+};
+
+export const mockedInvalidLogin: ISessionRequest = {
+  email: "giuseppe_cadura@mail.com",
+  password: "xaOlinMatADorDePorco056",
+};
+
