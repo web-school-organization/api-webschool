@@ -1,114 +1,17 @@
 import { DataSource } from "typeorm";
-import { AppDataSource } from "../../data-source";
+import { AppDataSource } from "../../../data-source";
 import request from "supertest";
-import app from "../../app";
-
-interface IAddressRequest {
-  state: string;
-  city: string;
-  district: string;
-  number: string;
-  zipCode: string;
-}
-
-interface ISchoolRequest {
-  name: string;
-  email: string;
-  password: string;
-  type: string;
-  director: string;
-  address: IAddressRequest;
-}
-
-const mockedSchool: ISchoolRequest = {
-  name: "Centro Educacional Salesiano",
-  email: "salesiano@email.com",
-  password: "123456",
-  type: "school",
-  director: "Gabriel Salesiano",
-  address: {
-    state: "BA",
-    city: "Serrinha",
-    district: "Primeira Travessa Antonio Pinheiro da Mota",
-    number: "166",
-    zipCode: "48700000",
-  },
-};
-
-const mockedSchoolLogin = {
-  email: "salesiano@email.com",
-  password: "123456",
-};
-
-const mockedTeacherLogin = {
-  email: "fabio@mail.com.br",
-  password: "123456",
-};
-
-const mockedSchoolInvalidId: ISchoolRequest = {
-  name: "Escola Educacional Plinio",
-  email: "plinio@email.com",
-  password: "123456",
-  type: "school",
-  director: "Rogerio Plinio",
-  address: {
-    state: "SE",
-    city: "Alagados",
-    district: "Rua 1",
-    number: "186",
-    zipCode: "48754000",
-  },
-};
-
-const mockedSchoolInvalidIdLogin = {
-  email: "plinio@email.com",
-  password: "123456",
-};
-
-const mockedSchoolInvalidZipCode: ISchoolRequest = {
-  name: "Centro Educacional Salesiano",
-  email: "salesiano@email.com",
-  password: "123456",
-  type: "school",
-  director: "Gabriel Salesiano",
-  address: {
-    state: "BA",
-    city: "Serrinha",
-    district: "Primeira Travessa Antonio Pinheiro da Mota",
-    number: "166",
-    zipCode: "12345678910",
-  },
-};
-
-const mockedSchoolInvalidState: ISchoolRequest = {
-  name: "Centro Educacional Salesiano",
-  email: "salesiano@email.com",
-  password: "123456",
-  type: "school",
-  director: "Gabriel Salesiano",
-  address: {
-    state: "BAHIA",
-    city: "Serrinha",
-    district: "Primeira Travessa Antonio Pinheiro da Mota",
-    number: "166",
-    zipCode: "48700000",
-  },
-};
-
-const mockedUpdatedSchool: ISchoolRequest = {
-  name: "Kenzie Salesiano Academy",
-  email: "salesiano@email.com",
-  password: "123456",
-  type: "school",
-  director: "Luccas Salesiano",
-  address: {
-    state: "BA",
-    city: "Serrinha",
-    district: "Primeira Travessa Antonio Pinheiro da Mota",
-    number: "166",
-    zipCode: "48700000",
-  },
-};
+import app from "../../../app";
+import {
+  mockedSchool,
+  mockedSchoolInvalidId,
+  mockedSchoolInvalidIdLogin,
+  mockedSchoolInvalidState,
+  mockedSchoolInvalidZipCode,
+  mockedSchoolLogin,
+  mockedTeacherLogin,
+  mockedUpdatedSchool,
+} from "../../mocks";
 
 describe("Testando rotas da instituição", () => {
   let connection: DataSource;
@@ -286,7 +189,7 @@ describe("Testando rotas da instituição", () => {
     expect(response.body).toHaveProperty("message");
   });
 
-  test("DELETE /schools/:id - Deve ser capaz de remover uma instituição", async () => {
+  test("DELETE /schools/:id - Deve ser capaz de deletar uma instituição", async () => {
     const school = await request(app).get("/schools");
     const userLogged = await request(app)
       .post("/login")
@@ -330,7 +233,7 @@ describe("Testando rotas da instituição", () => {
     expect(response.body).toHaveProperty("message");
   });
 
-  test("DELETE /schools/:id - Não deve ser capaz de remover uma instituição com o id inválido", async () => {
+  test("DELETE /schools/:id - Não deve ser capaz de deletar uma instituição com o id inválido", async () => {
     const response = await request(app).delete("/schools/777-777-777");
 
     expect(response.status).toBe(404);
