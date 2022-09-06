@@ -47,6 +47,7 @@ describe("/teachers", () => {
         expect(response.status).toBe(400)
     })
 
+
     test("GET - Não deve ser capaz de listar com ID errado", async() => {
         await request(app).post('/teachers').send(mockedTeacher)
 
@@ -134,5 +135,42 @@ describe("/teachers", () => {
         expect(response.body).toHaveProperty("message")
 
     })
+
+
+    test("DELETE /teachers/:id -  Não deve ser capaz de excluir sem autenticação de usuário",async () => {
+        const teacherLoginResponse = await request(app).post("/login").send(mockedTeacherLogin);
+        const TeacherTobeDeleted = await request(app).get('/teachers').set("Authorization", `Bearer ${teacherLoginResponse.body.token}`)
+
+        const response = await request(app).delete(`/teachers/${TeacherTobeDeleted.body[0].id}`)
+
+        expect(response.body).toHaveProperty("message")
+        expect(response.status).toBe(401)
+
+    })
+
+    test("DELETE /teachers/:id -  Deve ser capaz de excluir um professor",async () => {
+        await request(app).post('/teachers').send(mockedTeacher)
+
+        const teacherLoginResponse = await request(app).post("/login").send(mockedTeacherLogin);
+        const UserTobeDeleted = await request(app).get('/teachers').set("Authorization", `Bearer ${teacherLoginResponse.body.token}`)
+
+        const response = await request(app).delete(`/teachers/${UserTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${teacherLoginResponse.body.token}`)
+        const findUser = await request(app).get('/teachers').set("Authorization", `Bearer ${teacherLoginResponse.body.token}`)
+        expect(response.status).toBe(204)
+        expect(findUser.body[0]).toBe(undefined)
+
+    })
+
+    test("DELETE -  Não deve ser capaz de deletar com ID errado",async () => {
+        await request(app).post('/teachers').send(mockedTeacher)
+
+        const teacherLoginResponse = await request(app).post("/login").send(mockedTeacherLogin);
+        
+        const response = await request(app).delete(`/teachers/13970660-5dbe-423a-9a9d-5c23b37943cf`).set("Authorization", `Bearer ${teacherLoginResponse.body.token}`)
+        expect(response.status).toBe(404)
+        expect(response.body).toHaveProperty("message")
+
+    })
+
 
 })
