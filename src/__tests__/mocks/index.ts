@@ -19,3 +19,11 @@ export const mockedInvalidLogin: ISessionRequest = {
   email: "giuseppe_cadura@mail.com",
   password: "xaOlinMatADorDePorco056",
 };
+
+export const mockedTeam: ITeamsRequest = {
+  name: "307",
+};
+
+export const mockedInvalidTeam = {
+  robson: "antunes",
+};

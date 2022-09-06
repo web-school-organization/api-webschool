@@ -1,0 +1,3 @@
+interface ITeamsRequest {
+  name: string;
+}
