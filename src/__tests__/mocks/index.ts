@@ -1,5 +1,17 @@
 import { ISchoolRequest } from "../../interfaces/schools";
+import { IFeedbackRequest } from "../../interfaces/feedback";
 import { ISessionRequest } from "../../interfaces/sessions";
+
+
+export const mockedFeedback: IFeedbackRequest = {
+    name: "gabriel",
+    feedback: "você não fez a atividade"
+};
+
+export const mockedFeedbackBranco: IFeedbackRequest = {
+    name: "",
+    feedback: ""
+};
 
 export const mockedSchool: ISchoolRequest = {
   name: "Centro Educacional Salesiano",
@@ -100,3 +112,4 @@ export const mockedInvalidLogin: ISessionRequest = {
   email: "giuseppe_cadura@mail.com",
   password: "xaOlinMatADorDePorco056",
 };
+
