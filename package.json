@@ -1,5 +1,5 @@
 {
-  "name": "Entregas",
+  "name": "entregas",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -22,6 +22,7 @@
     "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^18.7.15",
     "@types/supertest": "^2.0.12",
+    "@types/jest": "^29.0.0",
     "jest": "^29.0.2",
     "sqlite3": "^5.0.11",
     "supertest": "^6.2.4",
