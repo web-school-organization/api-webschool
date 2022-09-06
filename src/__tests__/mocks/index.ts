@@ -14,3 +14,8 @@ export const mockedStudentLogin: ISessionRequest = {
   email: "joana@mail.com",
   password: "123456",
 };
+
+export const mockedInvalidLogin: ISessionRequest = {
+  email: "giuseppe_cadura@mail.com",
+  password: "xaOlinMatADorDePorco056",
+};
