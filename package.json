@@ -1,7 +1,7 @@
 {
   "name": "entregas",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server.ts",
   "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
