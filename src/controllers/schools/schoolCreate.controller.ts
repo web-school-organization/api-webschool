@@ -1,3 +1,4 @@
+import { instanceToPlain } from "class-transformer";
 import { Request, Response } from "express";
 import { ISchoolRequest } from "../../interfaces/schools";
 import { schoolCreateService } from "../../services/schools/schoolCreate.service";
@@ -14,19 +15,5 @@ export const schoolCreateController = async (req: Request, res: Response) => {
     address,
   });
 
-  console.log("aqui");
-  console.log(newSchool);
-
-  // adicionar exclude depois
-  const novaEscola = {
-    id: newSchool.id,
-    name: newSchool.name,
-    email: newSchool.email,
-    type: newSchool.type,
-    director: newSchool.director,
-    address: newSchool.address,
-    teams: newSchool.teams,
-  };
-
-  return res.status(201).json(novaEscola);
+  return res.status(201).json(instanceToPlain(newSchool));
 };

@@ -14,28 +14,24 @@ export const schoolCreateService = async ({
   const schoolRepository = AppDataSource.getRepository(School);
   const addressRepository = AppDataSource.getRepository(Address);
 
-  const newAddress = new Address();
-  newAddress.city = address.city;
-  newAddress.state = address.state;
-  newAddress.district = address.district;
-  newAddress.number = address.number;
-  newAddress.zipCode = address.zipCode;
+  const newAddress = await addressRepository.save({
+    city: address.city,
+    state: address.state,
+    district: address.district,
+    number: address.number,
+    zipCode: address.zipCode,
+  });
 
-  await addressRepository.save(newAddress);
+  const newSchool = await schoolRepository.save({
+    name,
+    email,
+    password,
+    type,
+    director,
+    address: newAddress,
+  });
 
-  const newSchool = new School();
-  newSchool.name = name;
-  newSchool.email = email;
-  newSchool.password = password;
-  newSchool.type = type;
-  newSchool.director = director;
-  newSchool.address = newAddress;
-  // Vai sair isso aqui
-  newSchool.teams = [];
+  const school = await schoolRepository.findOneBy({ id: newSchool.id });
 
-  await schoolRepository.save(newSchool);
-
-  // Team não está criando automaticamente
-
-  return newSchool;
+  return school;
 };

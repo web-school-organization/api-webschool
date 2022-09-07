@@ -40,7 +40,7 @@ export class Student {
   @CreateDateColumn({ type: "date" })
   updatedAt: Date;
 
-  @ManyToOne(() => Team, { eager: true })
+  @ManyToOne(() => Team)
   team: Team;
 
   @OneToMany(() => Feedback, (feedback) => feedback.student, { eager: true })
