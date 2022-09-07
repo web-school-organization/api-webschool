@@ -4,6 +4,7 @@ import request from "supertest";
 import app from "../../../app";
 import {
   mockedSchool,
+  mockedSchoolAddressExists,
   mockedSchoolInvalidId,
   mockedSchoolInvalidIdLogin,
   mockedSchoolInvalidState,
@@ -56,7 +57,9 @@ describe("Testando rotas da instituição", () => {
   });
 
   test("POST /schools - Não deve criar instituição caso endereço já exista", async () => {
-    const response = await request(app).post("/schools").send(mockedSchool);
+    const response = await request(app)
+      .post("/schools")
+      .send(mockedSchoolAddressExists);
 
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(400);
@@ -82,6 +85,8 @@ describe("Testando rotas da instituição", () => {
 
   test("GET /schools - Deve ser capaz de listar todas instituições", async () => {
     const response = await request(app).get("/schools");
+
+    console.log(response.body);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveLength(1);
