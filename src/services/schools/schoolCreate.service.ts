@@ -1,3 +1,4 @@
+import { hash } from "bcryptjs";
 import { AppDataSource } from "../../data-source";
 import { Address } from "../../entities/address.entity";
 import { School } from "../../entities/school.entity";
@@ -14,6 +15,8 @@ export const schoolCreateService = async ({
 }: ISchoolRequest) => {
   const schoolRepository = AppDataSource.getRepository(School);
   const addressRepository = AppDataSource.getRepository(Address);
+
+  const hashedPassword = await hash(password, 10);
 
   const emailExists = await schoolRepository.findOneBy({ email });
 
@@ -46,7 +49,7 @@ export const schoolCreateService = async ({
   const newSchool = await schoolRepository.save({
     name,
     email,
-    password,
+    password: hashedPassword,
     type,
     director,
     address: newAddress,

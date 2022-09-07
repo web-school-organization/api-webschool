@@ -1,4 +1,3 @@
-import { describe } from "node:test";
 import { DataSource } from "typeorm";
 import request from "supertest";
 import app from "../../../app";
@@ -15,12 +14,10 @@ describe("testando feedbacks", () => {
 
   beforeAll(async () => {
     await AppDataSource.initialize()
-      .then((res) => {
-        connection = res;
-      })
-      .catch((err) => {
-        console.error("Error during Data Source initialization", err);
-      });
+      .then((res) => (connection = res))
+      .catch((err) =>
+        console.error("Error during Data Source initialization", err)
+      );
 
     await request(app).post("/feedbacks").send(mockedFeedback);
     await request(app).post("/feedbacks").send(mockedFeedback);
@@ -32,7 +29,9 @@ describe("testando feedbacks", () => {
 });
 
 test("POST /feedback - tentando criar um feedback sendo um professor", async () => {
-  const adminLoginResponse = await request(app).post("/login").send(mockedTeacherLogin);
+  const adminLoginResponse = await request(app)
+    .post("/login")
+    .send(mockedTeacherLogin);
   const response = await request(app)
     .post("/feedback")
     .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
@@ -47,7 +46,9 @@ test("POST /feedback - tentando criar um feedback sendo um professor", async () 
 });
 
 test("POST /feedback - tentando criar um feedback em branco", async () => {
-  const adminLoginResponse = await request(app).post("/login").send(mockedTeacherLogin);
+  const adminLoginResponse = await request(app)
+    .post("/login")
+    .send(mockedTeacherLogin);
   const response = await request(app)
     .post("/feedback")
     .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
@@ -58,7 +59,9 @@ test("POST /feedback - tentando criar um feedback em branco", async () => {
 });
 
 test("POST /feedback - tentando criar um feedback sendo um aluno", async () => {
-  const adminLoginResponse = await request(app).post("/login").send(mockedStudentLogin);
+  const adminLoginResponse = await request(app)
+    .post("/login")
+    .send(mockedStudentLogin);
   const response = await request(app)
     .post("/feedback")
     .set("Authorization", `Bearer ${adminLoginResponse.body.token}`)
@@ -98,43 +101,102 @@ test("GET /feedback - tentando pegar feedbacks sem estar logado", async () => {
 });
 
 test("DELETE /feedback - tentando deleta um feedback sendo um professor", async () => {
-  const adminLoginResponse = await request(app).post("/login").send(mockedTeacherLogin);
-  const UserTobeDeleted = await request(app)
+  const adminLoginResponse = await request(app)
+    .post("/login")
+    .send(mockedTeacherLogin);
+
+  const FeedbackTobeDeleted = await request(app)
     .get("/feedback")
     .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
 
   const response = await request(app)
-    .delete(`/users/${UserTobeDeleted.body[0].id}`)
+    .delete(`/feedback/${FeedbackTobeDeleted.body[0].id}`)
     .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
   expect(response.status).toBe(204);
   expect(response.body).toHaveProperty("message");
 });
 
 test("DELETE /feedback - tentando deleta um feedback sendo um aluno", async () => {
-  const adminLoginResponse = await request(app).post("/login").send(mockedStudentLogin);
-  const UserTobeDeleted = await request(app)
+  const adminLoginResponse = await request(app)
+    .post("/login")
+    .send(mockedStudentLogin);
+  const FeedbackTobeDeleted = await request(app)
     .get("/feedback")
     .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
 
   const response = await request(app)
-    .delete(`/users/${UserTobeDeleted.body[0].id}`)
+    .delete(`/feedback/${FeedbackTobeDeleted.body[0].id}`)
     .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
   expect(response.status).toBe(400);
   expect(response.body).toHaveProperty("message");
 });
 
 test("DELETE /feedback - tentando deleta um feedback sem id", async () => {
-  const adminLoginResponse = await request(app).post("/login").send(mockedTeacherLogin);
+  const adminLoginResponse = await request(app)
+    .post("/login")
+    .send(mockedTeacherLogin);
 
   const response = await request(app)
-    .delete(`/users/13970660-5dbe-423a-9a9d-5c23b37943cf`)
+    .delete(`/feedback/13970660-5dbe-423a-9a9d-5c23b37943cf`)
     .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
   expect(response.status).toBe(404);
   expect(response.body).toHaveProperty("message");
 });
 
 test("DELETE /feedback - tentando deleta um feedback sem estar logado", async () => {
-  const response = await request(app).delete(`/users/13970660-5dbe-423a-9a9d-5c23b37943cf`);
+  const response = await request(app).delete(
+    `/feedback/13970660-5dbe-423a-9a9d-5c23b37943cf`
+  );
+  expect(response.status).toBe(401);
+  expect(response.body).toHaveProperty("message");
+});
+
+test("PATCH /feedback - tentando editar um feedback sendo um aluno", async () => {
+  const adminLoginResponse = await request(app)
+    .post("/login")
+    .send(mockedTeacherLogin);
+  const FeedbackTobeDeleted = await request(app)
+    .get("/feedback")
+    .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
+
+  const response = await request(app)
+    .patch(`/feedback/${FeedbackTobeDeleted.body[0].id}`)
+    .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
+  expect(response.status).toBe(204);
+  expect(response.body).toHaveProperty("message");
+});
+
+test("PATCH /feedback - tentando editar um feedback sendo um aluno", async () => {
+  const adminLoginResponse = await request(app)
+    .post("/login")
+    .send(mockedStudentLogin);
+  const FeedbackTobeDeleted = await request(app)
+    .get("/feedback")
+    .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
+
+  const response = await request(app)
+    .patch(`/feedback/${FeedbackTobeDeleted.body[0].id}`)
+    .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
+  expect(response.status).toBe(400);
+  expect(response.body).toHaveProperty("message");
+});
+
+test("PATCH /feedback - tentando editar um feedback sem id", async () => {
+  const adminLoginResponse = await request(app)
+    .post("/login")
+    .send(mockedTeacherLogin);
+
+  const response = await request(app)
+    .patch(`/feedback/13970660-5dbe-423a-9a9d-5c23b37943cf`)
+    .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
+  expect(response.status).toBe(404);
+  expect(response.body).toHaveProperty("message");
+});
+
+test("PATCH /feedback - tentando editar um feedback sem estar logado", async () => {
+  const response = await request(app).patch(
+    `/feedback/13970660-5dbe-423a-9a9d-5c23b37943cf`
+  );
   expect(response.status).toBe(401);
   expect(response.body).toHaveProperty("message");
 });
