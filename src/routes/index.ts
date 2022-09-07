@@ -1,9 +1,8 @@
 import { Express } from "express";
+import schoolRoutes from "./school.routes";
 
+const AppRoutes = (app: Express) => {
+  app.use("/schools", schoolRoutes());
+};
 
-
-const AppRoutes = (app:Express) => {
-
-}
-
-export default AppRoutes
+export default AppRoutes;
