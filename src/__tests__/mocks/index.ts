@@ -2,15 +2,14 @@ import { ISchoolRequest } from "../../interfaces/schools";
 import { IFeedbackRequest } from "../../interfaces/feedback";
 import { ISessionRequest } from "../../interfaces/sessions";
 
-
 export const mockedFeedback: IFeedbackRequest = {
-    name: "gabriel",
-    feedback: "você não fez a atividade"
+  name: "gabriel",
+  feedback: "você não fez a atividade",
 };
 
 export const mockedFeedbackBranco: IFeedbackRequest = {
-    name: "",
-    feedback: ""
+  name: "",
+  feedback: "",
 };
 
 export const mockedSchool: ISchoolRequest = {
@@ -113,3 +112,10 @@ export const mockedInvalidLogin: ISessionRequest = {
   password: "xaOlinMatADorDePorco056",
 };
 
+export const mockedTeam: ITeamsRequest = {
+  name: "307",
+};
+
+export const mockedInvalidTeam = {
+  robson: "antunes",
+};
