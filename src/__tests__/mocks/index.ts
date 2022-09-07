@@ -1,5 +1,7 @@
 import { ITeachersRequest } from "../../interfaces/teachers";
 import { ISessionRequest } from "../../interfaces/sessions";
+import { ISchoolRequest } from "../../interfaces/schools";
+import { IFeedbackRequest } from "../../interfaces/feedback";
 
 export const mockedTeacher : ITeachersRequest = {
     name: "Fábio Júnio",
@@ -20,26 +22,99 @@ export const mockedTeacherUpdate : ITeachersRequest = {
     matter: "Back-End",
 }
 
-export const mockedSchool = {
-    name: "Centro Educacional Salesiano",
-    email: "salesiano@email.com",
-    password: "123456",
-    type: "school",
-    director: "Gabriel Salesiano",
-    address: {
-      state: "BA",
-      city: "Serrinha",
-      district: "Primeira Travessa Antonio Pinheiro da Mota",
-      number: "166",
-      zipCode: "48700000",
-    },
-    teams: [],
-  };
+export const mockedFeedback: IFeedbackRequest = {
+  name: "gabriel",
+  feedback: "você não fez a atividade",
+};
 
+export const mockedFeedbackBranco: IFeedbackRequest = {
+  name: "",
+  feedback: "",
+};
+
+export const mockedSchool: ISchoolRequest = {
+  name: "Centro Educacional Salesiano",
+  email: "salesiano@email.com",
+  password: "123456",
+  type: "school",
+  director: "Gabriel Salesiano",
+  address: {
+    state: "BA",
+    city: "Serrinha",
+    district: "Primeira Travessa Antonio Pinheiro da Mota",
+    number: "166",
+    zipCode: "48700000",
+  },
+};
+
+export const mockedSchoolInvalidId: ISchoolRequest = {
+  name: "Escola Educacional Plinio",
+  email: "plinio@email.com",
+  password: "123456",
+  type: "school",
+  director: "Rogerio Plinio",
+  address: {
+    state: "SE",
+    city: "Alagados",
+    district: "Rua 1",
+    number: "186",
+    zipCode: "48754000",
+  },
+};
 
 export const mockedSchoolLogin: ISessionRequest = {
   email: "salesiano@email.com",
   password: "123456",
+};
+
+export const mockedSchoolInvalidIdLogin: ISessionRequest = {
+  email: "plinio@email.com",
+  password: "123456",
+};
+
+export const mockedSchoolInvalidZipCode: ISchoolRequest = {
+  name: "Centro Educacional Salesiano",
+  email: "salesiano@email.com",
+  password: "123456",
+  type: "school",
+  director: "Gabriel Salesiano",
+  address: {
+    state: "BA",
+    city: "Serrinha",
+    district: "Primeira Travessa Antonio Pinheiro da Mota",
+    number: "166",
+    zipCode: "12345678910",
+  },
+};
+
+export const mockedSchoolInvalidState: ISchoolRequest = {
+  name: "Centro Educacional Salesiano",
+  email: "salesiano@email.com",
+  password: "123456",
+  type: "school",
+  director: "Gabriel Salesiano",
+  address: {
+    state: "BAHIA",
+    city: "Serrinha",
+    district: "Primeira Travessa Antonio Pinheiro da Mota",
+    number: "166",
+    zipCode: "48700000",
+  },
+};
+
+export const mockedUpdatedSchool: ISchoolRequest = {
+  name: "Kenzie Salesiano Academy",
+  email: "salesiano@email.com",
+  password: "123456",
+  type: "school",
+  director: "Luccas Salesiano",
+  address: {
+    state: "BA",
+    city: "Serrinha",
+    district: "Primeira Travessa Antonio Pinheiro da Mota",
+    number: "166",
+    zipCode: "48700000",
+  },
 };
 
 export const mockedTeacherLogin: ISessionRequest = {
@@ -55,4 +130,12 @@ export const mockedStudentLogin: ISessionRequest = {
 export const mockedInvalidLogin: ISessionRequest = {
   email: "giuseppe_cadura@mail.com",
   password: "xaOlinMatADorDePorco056",
+};
+
+export const mockedTeam: ITeamsRequest = {
+  name: "307",
+};
+
+export const mockedInvalidTeam = {
+  robson: "antunes",
 };
