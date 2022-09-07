@@ -104,12 +104,13 @@ test("DELETE /feedback - tentando deleta um feedback sendo um professor", async 
   const adminLoginResponse = await request(app)
     .post("/login")
     .send(mockedTeacherLogin);
-  const UserTobeDeleted = await request(app)
+
+  const FeedbackTobeDeleted = await request(app)
     .get("/feedback")
     .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
 
   const response = await request(app)
-    .delete(`/feedback/${UserTobeDeleted.body[0].id}`)
+    .delete(`/feedback/${FeedbackTobeDeleted.body[0].id}`)
     .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
   expect(response.status).toBe(204);
   expect(response.body).toHaveProperty("message");
@@ -119,12 +120,12 @@ test("DELETE /feedback - tentando deleta um feedback sendo um aluno", async () =
   const adminLoginResponse = await request(app)
     .post("/login")
     .send(mockedStudentLogin);
-  const UserTobeDeleted = await request(app)
+  const FeedbackTobeDeleted = await request(app)
     .get("/feedback")
     .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
 
   const response = await request(app)
-    .delete(`/feedback/${UserTobeDeleted.body[0].id}`)
+    .delete(`/feedback/${FeedbackTobeDeleted.body[0].id}`)
     .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
   expect(response.status).toBe(400);
   expect(response.body).toHaveProperty("message");
@@ -152,32 +153,32 @@ test("DELETE /feedback - tentando deleta um feedback sem estar logado", async ()
 
 test("PATCH /feedback - tentando editar um feedback sendo um aluno", async () => {
   const adminLoginResponse = await request(app)
-  .post("/login")
-  .send(mockedTeacherLogin);
-const UserTobeDeleted = await request(app)
-  .get("/feedback")
-  .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
+    .post("/login")
+    .send(mockedTeacherLogin);
+  const FeedbackTobeDeleted = await request(app)
+    .get("/feedback")
+    .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
 
-const response = await request(app)
-  .patch(`/feedback/${UserTobeDeleted.body[0].id}`)
-  .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
-expect(response.status).toBe(204);
-expect(response.body).toHaveProperty("message");
+  const response = await request(app)
+    .patch(`/feedback/${FeedbackTobeDeleted.body[0].id}`)
+    .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
+  expect(response.status).toBe(204);
+  expect(response.body).toHaveProperty("message");
 });
 
 test("PATCH /feedback - tentando editar um feedback sendo um aluno", async () => {
   const adminLoginResponse = await request(app)
-  .post("/login")
-  .send(mockedStudentLogin);
-const UserTobeDeleted = await request(app)
-  .get("/feedback")
-  .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
+    .post("/login")
+    .send(mockedStudentLogin);
+  const FeedbackTobeDeleted = await request(app)
+    .get("/feedback")
+    .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
 
-const response = await request(app)
-  .patch(`/feedback/${UserTobeDeleted.body[0].id}`)
-  .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
-expect(response.status).toBe(400);
-expect(response.body).toHaveProperty("message");
+  const response = await request(app)
+    .patch(`/feedback/${FeedbackTobeDeleted.body[0].id}`)
+    .set("Authorization", `Bearer ${adminLoginResponse.body.token}`);
+  expect(response.status).toBe(400);
+  expect(response.body).toHaveProperty("message");
 });
 
 test("PATCH /feedback - tentando editar um feedback sem id", async () => {

@@ -1,16 +1,35 @@
+import { ITeachersRequest } from "../../interfaces/teachers";
+import { ISessionRequest } from "../../interfaces/sessions";
 import { ISchoolRequest } from "../../interfaces/schools";
 import { IFeedbackRequest } from "../../interfaces/feedback";
-import { ISessionRequest } from "../../interfaces/sessions";
+import { IStudentRequest } from "../../interfaces/students";
 
+export const mockedTeacher: ITeachersRequest = {
+  name: "Fábio Júnio",
+  email: "fabio@mail.com.br",
+  password: "123456",
+  type: "Teacher",
+  shift: "Matutino",
+  matter: "Back-End",
+};
+
+export const mockedTeacherUpdate: ITeachersRequest = {
+  name: "Júnior Fábio",
+  email: "fabio@mail.com.br",
+  password: "123456",
+  type: "Teacher",
+  shift: "Matutino",
+  matter: "Back-End",
+};
 
 export const mockedFeedback: IFeedbackRequest = {
-    name: "gabriel",
-    feedback: "você não fez a atividade"
+  name: "gabriel",
+  feedback: "você não fez a atividade",
 };
 
 export const mockedFeedbackBranco: IFeedbackRequest = {
-    name: "",
-    feedback: ""
+  name: "",
+  feedback: "",
 };
 
 export const mockedSchool: ISchoolRequest = {
@@ -113,3 +132,21 @@ export const mockedInvalidLogin: ISessionRequest = {
   password: "xaOlinMatADorDePorco056",
 };
 
+export const mockedTeam: ITeamsRequest = {
+  name: "307",
+};
+
+export const mockedInvalidTeam = {
+  robson: "antunes",
+};
+
+export const mockedStudent: IStudentRequest = {
+  name: "Joana",
+  email: "joana@mail.com",
+  type: "student",
+  shift: "",
+  registration: "",
+  team: [],
+  feedbacks: [],
+  password: "123456",
+};
