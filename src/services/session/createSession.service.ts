@@ -32,7 +32,6 @@ const createSessionService = async (dataLogin: ISessionRequest): Promise<string>
   const token = jwt.sign(
     {
       type: user.type,
-      email: user.email,
     },
     process.env.SECRET_KEY as string,
     {
