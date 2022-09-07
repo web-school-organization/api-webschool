@@ -23,7 +23,7 @@ const createSessionService = async (dataLogin: ISessionRequest): Promise<string>
     throw new AppError("Invalid email or password");
   }
 
-  const matchPassword = await compare(user.password, dataLogin.password);
+  const matchPassword = await compare(dataLogin.password, user.password);
 
   if (!matchPassword) {
     throw new AppError("Invalid email or password");
