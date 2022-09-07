@@ -15,4 +15,4 @@ const handleErrorMiddleware = async(error: Error, req: Request, res: Response, n
 
 }
 
-export default  handleErrorMiddleware 
+export { handleErrorMiddleware }
