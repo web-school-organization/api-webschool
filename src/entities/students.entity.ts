@@ -1,54 +1,48 @@
-import { Exclude } from "class-transformer"
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
-import { Feedback } from "./feedbacks.entity"
-import { Team } from "./teams.entiy"
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { Feedback } from "./feedbacks.entity";
+import { Exclude } from "class-transformer";
+import { Team } from "./teams.entiy";
 
-@Entity('students')
+@Entity("students")
 export class Student {
-  @PrimaryGeneratedColumn('uuid')
-  readonly id: string
+  @PrimaryGeneratedColumn("uuid")
+  readonly id: string;
 
-  @Column({length: 150})
-  name:string
+  @Column({ length: 150 })
+  name: string;
 
-  @Column({length: 200, unique:true})
-  email:string
+  @Column({ length: 200, unique: true })
+  email: string;
 
-  @Column({length: 150})
+  @Column({ length: 150 })
   @Exclude()
-  password:string
+  password: string;
 
-  @Column({default:"student"})
-  type:string
+  @Column({ default: "student" })
+  type: string;
 
-  @Column({length: 50, unique:true})
-  registration:string
+  @Column({ length: 50, unique: true })
+  registration: string;
 
-  @Column({length: 25})
-  shift:string
+  @Column({ length: 25 })
+  shift: string;
 
-  @CreateDateColumn({type: "date"})
-  createdAt:Date
+  @CreateDateColumn({ type: "date" })
+  createdAt: Date;
 
-  @CreateDateColumn({type:"date"})
-  updatedAt:Date
+  @CreateDateColumn({ type: "date" })
+  updatedAt: Date;
 
-  @ManyToOne(()=> Team)
-  team: Team
+  @ManyToOne(() => Team)
+  team: Team;
 
-  @OneToMany(()=> Feedback, (feedback)=>feedback.student, {eager:true})
-  feedbacks:Feedback[]
-
+  @OneToMany(() => Feedback, (feedback) => feedback.student, { eager: true })
+  feedbacks: Feedback[];
 }
-
-
-
-
-
-
-
-
-
-
-
-

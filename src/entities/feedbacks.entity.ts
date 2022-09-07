@@ -1,28 +1,34 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
-import { Student } from "./students.entity"
-import { Teacher } from "./teachers.entity"
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
+import { Student } from "./students.entity";
+import { Teacher } from "./teachers.entity";
 
-@Entity('feedbacks')
+@Entity("feedbacks")
 export class Feedback {
+  @PrimaryGeneratedColumn("uuid")
+  readonly id: string;
 
-  @PrimaryGeneratedColumn('uuid')
-  readonly id: string
+  @Column({ length: 150 })
+  name: string;
 
-  @Column({length: 150})
-  name:string
+  @Column({ length: 200, unique: true })
+  feedback: string;
 
-  @Column({length: 200, unique:true})
-  feedback:string
+  @CreateDateColumn({ type: "date" })
+  createdAt: Date;
 
-  @CreateDateColumn({type: "date"})
-  createdAt:Date
+  @UpdateDateColumn({ type: "date" })
+  updatedAt: Date;
 
-  @UpdateDateColumn({type:"date"})
-  updatedAt:Date
+  @ManyToOne(() => Teacher)
+  teacher: Teacher;
 
-  @ManyToOne(()=> Teacher)
-  teacher:Teacher
-
-  @ManyToOne(()=> Student)
-  student:Student
+  @ManyToOne(() => Student)
+  student: Student;
 }
