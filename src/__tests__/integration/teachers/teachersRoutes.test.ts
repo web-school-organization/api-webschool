@@ -2,7 +2,7 @@ import { DataSource } from "typeorm";
 import { AppDataSource } from "../../../data-source";
 import request from "supertest"
 import app from "../../../app";
-import { mockedSchool, mockedTeacher, mockedTeacherLogin, mockedTeacherUpdate } from "../../mocks";
+import { mockedSchool, mockedSchoolLogin, mockedTeacher, mockedTeacherLogin, mockedTeacherUpdate } from "../../mocks";
 
 describe("/teachers", () => {
     let connection: DataSource
@@ -20,7 +20,9 @@ describe("/teachers", () => {
     })
 
     test("POST /teachers - Deve ser capaz de criar o cadastro do professor",async () => {
-        const response = await request(app).post('/teachers').send(mockedTeacher)
+        const schoolResponse = await request(app).post("/schools").send(mockedSchool);
+        const loginSchool = await request(app).post("/login").send(mockedSchoolLogin)
+        const response = await request(app).post('/teachers').set("Authorization", `Bearer ${loginSchool.body.token}`).send(mockedTeacher)
 
         expect(response.body).toHaveProperty("id")
         expect(response.body).toHaveProperty("name")
@@ -43,7 +45,7 @@ describe("/teachers", () => {
         const response = await request(app).post('/teachers').send(mockedTeacher)
 
         expect(response.body).toHaveProperty("message")
-        expect(response.status).toBe(400)
+        expect(response.status).toBe(401)
     })
 
 
@@ -113,7 +115,7 @@ describe("/teachers", () => {
         expect(response.body).toHaveProperty("updatedAt")
         expect(response.body.name).toEqual("Júnior Fábio")
         expect(response.body.email).toEqual("fabio@mail.com.br")
-        expect(response.body.type).toEqual("teacher")
+        expect(response.body.type).toEqual("school")
         expect(response.body.shift).toEqual("Matutino")
         expect(response.body.matter).toEqual("Back-End")
         expect(response.status).toBe(200)        
@@ -155,15 +157,12 @@ describe("/teachers", () => {
     })
 
     test("DELETE /teachers/:id -  Deve ser capaz de excluir um professor",async () => {
-        await request(app).post('/teachers').send(mockedTeacher)
-
         const teacherLoginResponse = await request(app).post("/login").send(mockedTeacherLogin);
         const UserTobeDeleted = await request(app).get('/teachers').set("Authorization", `Bearer ${teacherLoginResponse.body.token}`)
         
         const response = await request(app).delete(`/teachers/${UserTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${teacherLoginResponse.body.token}`)
         
         expect(response.status).toBe(204)
-
     })
 
 })
