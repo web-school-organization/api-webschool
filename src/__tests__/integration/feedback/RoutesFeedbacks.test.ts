@@ -89,16 +89,16 @@ describe("testando feedbacks", () => {
     const TeacherResponse = await request(app)
       .post("/teachers")
       .send(mockedTeacher);
-    console.log(TeacherResponse.body);
+    // console.log(TeacherResponse.body);
     const res = await request(app)
       .post("/login")
 
       .send(mockedTeacherLogin);
-    console.log(res.body);
+    // console.log(res.body);
     const response = await request(app)
       .get("/feedback")
       .set("Authorization", `Bearer ${TeacherResponse.body.token}`);
-    console.log(response.body);
+    // console.log(response.body);
 
     expect(response.body.feedbacks[0]).toHaveProperty("updated_at");
     expect(response.body.feedbacks[0]).toHaveProperty("created_at");
@@ -138,9 +138,12 @@ describe("testando feedbacks", () => {
     const TeacherResponse = await request(app)
       .post("/login")
       .send(mockedStudentLogin);
+      // console.log(TeacherResponse.body)
+
     const FeedbackTobeDeleted = await request(app)
       .get("/feedback")
       .set("Authorization", `Bearer ${TeacherResponse.body.token}`);
+      // console.log(FeedbackTobeDeleted.body)
 
     const response = await request(app)
       .patch(`/feedback/${FeedbackTobeDeleted.body[0].id}`)
@@ -155,11 +158,18 @@ describe("testando feedbacks", () => {
     const TeacherResponse = await request(app)
       .post("/login")
       .send(mockedTeacherLogin);
+      console.log(TeacherResponse.body)
+
+      // const FeedbackTobeDeleted = await request(app)
+      // .get("/feedback")
+      // .set("Authorization", `Bearer ${TeacherResponse.body.token}`);
+      // console.log(FeedbackTobeDeleted.body)
 
       const response = await request(app)
       .patch(`/feedback/13970660-5dbe-423a-9a9d-5c23b37943cf`)
       .set("Authorization", `Bearer ${TeacherResponse.body.token}`)
       .send(mockedFeedbackUpdated);
+      console.log(response.body)
     expect(response.status).toBe(404);
     expect(response.body).toHaveProperty("message");
   });
@@ -215,6 +225,7 @@ describe("testando feedbacks", () => {
   });
 
   test("DELETE /feedback - tentando deleta um feedback sem estar logado", async () => {
+
     const response = await request(app).delete(
       `/feedback/13970660-5dbe-423a-9a9d-5c23b37943cf`
     );

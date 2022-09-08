@@ -11,7 +11,7 @@ const deleteFeedbackService = async ({
 
   const findFeedback = await feedbackRepository.findOneBy({id})
 
-  if (findFeedback) {
+  if (!findFeedback) {
     throw new AppError("Feedback not found",404);
   }
 

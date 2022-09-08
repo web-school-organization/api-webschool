@@ -11,9 +11,9 @@ const updateFeedbackService = async({id, type}:IUser, {feedback}:IFeedbackAtuali
       throw new AppError("You dont have permition");
     }
 
-    const feedbackFind = await feedbackRepository.findOneBy({id})
+    const feedbackFind = await feedbackRepository.findOneBy({id:id})
 
-    if (feedbackFind) {
+    if (!feedbackFind) {
       throw new AppError("Feedback not found",404);
       
     }
