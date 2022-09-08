@@ -1,4 +1,5 @@
 export interface IStudentRequest {
+
     name: string
     email:string
     password:string
@@ -22,4 +23,5 @@ export interface IStudent {
     feedbacks:Array<any>
     createdAt: Date
     updatedAt: Date
+
 }
