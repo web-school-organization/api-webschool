@@ -154,7 +154,6 @@ export const mockedStudent: IStudentRequest = {
   shift: "",
   registration: "",
   team: "307",
-  feedbacks: [],
   password: "123456",
 };
 
@@ -164,6 +163,5 @@ export const mockedStudentAuth: IStudentRequest = {
   shift: "",
   registration: "",
   team: "307",
-  feedbacks: [],
   password: "123456",
 };

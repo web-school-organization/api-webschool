@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import studentCreateService from "../../services/students/studentCreate.service";
 
 const studentCreateController = async (req: Request, res: Response) => {
-  const { name, email, password, registration, shift, team, feedbacks } = req.body;
+  const { name, email, password, registration, shift, team } = req.body;
   const studentCreated = await studentCreateService({
     name,
     email,
@@ -11,10 +11,9 @@ const studentCreateController = async (req: Request, res: Response) => {
     registration,
     shift,
     team,
-    feedbacks,
   });
 
-  return res.status(201).send(instanceToPlain(studentCreated));
+  return res.status(201).json(instanceToPlain(studentCreated));
 };
 
 export default studentCreateController;
