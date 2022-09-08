@@ -8,7 +8,7 @@ export const mockedTeacher: ITeachersRequest = {
   name: "Fábio Junior",
   email: "fabio@mail.com.br",
   password: "123456",
-  type: "school",
+  type: "teacher",
   shift: "Matutino",
   matter: "Back-End",
 };
@@ -167,7 +167,7 @@ export const mockedStudent: IStudentRequest = {
   type: "student",
   shift: "",
   registration: "",
-  team: [],
+  team:"",
   feedbacks: [],
   password: "123456",
 };
@@ -178,7 +178,7 @@ export const mockedStudentAuth: IStudentRequest = {
   type: "student",
   shift: "",
   registration: "",
-  team: [],
+  team:"",
   feedbacks: [],
   password: "123456",
 };

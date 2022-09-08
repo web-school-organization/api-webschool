@@ -47,6 +47,7 @@ describe("/login - Rota responsável por iniciar a sessão do usuário na aplica
   test("POST /login - PROFESSOR - Deve retornar um token de acesso caso o usuário tenha sucesso ao iniciar a sessão", async () => {
     await request(app).post("/teachers").send(mockedTeacher);
     const response = await request(app).post("/login").send(mockedTeacherLogin);
+    console.log(response);
 
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("token");
