@@ -31,12 +31,6 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
       .post("/teachers")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`)
       .send(mockedTeacher);
-    const student = await request(app)
-      .post("/students")
-      .set("Authorization", `Bearer ${schoolLogin.body.token}`)
-      .send(mockedStudent);
-
-    console.log(student.body);
   });
 
   afterAll(async () => {
@@ -75,9 +69,12 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("POST /teams - Não deve ser capaz de criar uma nova turma com o type sendo igual a aluno", async () => {
+    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    await request(app)
+      .post("/students")
+      .set("Authorization", `Bearer ${schoolLogin.body.token}`)
+      .send(mockedStudent);
     const studentLogin = await request(app).post("/login").send(mockedStudentLogin);
-
-    // console.log(studentLogin.body);
 
     const response = await request(app)
       .post("/teams")

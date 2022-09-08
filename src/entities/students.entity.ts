@@ -44,6 +44,6 @@ export class Student {
   @ManyToOne(() => Team)
   team: Team;
 
-  @OneToMany(() => Feedback, (feedback:Feedback) => feedback.student, { eager: true })
+  @OneToMany(() => Feedback, (feedback: Feedback) => feedback.student, { eager: true })
   feedbacks: Feedback[];
 }
