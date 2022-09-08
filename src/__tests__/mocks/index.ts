@@ -109,8 +109,8 @@ export const mockedUpdatedSchool: ISchoolRequest = {
   type: "school",
   director: "Luccas Salesiano",
   address: {
-    state: "BA",
-    city: "Serrinha",
+    state: "SE",
+    city: "Conceição do Coité",
     district: "Primeira Travessa Antonio Pinheiro da Mota",
     number: "166",
     zipCode: "48700000",
