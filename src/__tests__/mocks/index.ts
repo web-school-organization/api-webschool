@@ -17,7 +17,7 @@ export const mockedTeacherUpdate: ITeachersRequest = {
   name: "Júnior Fábio",
   email: "fabio@mail.com.br",
   password: "123456",
-  type: "teacher",
+  type: "school",
   shift: "Matutino",
   matter: "Back-End",
 };
