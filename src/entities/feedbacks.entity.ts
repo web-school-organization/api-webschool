@@ -2,7 +2,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -27,7 +26,7 @@ export class Feedback {
   @UpdateDateColumn({ type: "date" })
   updatedAt: Date;
 
-  @ManyToOne(() => Teacher, {eager: true})
+  @ManyToOne(() => Teacher, { eager: true })
   teacher: Teacher;
 
   @ManyToOne(() => Student)
