@@ -1,5 +1,13 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Exclude } from "class-transformer";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  TableIndex,
+} from "typeorm";
 import { Address } from "./address.entity";
 import { Team } from "./teams.entiy";
 
@@ -28,6 +36,9 @@ export class School {
   @JoinColumn()
   address: Address;
 
-  @OneToMany(() => Team, (team) => team.school, { eager: true, onDelete: "CASCADE" })
+  @OneToMany(() => Team, (team) => team.school, {
+    eager: true,
+    onDelete: "CASCADE",
+  })
   teams: Team[];
 }

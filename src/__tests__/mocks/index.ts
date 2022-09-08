@@ -74,7 +74,7 @@ export const mockedSchoolInvalidIdLogin: ISessionRequest = {
 
 export const mockedSchoolInvalidZipCode: ISchoolRequest = {
   name: "Centro Educacional Salesiano",
-  email: "salesiano@email.com",
+  email: "salesianoZipCode@email.com",
   password: "123456",
   type: "school",
   director: "Gabriel Salesiano",
@@ -89,7 +89,7 @@ export const mockedSchoolInvalidZipCode: ISchoolRequest = {
 
 export const mockedSchoolInvalidState: ISchoolRequest = {
   name: "Centro Educacional Salesiano",
-  email: "salesiano@email.com",
+  email: "salesianoInvalidState@email.com",
   password: "123456",
   type: "school",
   director: "Gabriel Salesiano",
@@ -109,8 +109,8 @@ export const mockedUpdatedSchool: ISchoolRequest = {
   type: "school",
   director: "Luccas Salesiano",
   address: {
-    state: "BA",
-    city: "Serrinha",
+    state: "SE",
+    city: "Conceição do Coité",
     district: "Primeira Travessa Antonio Pinheiro da Mota",
     number: "166",
     zipCode: "48700000",
@@ -138,6 +138,21 @@ export const mockedTeam: ITeamsRequest = {
 
 export const mockedInvalidTeam = {
   robson: "antunes",
+};
+
+export const mockedSchoolAddressExists = {
+  name: "Centro Educacional Salesiano",
+  email: "salesianoaddressexists@email.com",
+  password: "123456",
+  type: "school",
+  director: "Gabriel Salesiano",
+  address: {
+    state: "BA",
+    city: "Serrinha",
+    district: "Primeira Travessa Antonio Pinheiro da Mota",
+    number: "166",
+    zipCode: "48700000",
+  },
 };
 
 export const mockedStudent: IStudentRequest = {

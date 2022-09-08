@@ -19,7 +19,10 @@ export class Team {
   @Column()
   name: string;
 
-  @OneToMany(() => Student, (student) => student.team, { eager: true, onDelete: "CASCADE" })
+  @OneToMany(() => Student, (student) => student.team, {
+    eager: true,
+    onDelete: "CASCADE",
+  })
   students: Student[];
 
   @ManyToMany(() => Teacher, { eager: true, onDelete: "CASCADE" })

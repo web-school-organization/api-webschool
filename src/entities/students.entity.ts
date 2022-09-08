@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import {
   Column,
   CreateDateColumn,
@@ -7,7 +8,6 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Feedback } from "./feedbacks.entity";
-import { Exclude } from "class-transformer";
 import { Team } from "./teams.entiy";
 
 @Entity("students")
