@@ -5,10 +5,10 @@ import { IFeedbackRequest } from "../../interfaces/feedback";
 import { IStudentRequest } from "../../interfaces/students";
 
 export const mockedTeacher: ITeachersRequest = {
-  name: "Fábio Júnio",
+  name: "Fábio Junior",
   email: "fabio@mail.com.br",
   password: "123456",
-  type: "Teacher",
+  type: "school",
   shift: "Matutino",
   matter: "Back-End",
 };
@@ -17,7 +17,7 @@ export const mockedTeacherUpdate: ITeachersRequest = {
   name: "Júnior Fábio",
   email: "fabio@mail.com.br",
   password: "123456",
-  type: "Teacher",
+  type: "teacher",
   shift: "Matutino",
   matter: "Back-End",
 };

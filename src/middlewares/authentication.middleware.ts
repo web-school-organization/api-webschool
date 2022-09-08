@@ -18,7 +18,7 @@ const authenticationMiddleware = async (req: Request, res: Response, next: NextF
 
         req.user = {
             type: decode.type,
-            id: decode.id
+            id: decode.sub
         }
 
         next()
