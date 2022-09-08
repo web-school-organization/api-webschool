@@ -153,7 +153,7 @@ export const mockedStudent: IStudentRequest = {
   email: "joana@mail.com",
   shift: "",
   registration: "",
-  team: [],
+  team: "307",
   feedbacks: [],
   password: "123456",
 };
@@ -163,7 +163,7 @@ export const mockedStudentAuth: IStudentRequest = {
   email: "mario@mail.com",
   shift: "",
   registration: "",
-  team: [],
+  team: "307",
   feedbacks: [],
   password: "123456",
 };
