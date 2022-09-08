@@ -1,6 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { Student } from "../../entities/students.entity";
-import { IStudentRequest, IStudent } from "../../interfaces/students/index";
+import { IStudentRequest } from "../../interfaces/students/index";
 import bcrypt from "bcryptjs";
 import { AppError } from "../../errors/app.error";
 import { Team } from "../../entities/teams.entiy";
@@ -12,7 +12,6 @@ const studentCreateService = async ({
   registration,
   shift,
   team,
-  feedbacks,
 }: IStudentRequest) => {
   const studentRepository = AppDataSource.getRepository(Student);
   const teamRepository = AppDataSource.getRepository(Team);
@@ -35,12 +34,12 @@ const studentCreateService = async ({
   student.password = bcrypt.hashSync(password, 10);
   student.registration = registration;
   student.shift = shift;
-  student.team = teamAlreadyExistis;
-  student.feedbacks = feedbacks;
 
   const studentReturned = await studentRepository.save(student);
 
-  const createdStudent = await teamRepository.findOneBy({ id: studentReturned.id });
+  const createdStudent = await studentRepository.findOneBy({
+    id: studentReturned.id,
+  });
 
   return createdStudent;
 };

@@ -1,25 +1,30 @@
 import { AppDataSource } from "../../data-source";
 import { Feedback } from "../../entities/feedbacks.entity";
-import { AppError } from "../../errors/app.error"
-import { IFeedbackAtualizatio, IFeedbackResponse, IUser } from "../../interfaces/feedback"
+import { AppError } from "../../errors/app.error";
+import {
+  IFeedbackUpdated,
+  IFeedbackResponse,
+  IUser,
+} from "../../interfaces/feedback";
 
+const updateFeedbackService = async (
+  { id, type }: IUser,
+  { feedback }: IFeedbackUpdated
+): Promise<object | AppError> => {
+  const feedbackRepository = AppDataSource.getRepository(Feedback);
 
-const updateFeedbackService = async({id, type}:IUser, {feedback}:IFeedbackAtualizatio):Promise<object | AppError> => {
-    const feedbackRepository = AppDataSource.getRepository(Feedback)
+  if (type === "student") {
+    throw new AppError("You dont have permition");
+  }
 
-    if (type === "student") {
-      throw new AppError("You dont have permition");
-    }
+  const feedbackFind = await feedbackRepository.findOneBy({ id: id });
 
-    const feedbackFind = await feedbackRepository.findOneBy({id:id})
+  if (!feedbackFind) {
+    throw new AppError("Feedback not found", 404);
+  }
 
-    if (!feedbackFind) {
-      throw new AppError("Feedback not found",404);
-      
-    }
+  await feedbackRepository.update(id, { feedback: feedback });
+  return { message: "User updated" };
+};
 
-    await feedbackRepository.update(id,{feedback:feedback});
-    return {message:"User updated"}
-}
-
-export default updateFeedbackService
+export default updateFeedbackService;

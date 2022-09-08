@@ -1,7 +1,7 @@
 import { ITeachersRequest } from "../../interfaces/teachers";
 import { ISessionRequest } from "../../interfaces/sessions";
 import { ISchoolRequest } from "../../interfaces/schools";
-import { IFeedbackAtualizatio, IFeedbackRequest } from "../../interfaces/feedback";
+import { IFeedbackUpdated, IFeedbackRequest } from "../../interfaces/feedback";
 import { IStudentRequest } from "../../interfaces/students";
 import { ITeamsRequest } from "../../interfaces/teams";
 
@@ -22,9 +22,9 @@ export const mockedTeacherUpdate: ITeachersRequest = {
 };
 
 export const mockedFeedback: IFeedbackRequest = {
-  name: "gabriel",
+  name: "fabio",
   feedback: "você não fez a atividade",
-  email:"ggabriel.p2003@gmail.com"
+  email:"joana@mail.com"
 };
 
 export const mockedFeedbackBranco: IFeedbackRequest = {
@@ -33,7 +33,7 @@ export const mockedFeedbackBranco: IFeedbackRequest = {
   email:""
 };
 
-export const mockedFeedbackUpdated: IFeedbackAtualizatio ={
+export const mockedFeedbackUpdated: IFeedbackUpdated ={
   feedback:"feed atualizado"
 }
 
@@ -157,19 +157,17 @@ export const mockedSchoolAddressExists = {
 export const mockedStudent: IStudentRequest = {
   name: "Joana",
   email: "joana@mail.com",
-  shift: "",
-  registration: "",
+  shift: "matutino",
+  registration: "4684168111184",
   team: "307",
-  feedbacks: [],
   password: "123456",
 };
 
 export const mockedStudentAuth: IStudentRequest = {
   name: "Mario",
   email: "mario@mail.com",
-  shift: "",
-  registration: "",
+  shift: "matutino",
+  registration: "4684168111184",
   team: "307",
-  feedbacks: [],
   password: "123456",
 };

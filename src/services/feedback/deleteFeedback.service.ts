@@ -16,7 +16,7 @@ const deleteFeedbackService = async ({
   }
 
   if (type === "student") {
-    throw new AppError("You dont have permition",401);
+    throw new AppError("You dont have permition",403);
   }
 
   await feedbackRepository.delete(id);

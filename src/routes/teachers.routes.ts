@@ -13,7 +13,12 @@ import authenticationMiddleware from "../middlewares/authentication.middleware";
 const router = Router();
 
 const teacherRoutes = () => {
-  router.post("", validateSchemaMiddleware(teacherSchema), createTeacherController);
+  router.post(
+    "",
+    validateSchemaMiddleware(teacherSchema),
+    authenticationMiddleware,
+    createTeacherController
+  );
   router.delete("/:id", authenticationMiddleware, deleteTeacherController);
   router.get("/:id", authenticationMiddleware, listTeacherByIDController);
   router.get("", authenticationMiddleware, listTeacherController);

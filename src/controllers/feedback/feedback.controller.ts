@@ -1,6 +1,7 @@
+import { instanceToPlain } from "class-transformer";
 import { Request, Response } from "express";
 import {
-  IFeedbackAtualizatio,
+  IFeedbackUpdated,
   IFeedbackRequest,
 } from "../../interfaces/feedback";
 import createFeedbackService from "../../services/feedback/createFeedback.service";
@@ -16,24 +17,24 @@ const createFeedbackController = async (req: Request, res: Response) => {
     { feedback, name, email },
     { id, type }
   );
-  return res.json(newFeedback).status(201);
+  return res.status(201).json(instanceToPlain(newFeedback))
 };
 const getFeedbackController = async (req: Request, res: Response) => {
   const getFeedback = await getFeedbackService();
-  return res.json(getFeedback).status(200);
+  return res.status(200).json(instanceToPlain(getFeedback));
 };
 const updatefeedbackController = async (req: Request, res: Response) => {
   const { type } = req.user;
   const { id } = req.params;
-  const { feedback }: IFeedbackAtualizatio = req.body;
+  const { feedback }: IFeedbackUpdated = req.body;
   const newFeedback = await updateFeedbackService({ id, type }, { feedback });
-  return res.json(newFeedback).status(200);
+  return res.status(200).json(instanceToPlain(newFeedback));
 };
 const deleteFeedbackController = async (req: Request, res: Response) => {
   const { type } = req.user;
   const { id } = req.params;
   await deleteFeedbackService({ id, type });
-  return res.json().status(204);
+  return res.status(204).json();
 };
 
 export {

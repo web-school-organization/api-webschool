@@ -4,7 +4,13 @@ import { ITeachersRequest } from "../../interfaces/teachers";
 import { AppError } from "../../errors/app.error";
 import bcrypt from "bcryptjs";
 
-const createTeacherService = async (data: ITeachersRequest): Promise<Teacher> => {
+const createTeacherService = async (
+  data: ITeachersRequest,
+  typeLogin: string
+): Promise<Teacher> => {
+  if (typeLogin !== "school") {
+    throw new AppError("Just school can access this route", 403);
+  }
   const teacherRepository = AppDataSource.getRepository(Teacher);
 
   const { name, email, password, shift, matter } = data;

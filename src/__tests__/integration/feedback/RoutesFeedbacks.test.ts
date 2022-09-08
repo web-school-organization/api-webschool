@@ -6,10 +6,13 @@ import {
   mockedFeedback,
   mockedFeedbackBranco,
   mockedFeedbackUpdated,
+  mockedSchool,
+  mockedSchoolLogin,
   mockedStudent,
   mockedStudentLogin,
   mockedTeacher,
   mockedTeacherLogin,
+  mockedTeam,
 } from "../../mocks";
 
 describe("testando feedbacks", () => {
@@ -21,9 +24,7 @@ describe("testando feedbacks", () => {
       .catch((err) =>
         console.error("Error during Data Source initialization", err)
       );
-
-    await request(app).post("/feedbacks").send(mockedFeedback);
-    await request(app).post("/feedbacks").send(mockedFeedback);
+    await request(app).post("/schools").send(mockedSchool);
   });
 
   afterAll(async () => {
@@ -31,7 +32,25 @@ describe("testando feedbacks", () => {
   });
 
   test("POST /feedback - deve criar um feedback sendo um professor", async () => {
-    await request(app).post("/teachers").send(mockedTeacher);
+    const schoolLogin = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
+
+    await request(app)
+      .post("/teachers")
+      .set("Authorization", `Bearer ${schoolLogin.body.token}`)
+      .send(mockedTeacher);
+
+    await request(app)
+      .post("/teams")
+      .set("Authorization", `Bearer ${schoolLogin.body.token}`)
+      .send(mockedTeam);
+
+    await request(app)
+      .post("/students")
+      .set("Authorization", `Bearer ${schoolLogin.body.token}`)
+      .send(mockedStudent);
+
     const TeacherResponse = await request(app)
       .post("/login")
       .send(mockedTeacherLogin);
@@ -41,8 +60,8 @@ describe("testando feedbacks", () => {
       .set("Authorization", `Bearer ${TeacherResponse.body.token}`)
       .send(mockedFeedback);
 
-    expect(response.body).toHaveProperty("updated_at");
-    expect(response.body).toHaveProperty("created_at");
+    expect(response.body).toHaveProperty("updatedAt");
+    expect(response.body).toHaveProperty("createdAt");
     expect(response.body).toHaveProperty("feedback");
     expect(response.body).toHaveProperty("name");
     expect(response.body).toHaveProperty("id");
@@ -87,26 +106,15 @@ describe("testando feedbacks", () => {
 
   test("GET /feedback - pegando feedbacks", async () => {
     const TeacherResponse = await request(app)
-      .post("/teachers")
-      .send(mockedTeacher);
-    // console.log(TeacherResponse.body);
-    const res = await request(app)
       .post("/login")
-
       .send(mockedTeacherLogin);
-    // console.log(res.body);
+    TeacherResponse.body;
+
     const response = await request(app)
       .get("/feedback")
       .set("Authorization", `Bearer ${TeacherResponse.body.token}`);
-    // console.log(response.body);
-
-    expect(response.body.feedbacks[0]).toHaveProperty("updated_at");
-    expect(response.body.feedbacks[0]).toHaveProperty("created_at");
-    expect(response.body.feedbacks[0]).toHaveProperty("feedback");
-    expect(response.body.feedbacks[0]).toHaveProperty("name");
-    expect(response.body.feedbacks[0]).toHaveProperty("id");
-    expect(response.body.feedbacks[0]).toHaveProperty("teacher");
-    expect(response.body.feedbacks[0]).toHaveProperty("student");
+    response.body;
+    expect(response.body).toHaveLength(1);
     expect(response.status).toBe(200);
   });
 
@@ -117,7 +125,6 @@ describe("testando feedbacks", () => {
     expect(response.status).toBe(401);
   });
 
-  
   test("PATCH /feedback - tentando editar um feedback sendo um professor", async () => {
     const TeacherResponse = await request(app)
       .post("/login")
@@ -130,7 +137,7 @@ describe("testando feedbacks", () => {
       .patch(`/feedback/${FeedbackTobe.body[0].id}`)
       .set("Authorization", `Bearer ${TeacherResponse.body.token}`)
       .send(mockedFeedbackUpdated);
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("message");
   });
 
@@ -138,12 +145,12 @@ describe("testando feedbacks", () => {
     const TeacherResponse = await request(app)
       .post("/login")
       .send(mockedStudentLogin);
-      // console.log(TeacherResponse.body)
+ 
 
     const FeedbackTobeDeleted = await request(app)
       .get("/feedback")
       .set("Authorization", `Bearer ${TeacherResponse.body.token}`);
-      // console.log(FeedbackTobeDeleted.body)
+
 
     const response = await request(app)
       .patch(`/feedback/${FeedbackTobeDeleted.body[0].id}`)
@@ -158,18 +165,12 @@ describe("testando feedbacks", () => {
     const TeacherResponse = await request(app)
       .post("/login")
       .send(mockedTeacherLogin);
-      console.log(TeacherResponse.body)
 
-      // const FeedbackTobeDeleted = await request(app)
-      // .get("/feedback")
-      // .set("Authorization", `Bearer ${TeacherResponse.body.token}`);
-      // console.log(FeedbackTobeDeleted.body)
-
-      const response = await request(app)
-      .patch(`/feedback/13970660-5dbe-423a-9a9d-5c23b37943cf`)
+    const response = await request(app)
+      .patch(`/feedback/nada`)
       .set("Authorization", `Bearer ${TeacherResponse.body.token}`)
       .send(mockedFeedbackUpdated);
-      console.log(response.body)
+
     expect(response.status).toBe(404);
     expect(response.body).toHaveProperty("message");
   });
@@ -179,21 +180,6 @@ describe("testando feedbacks", () => {
       .patch(`/feedback/13970660-5dbe-423a-9a9d-5c23b37943cf`)
       .send(mockedFeedbackUpdated);
     expect(response.status).toBe(401);
-    expect(response.body).toHaveProperty("message");
-  });
-  test("DELETE /feedback - deletando um feedback sendo um professor", async () => {
-    const TeacherResponse = await request(app)
-      .post("/login")
-      .send(mockedTeacherLogin);
-
-    const FeedbackTobeDeleted = await request(app)
-      .get("/feedback")
-      .set("Authorization", `Bearer ${TeacherResponse.body.token}`);
-
-    const response = await request(app)
-      .delete(`/feedback/${FeedbackTobeDeleted.body[0].id}`)
-      .set("Authorization", `Bearer ${TeacherResponse.body.token}`);
-    expect(response.status).toBe(204);
     expect(response.body).toHaveProperty("message");
   });
 
@@ -208,7 +194,7 @@ describe("testando feedbacks", () => {
     const response = await request(app)
       .delete(`/feedback/${FeedbackTobeDeleted.body[0].id}`)
       .set("Authorization", `Bearer ${TeacherResponse.body.token}`);
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(403);
     expect(response.body).toHaveProperty("message");
   });
 
@@ -225,11 +211,25 @@ describe("testando feedbacks", () => {
   });
 
   test("DELETE /feedback - tentando deleta um feedback sem estar logado", async () => {
-
     const response = await request(app).delete(
       `/feedback/13970660-5dbe-423a-9a9d-5c23b37943cf`
     );
     expect(response.status).toBe(401);
     expect(response.body).toHaveProperty("message");
+  });
+
+  test("DELETE /feedback - deletando um feedback sendo um professor", async () => {
+    const TeacherResponse = await request(app)
+      .post("/login")
+      .send(mockedTeacherLogin);
+
+    const FeedbackTobeDeleted = await request(app)
+      .get("/feedback")
+      .set("Authorization", `Bearer ${TeacherResponse.body.token}`);
+
+    const response = await request(app)
+      .delete(`/feedback/${FeedbackTobeDeleted.body[0].id}`)
+      .set("Authorization", `Bearer ${TeacherResponse.body.token}`);
+    expect(response.status).toBe(204);
   });
 });

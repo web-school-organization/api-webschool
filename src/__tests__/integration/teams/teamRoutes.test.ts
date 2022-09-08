@@ -9,8 +9,8 @@ import {
   mockedTeacherLogin,
   mockedStudentLogin,
   mockedSchool,
-  mockedStudent,
   mockedTeacher,
+  mockedStudent,
 } from "../../mocks";
 
 describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
@@ -31,10 +31,6 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
       .post("/teachers")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`)
       .send(mockedTeacher);
-    await request(app)
-      .post("/students")
-      .set("Authorization", `Bearer ${schoolLogin.body.token}`)
-      .send(mockedStudent);
   });
 
   afterAll(async () => {
@@ -73,6 +69,11 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("POST /teams - Não deve ser capaz de criar uma nova turma com o type sendo igual a aluno", async () => {
+    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    await request(app)
+      .post("/students")
+      .set("Authorization", `Bearer ${schoolLogin.body.token}`)
+      .send(mockedStudent);
     const studentLogin = await request(app).post("/login").send(mockedStudentLogin);
 
     const response = await request(app)

@@ -1,10 +1,10 @@
 
-export interface IFeedbackAtualizatio{
+export interface IFeedbackUpdated{
     feedback:string
 }
 
 
-export interface IFeedbackRequest extends IFeedbackAtualizatio {
+export interface IFeedbackRequest extends IFeedbackUpdated {
     name:string
     email:string
 

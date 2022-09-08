@@ -17,18 +17,21 @@ const createFeedbackService = async (
   const studentRepository = AppDataSource.getRepository(Student);
 
   if (type === "student") {
-    throw new AppError("You dont have permition");
+    throw new AppError("You dont have permition",401);
   }
 
+  if (feedback === "" || feedback === undefined || feedback === null) {
+    throw new AppError("Empty feedback")
+  }
   const studentFind = await studentRepository.findOneBy({ email: email });
 
   const teacherFind = await teacherRepository.findOneBy({ id: id });
 
   if (!studentFind) {
-    throw new AppError("Student not found");
+    throw new AppError("Student not found",404);
   }
   if (!teacherFind) {
-    throw new AppError("teacher not found");
+    throw new AppError("teacher not found",404);
   }
   const comentario = await feedbackRepository.save({
     student: studentFind,
