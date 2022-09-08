@@ -10,7 +10,6 @@ export const schoolCreateController = async (req: Request, res: Response) => {
     name,
     email,
     password,
-    type: "school",
     director,
     address,
   });
