@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import {
   Column,
   CreateDateColumn,
@@ -5,9 +6,9 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { Feedback } from "./feedbacks.entity";
-import { Exclude } from "class-transformer";
 import { Team } from "./teams.entiy";
 
 @Entity("students")
@@ -37,7 +38,7 @@ export class Student {
   @CreateDateColumn({ type: "date" })
   createdAt: Date;
 
-  @CreateDateColumn({ type: "date" })
+  @UpdateDateColumn({ type: "date" })
   updatedAt: Date;
 
   @ManyToOne(() => Team)

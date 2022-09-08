@@ -1,4 +1,4 @@
-export interface IFeedbackRequest{
-    name:string
-    feedback:string
+export interface IFeedbackRequest {
+  name: string;
+  feedback: string;
 }

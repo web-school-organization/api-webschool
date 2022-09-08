@@ -31,7 +31,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("POST /teams - Deve ser capaz de criar uma nova turma", async () => {
-    await request(app).post("/school").send(mockedSchool);
+    await request(app).post("/schools").send(mockedSchool);
     const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
     const response = await request(app)
       .post("/teams")
@@ -75,7 +75,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("POST /teams - Não deve ser capaz de criar uma nova turma com um nome já esxistente", async () => {
-    await request(app).post("/school").send(mockedSchool);
+    await request(app).post("/schools").send(mockedSchool);
     const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
     await request(app)
       .post("/teams")
@@ -91,7 +91,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("POST /teams - Não deve ser capaz de criar uma nova turma caso os dados passados sejam inválidos", async () => {
-    await request(app).post("/school").send(mockedSchool);
+    await request(app).post("/schools").send(mockedSchool);
     const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
     const response = await request(app)
       .post("/teams")
@@ -103,7 +103,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("GET - /teams - Deve ser capaz de listar todas as turmas", async () => {
-    await request(app).post("/school").send(mockedSchool);
+    await request(app).post("/schools").send(mockedSchool);
     const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
     const response = await request(app)
       .get("/teams")
@@ -143,7 +143,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("GET - /teams/:id - Deve ser capaz de buscar os dados de uma turma", async () => {
-    await request(app).post("/school").send(mockedSchool);
+    await request(app).post("/schools").send(mockedSchool);
     const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
     const teams = await request(app)
       .get("/teams")
@@ -165,7 +165,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("GET - /teams/:id - Não deve ser capaz de buscar os dados de uma turma com o type sendo igual a teacher", async () => {
-    await request(app).post("/school").send(mockedSchool);
+    await request(app).post("/schools").send(mockedSchool);
     const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
     const teams = await request(app)
       .get("/teams")
@@ -182,7 +182,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("GET - /teams/:id - Não deve ser capaz de buscar os dados de uma turma com o type sendo igual a student", async () => {
-    await request(app).post("/school").send(mockedSchool);
+    await request(app).post("/schools").send(mockedSchool);
     const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
     const users = await request(app)
       .get("/teams")
@@ -199,7 +199,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("GET - /teams/:id - Não deve ser capaz de buscar os dados de uma turma caso o id informado seja inválido", async () => {
-    await request(app).post("/school").send(mockedSchool);
+    await request(app).post("/schools").send(mockedSchool);
     const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
     const response = await request(app)
       .get(`/teams/ccfecddf-aed7-4e42-8186-44215669a53c`)
@@ -217,18 +217,18 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("PATCH - /teams/:id - Não deve ser capaz de atualizar os dados da turma caso o id informado seja inválido", async () => {
-    await request(app).post("/school").send(mockedSchool);
+    await request(app).post("/schools").send(mockedSchool);
     const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
     const response = await request(app)
-      .delete(`/teams/ccfecddf-aed7-4e42-8186-44215669a53c`)
+      .patch(`/teams/ccfecddf-aed7-4e42-8186-44215669a53c`)
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
 
-    expect(response.status).toBe(403);
+    expect(response.status).toBe(404);
     expect(response.body).toHaveProperty("message");
   });
 
-  test("PATCH - /teams/:id - Não deve ser capaz de atualizar os dados da turma", async () => {
-    await request(app).post("/school").send(mockedSchool);
+  test("PATCH - /teams/:id - Não deve ser capaz de atualizar os dados da turma caso o type seja igual a teacher", async () => {
+    await request(app).post("/schools").send(mockedSchool);
     const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
     const users = await request(app)
       .get("/teams")
@@ -237,15 +237,15 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
     await request(app).post("/teacher").send(mockedTeacher);
     const teacherLogin = await request(app).post("/login").send(mockedTeacherLogin);
     const response = await request(app)
-      .delete(`/teams/${users.body[0].id}`)
+      .patch(`/teams/${users.body[0].id}`)
       .set("Authorization", `Bearer ${teacherLogin.body.token}`);
 
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(403);
     expect(response.body).toHaveProperty("message");
   });
 
-  test("PATCH - /teams/:id - Não deve ser capaz de atualizar os dados da turma", async () => {
-    await request(app).post("/school").send(mockedSchool);
+  test("PATCH - /teams/:id - Não deve ser capaz de atualizar os dados da turma caso o type seja igual a student", async () => {
+    await request(app).post("/schools").send(mockedSchool);
     const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
     const users = await request(app)
       .get("/teams")
@@ -254,22 +254,27 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
     await request(app).post("/student").send(mockedStudent);
     const studentLogin = await request(app).post("/login").send(mockedStudentLogin);
     const response = await request(app)
-      .delete(`/teams/${users.body[0].id}`)
+      .patch(`/teams/${users.body[0].id}`)
       .set("Authorization", `Bearer ${studentLogin.body.token}`);
 
-    expect(response.status).toBe(404);
+    expect(response.status).toBe(403);
     expect(response.body).toHaveProperty("message");
   });
 
   test("PATCH - /teams/:id - Deve ser capaz de atualizar os dados da turma", async () => {
-    await request(app).post("/school").send(mockedSchool);
+    await request(app).post("/schools").send(mockedSchool);
     const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    const users = await request(app)
+      .get("/teams")
+      .set("Authorization", `Bearer ${schoolLogin.body.token}`);
+
     const response = await request(app)
-      .patch(`/teams/${schoolLogin.body[0].id}`)
+      .patch(`/teams/${users.body[0].id}`)
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
 
     expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty("message");
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("name");
   });
 
   test("DELETE - /teams/:id - Não deve ser capaz de remover uma turma sem o token de autorização", async () => {
@@ -280,7 +285,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("DELETE - /teams/:id - Não deve ser capaz de remover uma turma com o type sendo igual a teacher", async () => {
-    await request(app).post("/school").send(mockedSchool);
+    await request(app).post("/schools").send(mockedSchool);
     const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
     const users = await request(app)
       .get("/teams")
@@ -297,7 +302,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("DELETE - /teams/:id - Não deve ser capaz de remover uma turma com o type sendo igual a student", async () => {
-    await request(app).post("/school").send(mockedSchool);
+    await request(app).post("/schools").send(mockedSchool);
     const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
     const users = await request(app)
       .get("/teams")
@@ -314,7 +319,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("DELETE - /teams/:id - Não deve ser capaz de remover uma turma caso o id informado seja inválido", async () => {
-    await request(app).post("/school").send(mockedSchool);
+    await request(app).post("/schools").send(mockedSchool);
     const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
     const response = await request(app)
       .delete(`/teams/ccfecddf-aed7-4e42-8186-44215669a53c`)
@@ -325,7 +330,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("DELETE - /teams/:id - Deve ser capaz de remover uma turma", async () => {
-    await request(app).post("/school").send(mockedSchool);
+    await request(app).post("/schools").send(mockedSchool);
     const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
     const teams = await request(app)
       .get("/teams")

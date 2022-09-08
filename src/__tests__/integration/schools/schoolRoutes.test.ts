@@ -4,11 +4,13 @@ import request from "supertest";
 import app from "../../../app";
 import {
   mockedSchool,
+  mockedSchoolAddressExists,
   mockedSchoolInvalidId,
   mockedSchoolInvalidIdLogin,
   mockedSchoolInvalidState,
   mockedSchoolInvalidZipCode,
   mockedSchoolLogin,
+  mockedTeacher,
   mockedTeacherLogin,
   mockedUpdatedSchool,
 } from "../../mocks";
@@ -56,7 +58,9 @@ describe("Testando rotas da instituição", () => {
   });
 
   test("POST /schools - Não deve criar instituição caso endereço já exista", async () => {
-    const response = await request(app).post("/schools").send(mockedSchool);
+    const response = await request(app)
+      .post("/schools")
+      .send(mockedSchoolAddressExists);
 
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(400);
@@ -116,15 +120,15 @@ describe("Testando rotas da instituição", () => {
   });
 
   test("PATCH /schools/:id - Deve ser capaz de atualizar uma instituição", async () => {
-    const school = await request(app).get("/schools");
-
-    const userLogged = await request(app)
+    const schoolLogged = await request(app)
       .post("/login")
       .send(mockedSchoolLogin);
 
+    const schoolsTobeUpdated = await request(app).get("/schools");
+
     const response = await request(app)
-      .patch(`/schools/${school.body[0].id}`)
-      .set("Authorization", `Bearer ${userLogged}`)
+      .patch(`/schools/${schoolsTobeUpdated.body[0].id}`)
+      .set("Authorization", `Bearer ${schoolLogged.body.token}`)
       .send(mockedUpdatedSchool);
 
     expect(response.status).toBe(200);
@@ -137,8 +141,8 @@ describe("Testando rotas da instituição", () => {
     expect(response.body).toHaveProperty("address");
     expect(response.body).toHaveProperty("teams");
     expect(response.body.address).toHaveProperty("id");
-    expect(response.body.address).toHaveProperty("state");
-    expect(response.body.address).toHaveProperty("city");
+    expect(response.body.address.state).toEqual("SE");
+    expect(response.body.address.city).toEqual("Conceição do Coité");
     expect(response.body.address).toHaveProperty("district");
     expect(response.body.address).toHaveProperty("number");
     expect(response.body.address).toHaveProperty("zipCode");
@@ -146,14 +150,14 @@ describe("Testando rotas da instituição", () => {
 
   test("PATCH /schools/:id - Não deve ser capaz de atualizar uma instituição com usuario logado com type diferente de school", async () => {
     const school = await request(app).get("/schools");
-
+    await request(app).post("/teachers").send(mockedTeacher);
     const userLogged = await request(app)
       .post("/login")
       .send(mockedTeacherLogin);
 
     const response = await request(app)
       .patch(`/schools/${school.body[0].id}`)
-      .set("Authorization", `Bearer ${userLogged}`)
+      .set("Authorization", `Bearer ${userLogged.body.token}`)
       .send(mockedUpdatedSchool);
 
     expect(response.status).toBe(403);
@@ -162,10 +166,7 @@ describe("Testando rotas da instituição", () => {
 
   test("PATCH /schools/:id - Não deve ser capaz de atualizar uma instituição com usuario logado com id diferente do id do parametro", async () => {
     const school = await request(app).get("/schools");
-
-    const schoolInvalidId = await request(app)
-      .post("/schools")
-      .send(mockedSchoolInvalidId);
+    await request(app).post("/schools").send(mockedSchoolInvalidId);
 
     const userLogged = await request(app)
       .post("/login")
@@ -173,7 +174,7 @@ describe("Testando rotas da instituição", () => {
 
     const response = await request(app)
       .patch(`/schools/${school.body[0].id}`)
-      .set("Authorization", `Bearer ${userLogged}`)
+      .set("Authorization", `Bearer ${userLogged.body.token}`)
       .send(mockedUpdatedSchool);
 
     expect(response.status).toBe(403);
@@ -181,40 +182,16 @@ describe("Testando rotas da instituição", () => {
   });
 
   test("PATCH /schools/:id - Não deve ser capaz de atualizar uma instituição com id inválido", async () => {
-    const response = await request(app)
-      .patch("/users/777-777-777")
-      .send(mockedUpdatedSchool);
-
-    expect(response.status).toEqual(404);
-    expect(response.body).toHaveProperty("message");
-  });
-
-  test("DELETE /schools/:id - Deve ser capaz de deletar uma instituição", async () => {
-    const school = await request(app).get("/schools");
-    const userLogged = await request(app)
+    const schoolLogged = await request(app)
       .post("/login")
       .send(mockedSchoolLogin);
 
     const response = await request(app)
-      .delete(`/schools/${school.body[0].id}`)
-      .set("Authorization", `Bearer ${userLogged}`);
+      .patch(`/schools/777-777-777`)
+      .set("Authorization", `Bearer ${schoolLogged.body.token}`)
+      .send(mockedUpdatedSchool);
 
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty("message");
-  });
-
-  test("DELETE /schools/:id - Não deve ser capaz de deletar uma instituição com usuario logado com type diferente de school", async () => {
-    const school = await request(app).get("/schools");
-
-    const userLogged = await request(app)
-      .post("/login")
-      .send(mockedTeacherLogin);
-
-    const response = await request(app)
-      .delete(`/schools/${school.body[0].id}`)
-      .set("Authorization", `Bearer ${userLogged}`);
-
-    expect(response.status).toBe(403);
+    expect(response.status).toEqual(404);
     expect(response.body).toHaveProperty("message");
   });
 
@@ -227,16 +204,52 @@ describe("Testando rotas da instituição", () => {
 
     const response = await request(app)
       .delete(`/schools/${school.body[0].id}`)
-      .set("Authorization", `Bearer ${userLogged}`);
+      .set("Authorization", `Bearer ${userLogged.body.token}`);
+
+    expect(response.status).toBe(403);
+    expect(response.body).toHaveProperty("message");
+  });
+
+  test("DELETE /schools/:id - Não deve ser capaz de deletar uma instituição com usuario logado com type diferente de school", async () => {
+    const school = await request(app).get("/schools");
+    // Talvez não use o post
+    /* await request(app).post("/teachers").send(mockedTeacher); */
+    const userLogged = await request(app)
+      .post("/login")
+      .send(mockedTeacherLogin);
+
+    const response = await request(app)
+      .delete(`/schools/${school.body[0].id}`)
+      .set("Authorization", `Bearer ${userLogged.body.token}`);
 
     expect(response.status).toBe(403);
     expect(response.body).toHaveProperty("message");
   });
 
   test("DELETE /schools/:id - Não deve ser capaz de deletar uma instituição com o id inválido", async () => {
-    const response = await request(app).delete("/schools/777-777-777");
+    const schoolLogged = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
+
+    const response = await request(app)
+      .delete(`/schools/777-777-777`)
+      .set("Authorization", `Bearer ${schoolLogged.body.token}`);
 
     expect(response.status).toBe(404);
+    expect(response.body).toHaveProperty("message");
+  });
+
+  test("DELETE /schools/:id - Deve ser capaz de deletar uma instituição", async () => {
+    const school = await request(app).get("/schools");
+    const userLogged = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
+
+    const response = await request(app)
+      .delete(`/schools/${school.body[0].id}`)
+      .set("Authorization", `Bearer ${userLogged.body.token}`);
+
+    expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("message");
   });
 });
