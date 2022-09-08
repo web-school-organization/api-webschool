@@ -28,18 +28,17 @@ const studentCreateService = async ({
     throw new AppError("Team not found", 404);
   }
 
-  const student = await studentRepository.save({
-    name: name,
-    email: email,
-    password: bcrypt.hashSync(password, 10),
-    registration: registration,
-    shift: shift,
-    team: teamAlreadyExistis,
-  });
+  const student = new Student();
+  student.name = name;
+  student.email = email;
+  student.password = bcrypt.hashSync(password, 10);
+  student.registration = registration;
+  student.shift = shift;
 
-  const createdStudent = await studentRepository.findOne({
-    where: { id: student.id },
-    relations: { team: true },
+  const studentReturned = await studentRepository.save(student);
+
+  const createdStudent = await studentRepository.findOneBy({
+    id: studentReturned.id,
   });
 
   return createdStudent;

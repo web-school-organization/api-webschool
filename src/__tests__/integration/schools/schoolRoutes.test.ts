@@ -140,9 +140,13 @@ describe("Testando rotas da instituição", () => {
 
   test("PATCH /schools/:id - Não deve ser capaz de atualizar uma instituição com usuario logado com type diferente de school", async () => {
     const school = await request(app).get("/schools");
-    await request(app).post("/teachers").send(mockedTeacher);
-    const userLogged = await request(app).post("/login").send(mockedTeacherLogin);
+    const schoolLogged = await request(app).post("/login").send(mockedSchoolLogin);
+    await request(app)
+      .post("/teachers")
+      .set("Authorization", `Bearer ${schoolLogged.body.token}`)
+      .send(mockedTeacher);
 
+    const userLogged = await request(app).post("/login").send(mockedTeacherLogin);
     const response = await request(app)
       .patch(`/schools/${school.body[0].id}`)
       .set("Authorization", `Bearer ${userLogged.body.token}`)
