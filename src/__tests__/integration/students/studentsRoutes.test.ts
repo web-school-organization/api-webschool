@@ -1,9 +1,9 @@
 import { DataSource } from "typeorm";
-import AppDataSource from "../../../data-source";
+import { AppDataSource } from "../../../data-source";
 import request from "supertest"
 import app from "../../../app";
 import {mockedStudent, mockedStudentAuth,mockedSchool} from "../../mocks"
-import {mockedSchoolLogin} from '../../mocks'
+import {mockedSchoolLogin } from '../../mocks'
 
 describe("students", () => {
     let connection: DataSource
