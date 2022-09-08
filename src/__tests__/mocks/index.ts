@@ -151,8 +151,8 @@ export const mockedSchoolAddressExists = {
 export const mockedStudent: IStudentRequest = {
   name: "Joana",
   email: "joana@mail.com",
-  shift: "",
-  registration: "",
+  shift: "matutino",
+  registration: "4684168111184",
   team: "307",
   password: "123456",
 };
@@ -160,8 +160,8 @@ export const mockedStudent: IStudentRequest = {
 export const mockedStudentAuth: IStudentRequest = {
   name: "Mario",
   email: "mario@mail.com",
-  shift: "",
-  registration: "",
+  shift: "matutino",
+  registration: "4684168111184",
   team: "307",
   password: "123456",
 };
