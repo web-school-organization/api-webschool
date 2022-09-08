@@ -53,6 +53,7 @@ describe("/login - Rota responsável por iniciar a sessão do usuário na aplica
       .set("Authorization", `Bearer ${schoolLogin.body.token}`)
       .send(mockedTeacher);
     const response = await request(app).post("/login").send(mockedTeacherLogin);
+   
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("token");

@@ -9,6 +9,6 @@ import { AppDataSource } from "./data-source";
   );
 
   app.listen(PORT, () => {
-    console.log(`App is running!`);
+    `App is running!`;
   });
 })();
