@@ -1,3 +1,4 @@
+
 import { ITeachersRequest } from "../../interfaces/teachers";
 import { ISessionRequest } from "../../interfaces/sessions";
 import { ISchoolRequest } from "../../interfaces/schools";
@@ -165,3 +166,4 @@ export const mockedStudent: IStudentRequest = {
   feedbacks: [],
   password: "123456",
 };
+
