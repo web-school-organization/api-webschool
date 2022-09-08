@@ -22,6 +22,15 @@ export interface IStudent{
   feedbacks: Array<Feedback>;
   createdAt:Date
   updatedAt:Date
+}
 
-
+export interface IStudentUpdated{
+  id:string,
+  name: string;
+  password:string;
+  email: string;
+  registration: string;
+  shift: string;
+  team: Team;
+  feedbacks: Array<Feedback>;
 }
