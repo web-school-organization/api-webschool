@@ -2,7 +2,8 @@ import { DataSource } from "typeorm";
 import AppDataSource from "../../../data-source";
 import request from "supertest"
 import app from "../../../app";
-import {mockedStudent} from "../../mocks"
+import {mockedStudent, mockedStudentAuth,mockedSchool} from "../../mocks"
+import {mockedSchoolLogin} from '../../mocks'
 
 describe("students", () => {
     let connection: DataSource
@@ -20,7 +21,9 @@ describe("students", () => {
     })
 
     test("POST /students -  Must be able to create a student",async () => {
-        const response = await request(app).post('/students').send(mockedStudent)
+        const schoolLogin = await request(app).post("/sessions").send(mockedSchoolLogin);
+
+       const response = await request(app).post('/students').send(mockedStudent).set("Authorization",`Bearer ${schoolLogin.body.token}`)
         expect(response.body).toHaveProperty("id")
         expect(response.body).toHaveProperty("name")
         expect(response.body).toHaveProperty("email")
@@ -34,7 +37,9 @@ describe("students", () => {
     })
 
     test("POST /students -  should not be able to create a student that already exists",async () => {
-        const response = await request(app).post('/students').send(mockedStudent)
+        await request(app).post('/schools').send(mockedSchool)
+        const schoolLogin = await request(app).post("/sessions").send(mockedSchoolLogin);
+        const response = await request(app).post('/students').send(mockedStudent).set("Authorization",`Bearer ${schoolLogin.body.token}`)
 
         expect(response.body).toHaveProperty("message")
         expect(response.status).toBe(400)
@@ -43,16 +48,16 @@ describe("students", () => {
 
 
     test("POST /students - should not be able to create a student without authentication",async() => {
-        const response = await request(app).post('/students').send(mockedStudent);
-//   precisa logar etc...
+        const response = await request(app).post('/students').send(mockedStudentAuth);
+
         expect(response.body).toHaveProperty('message');
         expect(response.status).toBe(400);
 
     })
 
     test("GET /students - should be able to list all students ",async()=>{
-        // login
-        const response = await request(app).get("/students")
+        const schoolLogin = await request(app).post("/sessions").send(mockedSchoolLogin);
+        const response = await request(app).get("/students").set("Authorization",`Bearer ${schoolLogin.body.token}`)
         expect(response.body).toHaveLength(1)
     } )
 
@@ -68,8 +73,8 @@ describe("students", () => {
 
     test("GET /students/:id - should be able to list specific student",async()=>{
 
-        // login
-        const response = await request(app).get("/students/:id")
+        const schoolLogin = await request(app).post("/sessions").send(mockedSchoolLogin);
+        const response = await request(app).get("/students/:id").set("Authorization",`Bearer ${schoolLogin.body.token}`)
 
         expect(response.body).toHaveProperty('name');
         expect(response.body).toHaveProperty('email');
@@ -96,9 +101,8 @@ describe("students", () => {
 
     test("GET /students/:id - should not be able to list specific student with invalid id",async()=>{
 
-
-        // login
-        const response = await request(app).get("/students/4234i20")
+        const schoolLogin = await request(app).post("/sessions").send(mockedSchoolLogin);
+        const response = await request(app).get("/students/40291490asdk").set("Authorization",`Bearer ${schoolLogin.body.token}`)
 
         expect(response.body).toHaveProperty('message');
         expect(response.status).toBe(400)
@@ -108,7 +112,7 @@ describe("students", () => {
 
     test("Delete /students/:id - should be able to Delete Student",async()=>{
 
-        const schollLoginResponse = await request(app).post("/login").send({});
+        const schollLoginResponse = await request(app).post("/login").send(mockedSchoolLogin);
         const StudentTobeDeleted = await request(app).get('/students').set("Authorization", `Bearer ${schollLoginResponse.body.token}`)
 
         const response = await request(app).delete(`/students/${StudentTobeDeleted.body[0].id}`).set("Authorization", `Bearer ${schollLoginResponse.body.token}`)
@@ -117,7 +121,7 @@ describe("students", () => {
     })
 
     test("Delete /students/:id - should not be able to Delete Student without authentication",async()=>{
-        const schollLoginResponse = await request(app).post("/login").send({});
+        const schollLoginResponse = await request(app).post("/login").send(mockedSchoolLogin);
         const StudentTobeDeleted = await request(app).get('/students').set("Authorization", `Bearer ${schollLoginResponse.body.token}`)
         const response = await request(app).delete(`/students/${StudentTobeDeleted.body[0].id}`)
 
@@ -128,7 +132,7 @@ describe("students", () => {
 
     test("Delete /students/:id - should not be able to Delete Student with invalid id",async()=>{
 
-        const schollLoginResponse = await request(app).post("/login").send({});
+        const schollLoginResponse = await request(app).post("/login").send(mockedSchoolLogin);
         await request(app).get('/students').set("Authorization", `Bearer ${schollLoginResponse.body.token}`)
 
         const response = await request(app).delete(`/students/302430-2`).set("Authorization", `Bearer ${schollLoginResponse.body.token}`)
@@ -140,7 +144,7 @@ describe("students", () => {
 
     test("PATCH /students/:id - should be able to update student",async()=>{
 
-        const schollLoginResponse = await request(app).post("/login").send({});
+        const schollLoginResponse = await request(app).post("/login").send(mockedSchoolLogin);
         const StudentTobeUpdated= await request(app).get('/students').set("Authorization", `Bearer ${schollLoginResponse.body.token}`)
 
         const response = await request(app).patch(`/students/${StudentTobeUpdated.body[0].id}`).set("Authorization", `Bearer ${schollLoginResponse.body.token}`)
@@ -155,7 +159,7 @@ describe("students", () => {
 
     test("Update /students/:id - should not be able to Update Student with invalid id",async()=>{
 
-        const schollLoginResponse = await request(app).post("/login").send({});
+        const schollLoginResponse = await request(app).post("/login").send(mockedSchoolLogin);
         await request(app).get('/students').set("Authorization", `Bearer ${schollLoginResponse.body.token}`)
 
         const response = await request(app).patch(`/students/302430-2`).set("Authorization", `Bearer ${schollLoginResponse.body.token}`)
@@ -167,16 +171,12 @@ describe("students", () => {
 
     test("Update /students/:id - should not be able to Update Student without authentication",async()=>{
 
-        const schollLoginResponse = await request(app).post("/login").send({});
+        const schollLoginResponse = await request(app).post("/login").send(mockedSchoolLogin);
         const StudentTobeUpdated= await request(app).get('/students').set("Authorization", `Bearer ${schollLoginResponse.body.token}`)
         const response = await request(app).patch(`/students/${StudentTobeUpdated.body[0].id}`)
-
         expect(response.body).toHaveProperty('message')
         expect(response.status).toBe(400) 
     })
-
-
-
 
 
 
