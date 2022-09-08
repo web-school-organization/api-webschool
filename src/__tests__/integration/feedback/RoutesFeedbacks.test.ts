@@ -32,6 +32,7 @@ describe("testando feedbacks", () => {
 });
 
 test("POST /feedback - tentando criar um feedback sendo um professor", async () => {
+  await request(app).post("/teachers").send(mockedTeacher);
   const adminLoginResponse = await request(app)
     .post("/login")
     .send(mockedTeacherLogin);
@@ -105,7 +106,7 @@ test("GET /feedback - tentando pegar feedbacks sem estar logado", async () => {
 });
 
 test("DELETE /feedback - tentando deleta um feedback sendo um professor", async () => {
-  await request(app).post("/teachers").send(mockedTeacher);
+  
   const adminLoginResponse = await request(app)
     .post("/login")
     .send(mockedTeacherLogin);
@@ -122,7 +123,7 @@ test("DELETE /feedback - tentando deleta um feedback sendo um professor", async 
 });
 
 test("DELETE /feedback - tentando deleta um feedback sendo um aluno", async () => {
-  await request(app).post("/student").send(mockedStudent);
+  
   const adminLoginResponse = await request(app)
     .post("/login")
     .send(mockedStudentLogin);
@@ -138,7 +139,7 @@ test("DELETE /feedback - tentando deleta um feedback sendo um aluno", async () =
 });
 
 test("DELETE /feedback - tentando deleta um feedback sem id", async () => {
-  await request(app).post("/teachers").send(mockedTeacher);
+  
   const adminLoginResponse = await request(app)
     .post("/login")
     .send(mockedTeacherLogin);
@@ -159,7 +160,7 @@ test("DELETE /feedback - tentando deleta um feedback sem estar logado", async ()
 });
 
 test("PATCH /feedback - tentando editar um feedback sendo um professor", async () => {
-  await request(app).post("/teachers").send(mockedTeacher);
+  
   const adminLoginResponse = await request(app)
     .post("/login")
     .send(mockedTeacherLogin);
@@ -176,7 +177,7 @@ test("PATCH /feedback - tentando editar um feedback sendo um professor", async (
 });
 
 test("PATCH /feedback - tentando editar um feedback sendo um aluno", async () => {
-  await request(app).post("/student").send(mockedStudent);
+  
   const adminLoginResponse = await request(app)
     .post("/login")
     .send(mockedStudentLogin);
@@ -194,7 +195,7 @@ test("PATCH /feedback - tentando editar um feedback sendo um aluno", async () =>
 });
 
 test("PATCH /feedback - tentando editar um feedback sem id", async () => {
-  await request(app).post("/teachers").send(mockedTeacher);
+  
   const adminLoginResponse = await request(app)
     .post("/login")
     .send(mockedTeacherLogin);
@@ -208,7 +209,7 @@ test("PATCH /feedback - tentando editar um feedback sem id", async () => {
 });
 
 test("PATCH /feedback - tentando editar um feedback sem estar logado", async () => {
-  await request(app).post("/teachers").send(mockedTeacher);
+  
   const response = await request(app)
     .patch(`/feedback/13970660-5dbe-423a-9a9d-5c23b37943cf`)
     .send(mockedFeedbackUpdated);

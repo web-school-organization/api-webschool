@@ -1,7 +1,7 @@
 import { ITeachersRequest } from "../../interfaces/teachers";
 import { ISessionRequest } from "../../interfaces/sessions";
 import { ISchoolRequest } from "../../interfaces/schools";
-import { IFeedbackRequest } from "../../interfaces/feedback";
+import { IFeedbackAtualizatio, IFeedbackRequest } from "../../interfaces/feedback";
 import { IStudentRequest } from "../../interfaces/students";
 
 export const mockedTeacher: ITeachersRequest = {
@@ -25,12 +25,18 @@ export const mockedTeacherUpdate: ITeachersRequest = {
 export const mockedFeedback: IFeedbackRequest = {
   name: "gabriel",
   feedback: "você não fez a atividade",
+  email:"ggabriel.p2003@gmail.com"
 };
 
 export const mockedFeedbackBranco: IFeedbackRequest = {
   name: "",
   feedback: "",
+  email:""
 };
+
+export const mockedFeedbackUpdated: IFeedbackAtualizatio ={
+  feedback:"feed atualizado"
+}
 
 export const mockedSchool: ISchoolRequest = {
   name: "Centro Educacional Salesiano",
