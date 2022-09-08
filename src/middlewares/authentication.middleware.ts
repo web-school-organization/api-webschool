@@ -35,4 +35,5 @@ const authenticationMiddleware = async (
   );
 };
 
-export default authenticationMiddleware;
+
+export default authenticationMiddleware

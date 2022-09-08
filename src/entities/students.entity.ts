@@ -5,7 +5,8 @@ import {
   Entity,
   ManyToOne,
   OneToMany,
-  PrimaryGeneratedColumn,
+  PrimaryGeneratedColumn, 
+  UpdateDateColumn
 } from "typeorm";
 import { Feedback } from "./feedbacks.entity";
 import { Team } from "./teams.entiy";
@@ -37,7 +38,7 @@ export class Student {
   @CreateDateColumn({ type: "date" })
   createdAt: Date;
 
-  @CreateDateColumn({ type: "date" })
+  @UpdateDateColumn({ type: "date" })
   updatedAt: Date;
 
   @ManyToOne(() => Team)

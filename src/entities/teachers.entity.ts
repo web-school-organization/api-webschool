@@ -1,5 +1,5 @@
 import { Exclude } from "class-transformer";
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Feedback } from "./feedbacks.entity";
 
 @Entity("teachers")
@@ -29,9 +29,9 @@ export class Teacher {
   @CreateDateColumn({ type: "date" })
   createdAt: Date;
 
-  @CreateDateColumn({ type: "date" })
+  @UpdateDateColumn({ type: "date" })
   updatedAt: Date;
 
-  @OneToMany(() => Feedback, (feedback) => feedback.teacher, { eager: true })
+  @OneToMany(() => Feedback, (feedback) => feedback.teacher)
   feedbacks: Feedback[];
 }
