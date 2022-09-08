@@ -7,13 +7,13 @@ import updateTeacherService from "../../services/teachers/updateTeacher.service"
 import { instanceToPlain } from "class-transformer";
 
 const createTeacherController = async (req: Request, res: Response) => {
-  const newTeacher = await createTeacherService(req.body);
+  const newTeacher = await createTeacherService(req.body, req.user.type);
   return res.status(201).json(instanceToPlain(newTeacher));
 };
 
 const deleteTeacherController = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const deletedTeacher = await deleteTeacherService(id);
+  const deletedTeacher = await deleteTeacherService(id, req.user.type);
   return res.status(204).json(deletedTeacher);
 };
 
