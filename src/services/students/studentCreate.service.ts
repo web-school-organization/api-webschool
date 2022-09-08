@@ -23,11 +23,10 @@ const studentCreateService = async ({
   }
 
   const teamAlreadyExistis = await teamRepository.findOneBy({ name: team });
-  const teams = await teamRepository.find();
 
-  /* if (!teamAlreadyExistis) {
+  if (!teamAlreadyExistis) {
     throw new AppError("Team not found", 404);
-  } */
+  }
 
   const student = new Student();
   student.name = name;
@@ -35,15 +34,10 @@ const studentCreateService = async ({
   student.password = bcrypt.hashSync(password, 10);
   student.registration = registration;
   student.shift = shift;
-  student.team = teamAlreadyExistis! || "";
-
-  console.log(teams);
-
-  /* console.log(student); */
 
   const studentReturned = await studentRepository.save(student);
 
-  const createdStudent = await teamRepository.findOneBy({
+  const createdStudent = await studentRepository.findOneBy({
     id: studentReturned.id,
   });
 

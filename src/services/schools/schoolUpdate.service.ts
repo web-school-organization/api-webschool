@@ -23,7 +23,6 @@ export const schoolUpdateService = async (
     throw new AppError("User does not have permission", 403);
   }
 
-  // Faltando essa verificação por conta da rota teacher
   if (userType !== "school") {
     throw new AppError("User does not have permission", 403);
   }
@@ -40,12 +39,6 @@ export const schoolUpdateService = async (
       number: schoolData.address.number || address.number,
       zipCode: schoolData.address.zipCode || address.zipCode,
     });
-
-    //tirar
-    const newAddress = await addressRepository.findOneBy({
-      id: address.id,
-    });
-    /* console.log(newAddress); */
   }
 
   const hashedPassword = schoolData.password

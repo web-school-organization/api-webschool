@@ -10,7 +10,6 @@ export interface ISchoolRequest {
   name: string;
   email: string;
   password: string;
-  type: string;
   director: string;
   address: IAddressRequest;
 }

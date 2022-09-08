@@ -35,9 +35,12 @@ const studentUpdateService = async (
     team: teamAlreadyExists || student.team,
     registration: registration || student.registration,
   };
+
   await studentRepository.update(id, updatedUser);
 
-  return updatedUser;
+  const userUpdated = await studentRepository.findOneBy({ id });
+
+  return userUpdated;
 };
 
 export default studentUpdateService;

@@ -5,8 +5,8 @@ import {
   Entity,
   ManyToOne,
   OneToMany,
-  PrimaryGeneratedColumn, 
-  UpdateDateColumn
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { Feedback } from "./feedbacks.entity";
 import { Team } from "./teams.entiy";

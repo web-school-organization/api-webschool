@@ -1,20 +1,18 @@
 import { AppDataSource } from "../../data-source";
-import {Student} from '../../entities/students.entity'
+import { Student } from "../../entities/students.entity";
 import { AppError } from "../../errors/app.error";
 
+const studentDeleteService = async (id: string) => {
+  const studentRepository = AppDataSource.getRepository(Student);
+  const student = await studentRepository.findOneBy({ id });
 
-const studentDeleteService = async (id:string) =>{
+  if (!student) {
+    throw new AppError("Invalid id", 404);
+  }
 
-    const studentRepository = AppDataSource.getRepository(Student);
-    const student = studentRepository.findOneBy({id});
-    if(!student){
-        throw new AppError('Invalid id',404);
-    }
-    studentRepository.delete(id);
-    
+  await studentRepository.delete(id);
 
+  return;
+};
 
-
-}
-
-export default studentDeleteService
+export default studentDeleteService;
