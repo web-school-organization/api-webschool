@@ -39,6 +39,6 @@ export class Teacher {
   @UpdateDateColumn({ type: "date" })
   updatedAt: Date;
 
-  @OneToMany(() => Feedback, (feedback) => feedback.teacher, { eager: true })
+  @OneToMany(() => Feedback, (feedback) => feedback.teacher)
   feedbacks: Feedback[];
 }

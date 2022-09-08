@@ -51,8 +51,9 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("POST /teams - Não deve ser capaz de criar uma nova turma com o type sendo igual a teacher", async () => {
-    await request(app).post("/teacher").send(mockedTeacher);
+    await request(app).post("/teachers").send(mockedTeacher);
     const teacherLogin = await request(app).post("/login").send(mockedTeacherLogin);
+
     const response = await request(app)
       .post("/teams")
       .set("Authorization", `Bearer ${teacherLogin.body.token}`)
@@ -63,7 +64,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("POST /teams - Não deve ser capaz de criar uma nova turma com o type sendo igual a aluno", async () => {
-    await request(app).post("/student").send(mockedStudent);
+    await request(app).post("/students").send(mockedStudent);
     const studentLogin = await request(app).post("/login").send(mockedStudentLogin);
     const response = await request(app)
       .post("/teams")
@@ -121,7 +122,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("GET - /teams - Não deve ser capaz de listar todas as turmas com o type sendo igual a teacher", async () => {
-    await request(app).post("/teacher").send(mockedTeacher);
+    await request(app).post("/teachers").send(mockedTeacher);
     const teacherLogin = await request(app).post("/login").send(mockedTeacherLogin);
     const response = await request(app)
       .get("/teams")
@@ -132,7 +133,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
   });
 
   test("GET - /teams - Não deve ser capaz de listar todas as turmas com o type sendo igual a student", async () => {
-    await request(app).post("/student").send(mockedStudent);
+    await request(app).post("/students").send(mockedStudent);
     const studentLogin = await request(app).post("/login").send(mockedStudentLogin);
     const response = await request(app)
       .get("/teams")
@@ -171,7 +172,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
       .get("/teams")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
 
-    await request(app).post("/teacher").send(mockedTeacher);
+    await request(app).post("/teachers").send(mockedTeacher);
     const teacherLogin = await request(app).post("/login").send(mockedTeacherLogin);
     const response = await request(app)
       .get(`/teams/${teams.body[0].id}`)
@@ -188,7 +189,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
       .get("/teams")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
 
-    await request(app).post("/student").send(mockedStudent);
+    await request(app).post("/students").send(mockedStudent);
     const studentLogin = await request(app).post("/login").send(mockedStudentLogin);
     const response = await request(app)
       .get(`/teams/${users.body[0].id}`)
@@ -234,7 +235,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
       .get("/teams")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
 
-    await request(app).post("/teacher").send(mockedTeacher);
+    await request(app).post("/teachers").send(mockedTeacher);
     const teacherLogin = await request(app).post("/login").send(mockedTeacherLogin);
     const response = await request(app)
       .patch(`/teams/${users.body[0].id}`)
@@ -251,7 +252,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
       .get("/teams")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
 
-    await request(app).post("/student").send(mockedStudent);
+    await request(app).post("/students").send(mockedStudent);
     const studentLogin = await request(app).post("/login").send(mockedStudentLogin);
     const response = await request(app)
       .patch(`/teams/${users.body[0].id}`)
@@ -291,7 +292,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
       .get("/teams")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
 
-    await request(app).post("/student").send(mockedStudent);
+    await request(app).post("/teachers").send(mockedTeacher);
     const teacherLogin = await request(app).post("/login").send(mockedTeacherLogin);
     const response = await request(app)
       .delete(`/teams/${users.body[0].id}`)
@@ -308,7 +309,7 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
       .get("/teams")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
 
-    await request(app).post("/student").send(mockedStudent);
+    await request(app).post("/students").send(mockedStudent);
     const studentLogin = await request(app).post("/login").send(mockedStudentLogin);
     const response = await request(app)
       .delete(`/teams/${users.body[0].id}`)

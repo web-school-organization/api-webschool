@@ -9,7 +9,6 @@ export const schoolCreateService = async ({
   name,
   email,
   password,
-  type,
   director,
   address,
 }: ISchoolRequest) => {
@@ -50,7 +49,6 @@ export const schoolCreateService = async ({
     name,
     email,
     password: hashedPassword,
-    type,
     director,
     address: newAddress,
   });

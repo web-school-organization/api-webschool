@@ -3,12 +3,12 @@ import { ISessionRequest } from "../../interfaces/sessions";
 import { ISchoolRequest } from "../../interfaces/schools";
 import { IFeedbackRequest } from "../../interfaces/feedback";
 import { IStudentRequest } from "../../interfaces/students";
+import { ITeamsRequest } from "../../interfaces/teams";
 
 export const mockedTeacher: ITeachersRequest = {
-  name: "Fábio Júnio",
+  name: "Fábio Junior",
   email: "fabio@mail.com.br",
   password: "123456",
-  type: "Teacher",
   shift: "Matutino",
   matter: "Back-End",
 };
@@ -17,7 +17,6 @@ export const mockedTeacherUpdate: ITeachersRequest = {
   name: "Júnior Fábio",
   email: "fabio@mail.com.br",
   password: "123456",
-  type: "Teacher",
   shift: "Matutino",
   matter: "Back-End",
 };
@@ -36,7 +35,6 @@ export const mockedSchool: ISchoolRequest = {
   name: "Centro Educacional Salesiano",
   email: "salesiano@email.com",
   password: "123456",
-  type: "school",
   director: "Gabriel Salesiano",
   address: {
     state: "BA",
@@ -51,7 +49,6 @@ export const mockedSchoolInvalidId: ISchoolRequest = {
   name: "Escola Educacional Plinio",
   email: "plinio@email.com",
   password: "123456",
-  type: "school",
   director: "Rogerio Plinio",
   address: {
     state: "SE",
@@ -76,7 +73,6 @@ export const mockedSchoolInvalidZipCode: ISchoolRequest = {
   name: "Centro Educacional Salesiano",
   email: "salesianoZipCode@email.com",
   password: "123456",
-  type: "school",
   director: "Gabriel Salesiano",
   address: {
     state: "BA",
@@ -91,7 +87,6 @@ export const mockedSchoolInvalidState: ISchoolRequest = {
   name: "Centro Educacional Salesiano",
   email: "salesianoInvalidState@email.com",
   password: "123456",
-  type: "school",
   director: "Gabriel Salesiano",
   address: {
     state: "BAHIA",
@@ -106,7 +101,6 @@ export const mockedUpdatedSchool: ISchoolRequest = {
   name: "Kenzie Salesiano Academy",
   email: "salesiano@email.com",
   password: "123456",
-  type: "school",
   director: "Luccas Salesiano",
   address: {
     state: "SE",
@@ -144,7 +138,6 @@ export const mockedSchoolAddressExists = {
   name: "Centro Educacional Salesiano",
   email: "salesianoaddressexists@email.com",
   password: "123456",
-  type: "school",
   director: "Gabriel Salesiano",
   address: {
     state: "BA",
@@ -158,7 +151,16 @@ export const mockedSchoolAddressExists = {
 export const mockedStudent: IStudentRequest = {
   name: "Joana",
   email: "joana@mail.com",
-  type: "student",
+  shift: "",
+  registration: "",
+  team: [],
+  feedbacks: [],
+  password: "123456",
+};
+
+export const mockedStudentAuth: IStudentRequest = {
+  name: "Mario",
+  email: "mario@mail.com",
   shift: "",
   registration: "",
   team: [],

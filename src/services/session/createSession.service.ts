@@ -8,9 +8,7 @@ import { compare } from "bcryptjs";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
-const createSessionService = async (
-  dataLogin: ISessionRequest
-): Promise<string> => {
+const createSessionService = async (dataLogin: ISessionRequest): Promise<string> => {
   const schoolRepository = AppDataSource.getRepository(School);
   const teacherRepository = AppDataSource.getRepository(Teacher);
   const studentRepository = AppDataSource.getRepository(Student);
@@ -19,9 +17,7 @@ const createSessionService = async (
   const teacher = await teacherRepository.find();
   const student = await studentRepository.find();
 
-  const user = [...school, ...teacher, ...student].find(
-    (user) => user.email === dataLogin.email
-  );
+  const user = [...school, ...teacher, ...student].find((user) => user.email === dataLogin.email);
 
   if (!user) {
     throw new AppError("Invalid email or password");
@@ -30,7 +26,7 @@ const createSessionService = async (
   const matchPassword = await compare(dataLogin.password, user.password);
 
   if (!matchPassword) {
-    throw new AppError("Invalid email or password");
+    throw new AppError("Invalid email or password 0000");
   }
 
   const token = jwt.sign(
