@@ -165,3 +165,14 @@ export const mockedStudent: IStudentRequest = {
   feedbacks: [],
   password: "123456",
 };
+
+export const mockedStudentAuth: IStudentRequest = {
+  name: "Mario",
+  email: "mario@mail.com",
+  type: "student",
+  shift: "",
+  registration: "",
+  team: [],
+  feedbacks: [],
+  password: "123456",
+};
