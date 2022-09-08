@@ -30,7 +30,7 @@ const createSessionService = async (
   const matchPassword = await compare(dataLogin.password, user.password);
 
   if (!matchPassword) {
-    throw new AppError("Invalid email or password");
+    throw new AppError("Invalid email or password 0000");
   }
 
   const token = jwt.sign(
