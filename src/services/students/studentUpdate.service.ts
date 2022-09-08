@@ -1,38 +1,43 @@
 import { AppDataSource } from "../../data-source";
-import {Student} from '../../entities/students.entity'
+import { Student } from "../../entities/students.entity";
 import { AppError } from "../../errors/app.error";
-import { IStudentUpdated } from "../../interfaces/students";
-import bcrypt from 'bcryptjs'
+import { IStudentRequest } from "../../interfaces/students";
+import bcrypt from "bcryptjs";
+import { Team } from "../../entities/teams.entiy";
 
-const studentUpdateService = async ({name,email,id,password,shift,team,registration,feedbacks}:IStudentUpdated) => {
+const studentUpdateService = async (
+  { name, email, password, shift, team, registration }: IStudentRequest,
+  id: string
+) => {
+  const studentRepository = AppDataSource.getRepository(Student);
+  const teamRepository = AppDataSource.getRepository(Team);
+  const student = await studentRepository.findOneBy({ id });
+  const emailExists = await studentRepository.findOneBy({ email });
+  const teamAlreadyExists = await teamRepository.findOneBy({ name: team });
 
-    const studentRepository = AppDataSource.getRepository(Student);
-    const student = studentRepository.findOneBy({id});
-    const emailExists = await studentRepository.findOneBy({ email });
+  if (!teamAlreadyExists) {
+    throw new AppError("Team not found", 404);
+  }
 
-    if(!student){
-        throw new AppError('Invalid id',404);
-    }
-    if (emailExists) {
-        throw new AppError("Email already exists", 400);
-      }
+  if (!student) {
+    throw new AppError("Invalid id", 404);
+  }
 
-    const updatedUser = {
-        id:id,
-        name: name || student.name,
-        email: email || student.email,
-        password: bcrypt.hashSync(password,10) || student.password,
-        shift: shift || student.shift,
-        team: team || student.team,
-        registration: registration || student.registration,
-        feedbacks: feedbacks || student.feedbacks,
-        createdAt: student.createdAt,
-        updatedAt: new Date()
-    }
-    await studentRepository.update(id,updatedUser)
+  if (emailExists) {
+    throw new AppError("Email already exists", 400);
+  }
 
-    return updatedUser
+  const updatedUser = {
+    name: name || student.name,
+    email: email || student.email,
+    password: bcrypt.hashSync(password, 10) || student.password,
+    shift: shift || student.shift,
+    team: teamAlreadyExists || student.team,
+    registration: registration || student.registration,
+  };
+  await studentRepository.update(id, updatedUser);
 
-}
+  return updatedUser;
+};
 
-export default studentUpdateService
+export default studentUpdateService;

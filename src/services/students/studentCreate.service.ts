@@ -1,51 +1,53 @@
 import { AppDataSource } from "../../data-source";
-import {Student} from '../../entities/students.entity'
-import {IStudentRequest,IStudent} from '../../interfaces/students/index'
-import bcrypt from 'bcryptjs'
+import { Student } from "../../entities/students.entity";
+import { IStudentRequest } from "../../interfaces/students/index";
+import bcrypt from "bcryptjs";
 import { AppError } from "../../errors/app.error";
+import { Team } from "../../entities/teams.entiy";
 
-const studentCreateService = async ({name,email,password,type,registration,shift,team,feedbacks}:IStudentRequest) => {
+const studentCreateService = async ({
+  name,
+  email,
+  password,
+  registration,
+  shift,
+  team,
+}: IStudentRequest) => {
+  const studentRepository = AppDataSource.getRepository(Student);
+  const teamRepository = AppDataSource.getRepository(Team);
 
-    const studentRepository = AppDataSource.getRepository(Student);
+  const emailExists = await studentRepository.findOneBy({ email });
 
-    const emailExists = await studentRepository.findOneBy({ email });
+  if (emailExists) {
+    throw new AppError("Email already exists", 400);
+  }
 
-    if (emailExists) {
-      throw new AppError("Email already exists", 400);
-    }
+  const teamAlreadyExistis = await teamRepository.findOneBy({ name: team });
+  const teams = await teamRepository.find();
 
-    const student = new Student
-    student.name = name
-    student.email = email
-    student.password = bcrypt.hashSync(password,10);
-    student.type = type;
-    student.registration = registration;
-    student.shift = shift;
-    student.team = team;
-    student.feedbacks = feedbacks
-    student.createdAt = new Date()
-    student.updatedAt = new Date();
+  /* if (!teamAlreadyExistis) {
+    throw new AppError("Team not found", 404);
+  } */
 
-    studentRepository.create(student)
-    await studentRepository.save(student)
+  const student = new Student();
+  student.name = name;
+  student.email = email;
+  student.password = bcrypt.hashSync(password, 10);
+  student.registration = registration;
+  student.shift = shift;
+  student.team = teamAlreadyExistis! || "";
 
-    const studentReturned:IStudent = {
-        id:student.id,
-        name:student.name,
-        email:student.email,
-        type:student.type,
-        registration:student.registration,
-        shift:student.shift,
-        team:student.team,
-        feedbacks:student.feedbacks,
-        createdAt:student.createdAt,
-        updatedAt:student.updatedAt
-    }
-    
+  console.log(teams);
 
-    return studentReturned
+  /* console.log(student); */
 
-}
+  const studentReturned = await studentRepository.save(student);
 
-export default studentCreateService
+  const createdStudent = await teamRepository.findOneBy({
+    id: studentReturned.id,
+  });
 
+  return createdStudent;
+};
+
+export default studentCreateService;
