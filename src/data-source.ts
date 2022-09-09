@@ -1,6 +1,5 @@
 import { DataSource } from "typeorm";
 import "dotenv/config";
-require("dotenv").config();
 
 export const AppDataSource =
   process.env.NODE_ENV === "test"
@@ -23,6 +22,4 @@ export const AppDataSource =
         migrations: ["src/migrations/*.ts"],
       });
 
-
 export default AppDataSource;
-
