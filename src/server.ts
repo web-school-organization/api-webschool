@@ -10,6 +10,6 @@ import "dotenv/config";
   );
 
   app.listen(PORT, () => {
-    `App is running!`;
+    console.log(`App is running!`);
   });
 })();

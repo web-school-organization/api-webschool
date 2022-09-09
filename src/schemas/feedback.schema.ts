@@ -9,8 +9,6 @@ export const schemaFeedback: SchemaOf<IFeedbackRequest> = yup.object().shape({
   id: yup.string().required(),
 });
 
-export const updateSchemaFeedback: SchemaOf<IFeedbackUpdated> = yup
-  .object()
-  .shape({
-    feedback: yup.string().required(),
-  });
+export const updateSchemaFeedback: SchemaOf<IFeedbackUpdated> = yup.object().shape({
+  feedback: yup.string().required(),
+});
