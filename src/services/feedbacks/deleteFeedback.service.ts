@@ -1,4 +1,4 @@
-import { AppDataSource } from "../../data-source";
+import AppDataSource from "../../data-source";
 import { Feedback } from "../../entities/feedbacks.entity";
 import { AppError } from "../../errors/app.error";
 import { IUser } from "../../interfaces/feedback";

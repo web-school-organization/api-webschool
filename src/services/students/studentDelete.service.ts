@@ -1,4 +1,4 @@
-import { AppDataSource } from "../../data-source";
+import AppDataSource from "../../data-source";
 import { Student } from "../../entities/students.entity";
 import { AppError } from "../../errors/app.error";
 

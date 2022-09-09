@@ -20,16 +20,8 @@ const feedbackRoutes = () => {
     createFeedbackController
   );
   router.get("", authenticationMiddleware, getFeedbackController);
-  router.patch(
-    "/:id",
-    authenticationMiddleware,
-    updatefeedbackController
-  );
-  router.delete(
-    "/:id",
-    authenticationMiddleware,
-    deleteFeedbackController
-  );
+  router.patch("/:id", authenticationMiddleware, updatefeedbackController);
+  router.delete("/:id", authenticationMiddleware, deleteFeedbackController);
 
   return router;
 };

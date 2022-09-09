@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { AppDataSource } from "../../data-source";
+import AppDataSource from "../../data-source";
 import { Teacher } from "../../entities/teachers.entity";
 import { AppError } from "../../errors/app.error";
 

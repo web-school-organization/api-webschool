@@ -1,4 +1,4 @@
-import { AppDataSource } from "../../data-source";
+import AppDataSource from "../../data-source";
 import { Feedback } from "../../entities/feedbacks.entity";
 
 const getFeedbackService = async (): Promise<Feedback[]> => {

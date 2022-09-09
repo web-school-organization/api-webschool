@@ -1,4 +1,4 @@
-import { AppDataSource } from "../../data-source";
+import AppDataSource from "../../data-source";
 import { Team } from "../../entities/teams.entiy";
 import { AppError } from "../../errors/app.error";
 
