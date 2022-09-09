@@ -1,4 +1,4 @@
-import { AppDataSource } from "../../data-source";
+import AppDataSource from "../../data-source";
 import { Teacher } from "../../entities/teachers.entity";
 import { ITeachersRequest } from "../../interfaces/teachers";
 import { AppError } from "../../errors/app.error";

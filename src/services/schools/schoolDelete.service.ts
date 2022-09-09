@@ -1,8 +1,12 @@
-import { AppDataSource } from "../../data-source";
+import AppDataSource from "../../data-source";
 import { School } from "../../entities/school.entity";
 import { AppError } from "../../errors/app.error";
 
-export const schoolDeleteService = async (id: string, userType: string, userId: string) => {
+export const schoolDeleteService = async (
+  id: string,
+  userType: string,
+  userId: string
+) => {
   const schoolRepository = AppDataSource.getRepository(School);
 
   const school = await schoolRepository.findOneBy({ id });

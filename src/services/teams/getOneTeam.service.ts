@@ -1,8 +1,11 @@
-import { AppDataSource } from "../../data-source";
+import AppDataSource from "../../data-source";
 import { AppError } from "../../errors/app.error";
 import { Team } from "../../entities/teams.entiy";
 
-const getOneTeamService = async (type: string, teamId: string): Promise<Team> => {
+const getOneTeamService = async (
+  type: string,
+  teamId: string
+): Promise<Team> => {
   const teamRepository = AppDataSource.getRepository(Team);
 
   if (type !== "school") {

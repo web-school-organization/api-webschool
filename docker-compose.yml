@@ -6,8 +6,12 @@ services:
     build: .
     ports:
       - 3000:3000
-    env_file:
-      - .env
+    environment:
+      - DB=api_webschool
+      - DB_USER=postgres
+      - DB_PASSWORD=1234
+      - DB_HOST=db
+      - SECRET_KEY=1234
     depends_on:
       db:
         condition: service_healthy
@@ -15,15 +19,15 @@ services:
       - .:/app
   db:
     container_name: db
-    image: postgres:latest
+    image: postgres:14
     ports:
       - 5431:5432
     environment:
-      - POSTGRES_USER=luccas
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1234
       - POSTGRES_DB=api_webschool
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U luccas -d api_webschool"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d api_webschool"]
       interval: 15s
       timeout: 10s
       retries: 5
