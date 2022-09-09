@@ -1,4 +1,4 @@
-import { AppDataSource } from "../../data-source";
+import AppDataSource from "../../data-source";
 import { School } from "../../entities/school.entity";
 
 export const schoolListService = async () => {

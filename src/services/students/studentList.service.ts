@@ -1,16 +1,11 @@
-import { AppDataSource } from "../../data-source";
-import {Student} from '../../entities/students.entity'
-
-
+import AppDataSource from "../../data-source";
+import { Student } from "../../entities/students.entity";
 
 const studentListService = async () => {
-    const studentRepository = AppDataSource.getRepository(Student);
-    const students = await studentRepository.find();
+  const studentRepository = AppDataSource.getRepository(Student);
+  const students = await studentRepository.find();
 
+  return students;
+};
 
-    return students;
-
-}
-
-
-export default studentListService
+export default studentListService;
