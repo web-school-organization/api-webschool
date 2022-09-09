@@ -10,7 +10,7 @@ const createTeacherService = async (data: ITeachersRequest, typeLogin: string): 
     }
     const teacherRepository = AppDataSource.getRepository(Teacher)
     
-    const {name, email, password, type, shift, matter} = data
+    const {name, email, password, shift, matter} = data
 
     const verifyEmail = await teacherRepository.findOneBy({email})
     if(verifyEmail){
@@ -23,7 +23,6 @@ const createTeacherService = async (data: ITeachersRequest, typeLogin: string): 
         name,
         email,
         password: hashedPassword,
-        type,
         shift,
         matter,
 

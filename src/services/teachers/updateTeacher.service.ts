@@ -14,7 +14,7 @@ const updateTeacherService = async (data: ITeachersRequest, id: string) => {
         throw new AppError('Cannot find teacher with this ID', 404)
     }
 
-    const {name, email, password, type, shift, matter} = data
+    const {name, email, password, shift, matter} = data
 
     if(password){
         const comparePassaword = bcrypt.compare(password, updateTeacher.password)
@@ -26,7 +26,6 @@ const updateTeacherService = async (data: ITeachersRequest, id: string) => {
 
     updateTeacher.name = name || updateTeacher.name
     updateTeacher.email = email || updateTeacher.email
-    updateTeacher.type = type || updateTeacher.type
     updateTeacher.shift = shift || updateTeacher.shift
     updateTeacher.matter = matter || updateTeacher.matter
     //updateTeacher.updatedAt = new Date()
