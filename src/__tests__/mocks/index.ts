@@ -140,6 +140,10 @@ export const mockedInvalidTeam = {
   robson: "antunes",
 };
 
+export const mockedUpdatedTeam = {
+  name: "queiroz",
+};
+
 export const mockedSchoolAddressExists = {
   name: "Centro Educacional Salesiano",
   email: "salesianoaddressexists@email.com",
