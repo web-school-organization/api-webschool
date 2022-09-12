@@ -4,6 +4,9 @@ import { ISchoolRequest } from "../../interfaces/schools";
 import { IFeedbackRequest, IFeedbackUpdated } from "../../interfaces/feedback";
 import { IStudentRequest } from "../../interfaces/students";
 import { ITeamsRequest } from "../../interfaces/teams";
+import { IResponsibleRequest } from "../../interfaces/responsibles";
+import { IActivitieRequest } from "../../interfaces/activities/iindex";
+
 
 export const mockedTeacher: ITeachersRequest = {
   name: "Fábio Junior",
@@ -175,3 +178,42 @@ export const mockedStudentAuth: IStudentRequest = {
   team: "307",
   password: "123456",
 };
+
+export const mockedResponsible: IResponsibleRequest = {
+  name:"Pai da Joana",
+  email:"responsaveljoana@mail.com",
+  password:"123"
+}
+
+export const mockedResponsibleAuth: IResponsibleRequest = {
+  name:"Pai do Mario",
+  email:"responsavelmario@mail.com",
+  password:"123"
+}
+
+export const mockedActivitie: IActivitieRequest = {
+  title: "Criando banco de dados",
+  url: "https://canvas.kenzie.com.br/courses/15/pages/s2-01-%7C-aula-bancos-de-dados-introducao?module_item_id=1751",
+  student: "joana@mail.com"
+}
+
+export const mockedActivitieWithoutEmail: IActivitieRequest = {
+  title: "Criando banco de dados",
+  url: "https://canvas.kenzie.com.br/courses/15/pages/s2-01-%7C-aula-bancos-de-dados-introducao?module_item_id=1751",
+  student: ""
+}
+
+export const mockedActivitieUpdate: IActivitieRequest = {
+  title: "Introdução ao Express",
+  url: "https://canvas.kenzie.com.br/courses/15/pages/s1-03-%7C-aula-express-introducao?module_item_id=1731",
+  student: "joana@mail.com"
+}
+
+export const mockedInformation = {
+  message: "Hello, World",
+};
+
+export const mockedUpdatedInformation = {
+  message: "Hello, Moon",
+};
+
