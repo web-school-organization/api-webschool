@@ -2,7 +2,11 @@ import AppDataSource from "../../data-source";
 import { AppError } from "../../errors/app.error";
 import { Team } from "../../entities/teams.entiy";
 
-const updateTeamService = async (name: string, type: string, teamId: string): Promise<Team> => {
+const updateTeamService = async (
+  name: string,
+  type: string,
+  teamId: string
+): Promise<Team> => {
   const teamRepository = AppDataSource.getRepository(Team);
 
   if (type !== "school") {

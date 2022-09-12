@@ -30,10 +30,10 @@ const getOneTeamController = async (req: Request, res: Response) => {
 };
 
 const updateTeamController = async (req: Request, res: Response) => {
-  const dataTeam = req.body;
+  const { name } = req.body;
   const { id } = req.params;
   const type = req.user.type;
-  const team = await updateTeamService(dataTeam, type, id);
+  const team = await updateTeamService(name, type, id);
 
   return res.status(200).json(team);
 };
