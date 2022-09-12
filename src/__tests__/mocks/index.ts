@@ -4,7 +4,9 @@ import { ISchoolRequest } from "../../interfaces/schools";
 import { IFeedbackRequest, IFeedbackUpdated } from "../../interfaces/feedback";
 import { IStudentRequest } from "../../interfaces/students";
 import { ITeamsRequest } from "../../interfaces/teams";
+import { IResponsibleRequest } from "../../interfaces/responsibles";
 import { IActivitieRequest } from "../../interfaces/activities/iindex";
+
 
 export const mockedTeacher: ITeachersRequest = {
   name: "Fábio Junior",
@@ -176,6 +178,18 @@ export const mockedStudentAuth: IStudentRequest = {
   team: "307",
   password: "123456",
 };
+
+export const mockedResponsible: IResponsibleRequest = {
+  name:"Pai da Joana",
+  email:"responsaveljoana@mail.com",
+  password:"123"
+}
+
+export const mockedResponsibleAuth: IResponsibleRequest = {
+  name:"Pai do Mario",
+  email:"responsavelmario@mail.com",
+  password:"123"
+}
 
 export const mockedActivitie: IActivitieRequest = {
   title: "Criando banco de dados",
