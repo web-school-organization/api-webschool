@@ -11,6 +11,7 @@ import {
   mockedSchool,
   mockedTeacher,
   mockedStudent,
+  mockedUpdatedTeam,
 } from "../../mocks";
 
 describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
@@ -264,7 +265,9 @@ describe("/teams - Rota responsável pelas funcionalidades das turmas", () => {
 
     const response = await request(app)
       .patch(`/teams/${users.body[0].id}`)
-      .set("Authorization", `Bearer ${schoolLogin.body.token}`);
+      .set("Authorization", `Bearer ${schoolLogin.body.token}`).send(mockedUpdatedTeam);
+      console.log(response.body);
+      
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("id");
