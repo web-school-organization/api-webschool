@@ -9,6 +9,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { Feedback } from "./feedbacks.entity";
+import { Responsibles } from "./responsible.entity";
 import { Team } from "./teams.entiy";
 
 @Entity("students")
@@ -46,4 +47,7 @@ export class Student {
 
   @OneToMany(() => Feedback, (feedback: Feedback) => feedback.student, { eager: true })
   feedbacks: Feedback[];
+
+  @ManyToOne(()=> Responsibles, {onDelete:"SET NULL"})
+  responsibles:Responsibles
 }
