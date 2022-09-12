@@ -8,7 +8,8 @@ import updateTeamService from "../../services/teams/updateTeam.service";
 const createTeamController = async (req: Request, res: Response) => {
   const { name } = req.body;
   const type = req.user.type;
-  const team = await createTeamService(name, type);
+  const id = req.user.id;
+  const team = await createTeamService(name, type, id);
 
   return res.status(201).json(team);
 };

@@ -4,7 +4,7 @@ import { Feedback } from "../../entities/feedbacks.entity";
 const getFeedbackService = async (): Promise<Feedback[]> => {
   const feedbackRepository = AppDataSource.getRepository(Feedback);
 
-  const comment = feedbackRepository.find();
+  const comment = await feedbackRepository.find();
 
   return comment;
 };

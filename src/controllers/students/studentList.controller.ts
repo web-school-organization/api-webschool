@@ -1,15 +1,11 @@
-import {Request,Response} from 'express'
-import studentListService from '../../services/students/studentList.service'
+import { instanceToPlain } from "class-transformer";
+import { Request, Response } from "express";
+import studentListService from "../../services/students/studentList.service";
 
+const studentListController = async (req: Request, res: Response) => {
+  const students = await studentListService();
 
-const studentListController = async (req:Request,res:Response) => {
+  return res.status(200).send(instanceToPlain(students));
+};
 
-
-    const students = await studentListService();
-
-
-    return res.status(200).send(students)
-
-}
-
-export default studentListController
+export default studentListController;

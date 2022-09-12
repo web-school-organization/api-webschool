@@ -3,7 +3,7 @@ import { Feedback } from "../../entities/feedbacks.entity";
 import { AppError } from "../../errors/app.error";
 import { IUser } from "../../interfaces/feedback";
 
-const deleteFeedbackService = async ({ id, type }: IUser): Promise<object | AppError> => {
+const deleteFeedbackService = async ({ id, type }: IUser) => {
   const feedbackRepository = AppDataSource.getRepository(Feedback);
 
   const findFeedback = await feedbackRepository.findOneBy({ id });
@@ -18,7 +18,7 @@ const deleteFeedbackService = async ({ id, type }: IUser): Promise<object | AppE
 
   await feedbackRepository.delete(id);
 
-  return { message: "Feedback deleted" };
+  return;
 };
 
 export default deleteFeedbackService;

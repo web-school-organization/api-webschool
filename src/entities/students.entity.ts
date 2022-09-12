@@ -41,9 +41,12 @@ export class Student {
   @UpdateDateColumn({ type: "date" })
   updatedAt: Date;
 
-  @ManyToOne(() => Team)
+  @ManyToOne(() => Team, { onDelete: "SET NULL" })
   team: Team;
 
-  @OneToMany(() => Feedback, (feedback: Feedback) => feedback.student, { eager: true })
+  @OneToMany(() => Feedback, (feedback: Feedback) => feedback.student, {
+    eager: true,
+    onDelete: "SET NULL",
+  })
   feedbacks: Feedback[];
 }
