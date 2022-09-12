@@ -1,11 +1,7 @@
 import AppDataSource from "../../data-source";
 import { Feedback } from "../../entities/feedbacks.entity";
 import { AppError } from "../../errors/app.error";
-import {
-  IFeedbackUpdated,
-  IFeedbackResponse,
-  IUser,
-} from "../../interfaces/feedback";
+import { IFeedbackUpdated, IUser } from "../../interfaces/feedback";
 
 const updateFeedbackService = async (
   { id, type }: IUser,

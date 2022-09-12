@@ -1,12 +1,9 @@
 import AppDataSource from "../../data-source";
 import { Feedback } from "../../entities/feedbacks.entity";
 import { AppError } from "../../errors/app.error";
-import { IFeedbackResponse, IUser } from "../../interfaces/feedback";
+import { IUser } from "../../interfaces/feedback";
 
-const deleteFeedbackService = async ({
-  id,
-  type,
-}: IUser): Promise<object | AppError> => {
+const deleteFeedbackService = async ({ id, type }: IUser): Promise<object | AppError> => {
   const feedbackRepository = AppDataSource.getRepository(Feedback);
 
   const findFeedback = await feedbackRepository.findOneBy({ id });
