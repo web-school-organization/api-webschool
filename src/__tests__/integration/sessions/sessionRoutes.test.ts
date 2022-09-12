@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm";
-import  AppDataSource  from "../../../data-source";
+import AppDataSource from "../../../data-source";
 import request from "supertest";
 import app from "../../../app";
 import {
@@ -53,7 +53,6 @@ describe("/login - Rota responsável por iniciar a sessão do usuário na aplica
       .set("Authorization", `Bearer ${schoolLogin.body.token}`)
       .send(mockedTeacher);
     const response = await request(app).post("/login").send(mockedTeacherLogin);
-   
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("token");

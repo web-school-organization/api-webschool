@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 import request from "supertest";
 import app from "../../../app";
-import AppDataSource  from "../../../data-source";
+import AppDataSource from "../../../data-source";
 import {
   mockedFeedback,
   mockedFeedbackBranco,
@@ -21,9 +21,7 @@ describe("testando feedbacks", () => {
   beforeAll(async () => {
     await AppDataSource.initialize()
       .then((res) => (connection = res))
-      .catch((err) =>
-        console.error("Error during Data Source initialization", err)
-      );
+      .catch((err) => console.error("Error during Data Source initialization", err));
     await request(app).post("/schools").send(mockedSchool);
   });
 
@@ -32,9 +30,7 @@ describe("testando feedbacks", () => {
   });
 
   test("POST /feedback - deve criar um feedback sendo um professor", async () => {
-    const schoolLogin = await request(app)
-      .post("/login")
-      .send(mockedSchoolLogin);
+    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
 
     await request(app)
       .post("/teachers")
@@ -51,9 +47,7 @@ describe("testando feedbacks", () => {
       .set("Authorization", `Bearer ${schoolLogin.body.token}`)
       .send(mockedStudent);
 
-    const TeacherResponse = await request(app)
-      .post("/login")
-      .send(mockedTeacherLogin);
+    const TeacherResponse = await request(app).post("/login").send(mockedTeacherLogin);
 
     const response = await request(app)
       .post("/feedback")
@@ -70,9 +64,7 @@ describe("testando feedbacks", () => {
 
   test("POST /feedback - tentando criar um feedback em branco", async () => {
     await request(app).post("/teachers").send(mockedTeacher);
-    const TeacherResponse = await request(app)
-      .post("/login")
-      .send(mockedTeacherLogin);
+    const TeacherResponse = await request(app).post("/login").send(mockedTeacherLogin);
     const response = await request(app)
       .post("/feedback")
       .set("Authorization", `Bearer ${TeacherResponse.body.token}`)
@@ -84,9 +76,7 @@ describe("testando feedbacks", () => {
 
   test("POST /feedback - tentando criar um feedback sendo um aluno", async () => {
     await request(app).post("/student").send(mockedStudent);
-    const TeacherResponse = await request(app)
-      .post("/login")
-      .send(mockedStudentLogin);
+    const TeacherResponse = await request(app).post("/login").send(mockedStudentLogin);
     const response = await request(app)
       .post("/feedback")
       .set("Authorization", `Bearer ${TeacherResponse.body.token}`)
@@ -105,9 +95,7 @@ describe("testando feedbacks", () => {
   });
 
   test("GET /feedback - pegando feedbacks", async () => {
-    const TeacherResponse = await request(app)
-      .post("/login")
-      .send(mockedTeacherLogin);
+    const TeacherResponse = await request(app).post("/login").send(mockedTeacherLogin);
     TeacherResponse.body;
 
     const response = await request(app)
@@ -126,9 +114,7 @@ describe("testando feedbacks", () => {
   });
 
   test("PATCH /feedback - tentando editar um feedback sendo um professor", async () => {
-    const TeacherResponse = await request(app)
-      .post("/login")
-      .send(mockedTeacherLogin);
+    const TeacherResponse = await request(app).post("/login").send(mockedTeacherLogin);
     const FeedbackTobe = await request(app)
       .get("/feedback")
       .set("Authorization", `Bearer ${TeacherResponse.body.token}`);
@@ -142,15 +128,11 @@ describe("testando feedbacks", () => {
   });
 
   test("PATCH /feedback - tentando editar um feedback sendo um aluno", async () => {
-    const TeacherResponse = await request(app)
-      .post("/login")
-      .send(mockedStudentLogin);
- 
+    const TeacherResponse = await request(app).post("/login").send(mockedStudentLogin);
 
     const FeedbackTobeDeleted = await request(app)
       .get("/feedback")
       .set("Authorization", `Bearer ${TeacherResponse.body.token}`);
-
 
     const response = await request(app)
       .patch(`/feedback/${FeedbackTobeDeleted.body[0].id}`)
@@ -162,9 +144,7 @@ describe("testando feedbacks", () => {
   });
 
   test("PATCH /feedback - tentando editar um feedback sem id", async () => {
-    const TeacherResponse = await request(app)
-      .post("/login")
-      .send(mockedTeacherLogin);
+    const TeacherResponse = await request(app).post("/login").send(mockedTeacherLogin);
 
     const response = await request(app)
       .patch(`/feedback/nada`)
@@ -184,9 +164,7 @@ describe("testando feedbacks", () => {
   });
 
   test("DELETE /feedback - tentando deleta um feedback sendo um aluno", async () => {
-    const TeacherResponse = await request(app)
-      .post("/login")
-      .send(mockedStudentLogin);
+    const TeacherResponse = await request(app).post("/login").send(mockedStudentLogin);
     const FeedbackTobeDeleted = await request(app)
       .get("/feedback")
       .set("Authorization", `Bearer ${TeacherResponse.body.token}`);
@@ -199,9 +177,7 @@ describe("testando feedbacks", () => {
   });
 
   test("DELETE /feedback - tentando deleta um feedback sem id valido", async () => {
-    const TeacherResponse = await request(app)
-      .post("/login")
-      .send(mockedTeacherLogin);
+    const TeacherResponse = await request(app).post("/login").send(mockedTeacherLogin);
 
     const response = await request(app)
       .delete(`/feedback/13970660-5dbe-423a-9a9d-5c23b37943cf`)
@@ -211,17 +187,13 @@ describe("testando feedbacks", () => {
   });
 
   test("DELETE /feedback - tentando deleta um feedback sem estar logado", async () => {
-    const response = await request(app).delete(
-      `/feedback/13970660-5dbe-423a-9a9d-5c23b37943cf`
-    );
+    const response = await request(app).delete(`/feedback/13970660-5dbe-423a-9a9d-5c23b37943cf`);
     expect(response.status).toBe(401);
     expect(response.body).toHaveProperty("message");
   });
 
   test("DELETE /feedback - deletando um feedback sendo um professor", async () => {
-    const TeacherResponse = await request(app)
-      .post("/login")
-      .send(mockedTeacherLogin);
+    const TeacherResponse = await request(app).post("/login").send(mockedTeacherLogin);
 
     const FeedbackTobeDeleted = await request(app)
       .get("/feedback")

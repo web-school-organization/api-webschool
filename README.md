@@ -37,11 +37,13 @@ Como retorno obteremos a seguinte json:
 
 ```json
 {
+  "id": "eb39e0f7-2e82-4a72-9d78-d1d17fcb35e3",
   "name": "Centro Educacional Salesiano",
-  "email": "salesiano@email.com",
-  "password": "123456",
+  "email": "escola@mail.com",
+  "type": "school",
   "director": "Gabriel Salesiano",
   "address": {
+    "id": "958ed084-cd3d-4151-9d35-fe2eb1aadcc5",
     "state": "BA",
     "city": "Serrinha",
     "district": "Primeira Travessa Antonio Pinheiro da Mota",
@@ -62,11 +64,13 @@ Deve retornar um array com todas as escolas:
 ```json
 [
   {
+    "id": "eb39e0f7-2e82-4a72-9d78-d1d17fcb35e3",
     "name": "Centro Educacional Salesiano",
-    "email": "salesiano@email.com",
-    "password": "123456",
+    "email": "escola@mail.com",
+    "type": "school",
     "director": "Gabriel Salesiano",
     "address": {
+      "id": "958ed084-cd3d-4151-9d35-fe2eb1aadcc5",
       "state": "BA",
       "city": "Serrinha",
       "district": "Primeira Travessa Antonio Pinheiro da Mota",
@@ -86,11 +90,13 @@ Deve retornar um objeto com a escola expecífica:
 
 ```json
 {
+  "id": "eb39e0f7-2e82-4a72-9d78-d1d17fcb35e3",
   "name": "Centro Educacional Salesiano",
-  "email": "salesiano@email.com",
-  "password": "123456",
+  "email": "escola@mail.com",
+  "type": "school",
   "director": "Gabriel Salesiano",
   "address": {
+    "id": "958ed084-cd3d-4151-9d35-fe2eb1aadcc5",
     "state": "BA",
     "city": "Serrinha",
     "district": "Primeira Travessa Antonio Pinheiro da Mota",
@@ -104,12 +110,12 @@ Deve retornar um objeto com a escola expecífica:
 
 #### **PATCH: /schools/:id**
 
-<hr>
+< hr/ >
 Deve enviar um objeto com a escola expecífica:
 
 ```json
 {
-  "name": "Centro Educacional Salesiano",
+  "name": "Centro Educacional Salesiana",
   "email": "salesiano@email.com",
   "password": "123456",
   "director": "Gabriel Salesiano",
@@ -130,11 +136,13 @@ Como retorno obteremos a seguinte json:
 
 ```json
 {
-  "name": "Centro Educacional Salesiano",
-  "email": "salesiano@email.com",
-  "password": "123456",
+  "id": "eb39e0f7-2e82-4a72-9d78-d1d17fcb35e3",
+  "name": "Centro Educacional Salesiana",
+  "email": "escola@mail.com",
+  "type": "school",
   "director": "Gabriel Salesiano",
   "address": {
+    "id": "958ed084-cd3d-4151-9d35-fe2eb1aadcc5",
     "state": "BA",
     "city": "Serrinha",
     "district": "Primeira Travessa Antonio Pinheiro da Mota",
@@ -152,8 +160,6 @@ Como retorno obteremos a seguinte json:
 Deve enviar um id, não deve retonar nada
 
 <br>
-<hr>
-<hr>
 <hr>
 <br>
 
@@ -270,8 +276,6 @@ Deve enviar um id, não deve retonar nada
 
 <br>
 <hr>
-<hr>
-<hr>
 <br>
 
 ## **Salas**
@@ -364,8 +368,6 @@ Deve enviar um id, não deve retonar nada
 
 <br>
 <hr>
-<hr>
-<hr>
 <br>
 
 ## **Estudantes**
@@ -380,18 +382,28 @@ O Corpo da requisição deve ser enviado da seguinte forma:
 
 ```json
 {
-  "name": "307"
+  "name": "Joana",
+  "email": "joana@mail.com",
+  "shift": "matutino",
+  "registration": "4684168111184",
+  "team": "307",
+  "password": "123456"
 }
 ```
 
-<br>
+< br/ >
 Como retorno obteremos a seguinte json:
 
 <br>
 
 ```json
 {
-  "name": "307"
+  "name": "Joana",
+  "email": "joana@mail.com",
+  "shift": "matutino",
+  "registration": "4684168111184",
+  "team": "307",
+  "password": "123456"
 }
 ```
 
@@ -406,7 +418,12 @@ Deve retornar um array com todas as escolas:
 ```json
 [
   {
-    "name": "307"
+    "name": "Joana",
+    "email": "joana@mail.com",
+    "shift": "matutino",
+    "registration": "4684168111184",
+    "team": "307",
+    "password": "123456"
   }
 ]
 ```
@@ -420,7 +437,12 @@ Deve retornar um objeto com a escola expecífica:
 
 ```json
 {
-  "name": "307"
+  "name": "Joana",
+  "email": "joana@mail.com",
+  "shift": "matutino",
+  "registration": "4684168111184",
+  "team": "307",
+  "password": "123456"
 }
 ```
 
@@ -433,7 +455,12 @@ Deve enviar um objeto com a escola expecífica:
 
 ```json
 {
-  "name": "307"
+  "name": "Joana",
+  "email": "joana@mail.com",
+  "shift": "matutino",
+  "registration": "4684168111184",
+  "team": "307",
+  "password": "123456"
 }
 ```
 
@@ -444,7 +471,12 @@ Como retorno obteremos a seguinte json:
 
 ```json
 {
-  "name": "307"
+  "name": "Joana",
+  "email": "joana@mail.com",
+  "shift": "matutino",
+  "registration": "4684168111184",
+  "team": "307",
+  "password": "123456"
 }
 ```
 
@@ -456,8 +488,6 @@ Como retorno obteremos a seguinte json:
 Deve enviar um id, não deve retonar nada
 
 <br>
-<hr>
-<hr>
 <hr>
 <br>
 
@@ -561,8 +591,6 @@ Como retorno obteremos a seguinte json:
 Deve enviar um id, não deve retonar nada
 
 <br>
-<hr>
-<hr>
 <hr>
 <br>
 
