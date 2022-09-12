@@ -1,5 +1,6 @@
 import app from "./app";
-import { AppDataSource } from "./data-source";
+import AppDataSource from "./data-source";
+import "dotenv/config";
 
 (async () => {
   const PORT = process.env.PORT || 3000;
@@ -9,6 +10,6 @@ import { AppDataSource } from "./data-source";
   );
 
   app.listen(PORT, () => {
-    `App is running!`;
+    console.log(`App is running!`);
   });
 })();

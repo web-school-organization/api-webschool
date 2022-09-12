@@ -1,5 +1,5 @@
 import { hash } from "bcryptjs";
-import { AppDataSource } from "../../data-source";
+import AppDataSource from "../../data-source";
 import { Address } from "../../entities/address.entity";
 import { School } from "../../entities/school.entity";
 import { AppError } from "../../errors/app.error";

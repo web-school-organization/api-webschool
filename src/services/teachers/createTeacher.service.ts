@@ -1,4 +1,4 @@
-import { AppDataSource } from "../../data-source";
+import AppDataSource from "../../data-source";
 import { Teacher } from "../../entities/teachers.entity";
 import { ITeachersRequest } from "../../interfaces/teachers";
 import { AppError } from "../../errors/app.error";
@@ -11,6 +11,7 @@ const createTeacherService = async (
   if (typeLogin !== "school") {
     throw new AppError("Just school can access this route", 403);
   }
+
   const teacherRepository = AppDataSource.getRepository(Teacher);
 
   const { name, email, password, shift, matter } = data;
@@ -34,6 +35,7 @@ const createTeacherService = async (
     where: { id: newTeacher.id },
     relations: { feedbacks: true },
   });
+
   return retorno!;
 };
 

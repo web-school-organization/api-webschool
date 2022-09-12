@@ -26,9 +26,9 @@ export class Feedback {
   @UpdateDateColumn({ type: "date" })
   updatedAt: Date;
 
-  @ManyToOne(() => Teacher, { eager: true })
+  @ManyToOne(() => Teacher, { eager: true, onDelete: "SET NULL" })
   teacher: Teacher;
 
-  @ManyToOne(() => Student)
+  @ManyToOne(() => Student, { onDelete: "SET NULL" })
   student: Student;
 }

@@ -1,8 +1,12 @@
-import { AppDataSource } from "../../data-source";
+import AppDataSource from "../../data-source";
 import { AppError } from "../../errors/app.error";
 import { Team } from "../../entities/teams.entiy";
 
-const updateTeamService = async (name: string, type: string, teamId: string): Promise<Team> => {
+const updateTeamService = async (
+  name: string,
+  type: string,
+  teamId: string
+): Promise<Team> => {
   const teamRepository = AppDataSource.getRepository(Team);
 
   if (type !== "school") {
@@ -23,10 +27,7 @@ const updateTeamService = async (name: string, type: string, teamId: string): Pr
 
   await teamRepository.update(teamId, { name: name || team.name });
 
-  const updatedTeam = await teamRepository.findOne({
-    where: { id: teamId },
-    relations: { teachers: true, students: true },
-  });
+  const updatedTeam = await teamRepository.findOneBy({ id: teamId });
 
   return updatedTeam!;
 };

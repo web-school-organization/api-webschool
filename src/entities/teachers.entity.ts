@@ -39,6 +39,6 @@ export class Teacher {
   @UpdateDateColumn({ type: "date" })
   updatedAt: Date;
 
-  @OneToMany(() => Feedback, (feedback) => feedback.teacher)
+  @OneToMany(() => Feedback, (feedback) => feedback.teacher, { onDelete: "SET NULL" })
   feedbacks: Feedback[];
 }

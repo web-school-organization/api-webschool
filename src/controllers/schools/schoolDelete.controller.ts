@@ -8,5 +8,5 @@ export const schoolDeleteController = async (req: Request, res: Response) => {
 
   await schoolDeleteService(id, userType, userId);
 
-  return res.status(200).json({ message: "school deleted" });
+  return res.status(204).send();
 };

@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm";
-import { AppDataSource } from "../../../data-source";
+import AppDataSource from "../../../data-source";
 import request from "supertest";
 import app from "../../../app";
 import {
@@ -229,7 +229,6 @@ describe("Testando rotas da instituição", () => {
       .delete(`/schools/${school.body[0].id}`)
       .set("Authorization", `Bearer ${userLogged.body.token}`);
 
-    expect(response.status).toBe(200);
-    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(204);
   });
 });

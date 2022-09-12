@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { teacherSchema } from "../schemas/users.schema";
+import { teacherSchema } from "../schemas/teacher.schema";
 import {
   createTeacherController,
   deleteTeacherController,

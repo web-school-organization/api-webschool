@@ -1,13 +1,14 @@
+version: "3.9"
 
-version: '3.9'
-services:   
+services:
   api:
     container_name: api
     build: .
     ports:
       - 3000:3000
-    env_file:
-      - .env
+    environment:
+      - DATABASE_URL=postgres://luccas:1234@db:5432/api_webschool
+      - SECRET_KEY=7cd9f0962690818c4f5c6e923d81dbc5
     depends_on:
       db:
         condition: service_healthy
@@ -28,4 +29,3 @@ services:
       timeout: 10s
       retries: 5
       start_period: 10s
-    
