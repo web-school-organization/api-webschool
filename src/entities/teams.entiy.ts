@@ -29,6 +29,6 @@ export class Team {
   @JoinTable()
   teachers: Teacher[];
 
-  @ManyToOne(() => School)
+  @ManyToOne(() => School, { onDelete: "CASCADE" })
   school: School;
 }

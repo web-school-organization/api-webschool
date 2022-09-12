@@ -20,6 +20,7 @@ const createFeedbackService = async (
   if (feedback === "" || feedback === undefined || feedback === null) {
     throw new AppError("Empty feedback");
   }
+
   const studentFind = await studentRepository.findOneBy({ email: email });
 
   const teacherFind = await teacherRepository.findOneBy({ id: id });
@@ -27,15 +28,18 @@ const createFeedbackService = async (
   if (!studentFind) {
     throw new AppError("Student not found", 404);
   }
+
   if (!teacherFind) {
     throw new AppError("teacher not found", 404);
   }
+
   const comentario = await feedbackRepository.save({
     student: studentFind,
     teacher: teacherFind,
     feedback,
     name,
   });
+
   return comentario;
 };
 

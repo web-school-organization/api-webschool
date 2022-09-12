@@ -20,6 +20,7 @@ const updateFeedbackService = async (
   }
 
   await feedbackRepository.update(id, { feedback: feedback });
+
   return { message: "User updated" };
 };
 

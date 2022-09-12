@@ -6,8 +6,9 @@ services:
     build: .
     ports:
       - 3000:3000
-    env_file:
-      - .env
+    environment:
+      - DATABASE_URL=postgres://luccas:1234@db:5432/api_webschool
+      - SECRET_KEY=7cd9f0962690818c4f5c6e923d81dbc5
     depends_on:
       db:
         condition: service_healthy
