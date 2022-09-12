@@ -3,11 +3,7 @@ import { School } from "../../entities/school.entity";
 import { Team } from "../../entities/teams.entiy";
 import { AppError } from "../../errors/app.error";
 
-const createTeamService = async (
-  name: string,
-  type: string,
-  id: string
-): Promise<Team> => {
+const createTeamService = async (name: string, type: string, id: string): Promise<Team> => {
   const teamRepository = AppDataSource.getRepository(Team);
   const schoolRepository = AppDataSource.getRepository(School);
 
@@ -22,7 +18,10 @@ const createTeamService = async (
     throw new AppError("Team already exists");
   }
 
-  const newTeam = await teamRepository.save({ name, school: school! });
+  const newTeam = await teamRepository.save({
+    name,
+    school: school!,
+  });
 
   const team = await teamRepository.findOneBy({
     id: newTeam.id,
