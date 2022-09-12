@@ -9,7 +9,6 @@ import {
 } from "typeorm";
 import { School } from "./school.entity";
 import { Student } from "./students.entity";
-import { Teacher } from "./teachers.entity";
 
 @Entity("teams")
 export class Team {
@@ -24,10 +23,6 @@ export class Team {
     onDelete: "CASCADE",
   })
   students: Student[];
-
-  @ManyToMany(() => Teacher, { eager: true, onDelete: "CASCADE" })
-  @JoinTable()
-  teachers: Teacher[];
 
   @ManyToOne(() => School, { onDelete: "CASCADE" })
   school: School;
