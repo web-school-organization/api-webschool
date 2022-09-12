@@ -12,7 +12,7 @@ const createTeamService = async (name: string, type: string, id: string): Promis
   }
 
   const teamAlreadyExists = await teamRepository.findOneBy({ name });
-  const school = await teamRepository.findOneBy({ id });
+  const school = await schoolRepository.findOneBy({ id });
 
   if (!!teamAlreadyExists) {
     throw new AppError("Team already exists");
