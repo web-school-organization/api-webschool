@@ -194,3 +194,12 @@ export const mockedActivitieUpdate: IActivitieRequest = {
   url: "https://canvas.kenzie.com.br/courses/15/pages/s1-03-%7C-aula-express-introducao?module_item_id=1731",
   student: "joana@mail.com"
 }
+
+export const mockedInformation = {
+  message: "Hello, World",
+};
+
+export const mockedUpdatedInformation = {
+  message: "Hello, Moon",
+};
+
