@@ -6,6 +6,7 @@ const listTeacherByIDService = async (id: string) => {
   const teacherRepository = AppDataSource.getRepository(Teacher);
 
   const listTeacher = await teacherRepository.findOneBy({ id });
+
   if (!listTeacher) {
     throw new AppError("Cannot find teacher with this ID", 404);
   }

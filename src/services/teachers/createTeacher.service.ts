@@ -11,6 +11,7 @@ const createTeacherService = async (
   if (typeLogin !== "school") {
     throw new AppError("Just school can access this route", 403);
   }
+
   const teacherRepository = AppDataSource.getRepository(Teacher);
 
   const { name, email, password, shift, matter } = data;
@@ -34,6 +35,7 @@ const createTeacherService = async (
     where: { id: newTeacher.id },
     relations: { feedbacks: true },
   });
+
   return retorno!;
 };
 

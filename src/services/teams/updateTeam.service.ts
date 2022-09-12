@@ -27,10 +27,7 @@ const updateTeamService = async (
 
   await teamRepository.update(teamId, { name: name || team.name });
 
-  const updatedTeam = await teamRepository.findOne({
-    where: { id: teamId },
-    relations: { teachers: true, students: true },
-  });
+  const updatedTeam = await teamRepository.findOneBy({ id: teamId });
 
   return updatedTeam!;
 };

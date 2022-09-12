@@ -100,8 +100,7 @@ describe("/teachers", () => {
       .get("/teachers")
       .set("Authorization", `Bearer ${schoolLoginResponse.body.token}`);
 
-    expect(response.body[0]).toHaveProperty("type");
-    expect(response.body[0].type).toEqual("teacher");
+    expect(response.body).toHaveLength(1);
     expect(response.status).toBe(200);
   });
 
