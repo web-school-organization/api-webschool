@@ -18,11 +18,13 @@ const createTeamService = async (name: string, type: string, id: string): Promis
     throw new AppError("Team already exists");
   }
 
-  const newTeam = await teamRepository.save({ name });
+  const newTeam = await teamRepository.save({
+    name,
+    school: school!,
+  });
 
   const team = await teamRepository.findOneBy({
     id: newTeam.id,
-    school: school!,
   });
 
   return team!;

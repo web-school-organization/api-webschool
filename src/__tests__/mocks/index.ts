@@ -171,3 +171,11 @@ export const mockedStudentAuth: IStudentRequest = {
   team: "307",
   password: "123456",
 };
+
+export const mockedInformation = {
+  message: "Hello, Wolrd",
+};
+
+export const mockedUpdatedInformation = {
+  message: "Hello, Moon",
+};
