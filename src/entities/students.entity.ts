@@ -5,8 +5,8 @@ import {
   Entity,
   ManyToOne,
   OneToMany,
-  PrimaryGeneratedColumn, 
-  UpdateDateColumn
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm";
 import { Feedback } from "./feedbacks.entity";
 import { Team } from "./teams.entiy";
@@ -44,6 +44,6 @@ export class Student {
   @ManyToOne(() => Team)
   team: Team;
 
-  @OneToMany(() => Feedback, (feedback:Feedback) => feedback.student, { eager: true })
+  @OneToMany(() => Feedback, (feedback: Feedback) => feedback.student, { eager: true })
   feedbacks: Feedback[];
 }

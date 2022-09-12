@@ -21,9 +21,7 @@ describe("Testando rotas da instituição", () => {
   beforeAll(async () => {
     await AppDataSource.initialize()
       .then((res) => (connection = res))
-      .catch((err) =>
-        console.error("Error during Data Source initialization", err)
-      );
+      .catch((err) => console.error("Error during Data Source initialization", err));
   });
 
   afterAll(async () => {
@@ -58,27 +56,21 @@ describe("Testando rotas da instituição", () => {
   });
 
   test("POST /schools - Não deve criar instituição caso endereço já exista", async () => {
-    const response = await request(app)
-      .post("/schools")
-      .send(mockedSchoolAddressExists);
+    const response = await request(app).post("/schools").send(mockedSchoolAddressExists);
 
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(400);
   });
 
   test("POST /schools - Não deve criar instituição caso zipCode do endereço tenha o tamanho maior que 8 caracteres", async () => {
-    const response = await request(app)
-      .post("/schools")
-      .send(mockedSchoolInvalidZipCode);
+    const response = await request(app).post("/schools").send(mockedSchoolInvalidZipCode);
 
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(400);
   });
 
   test("POST /schools - Não deve criar instituição caso state do endereço tenha o tamanho maior que 2 caracteres", async () => {
-    const response = await request(app)
-      .post("/schools")
-      .send(mockedSchoolInvalidState);
+    const response = await request(app).post("/schools").send(mockedSchoolInvalidState);
 
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(400);
@@ -120,9 +112,7 @@ describe("Testando rotas da instituição", () => {
   });
 
   test("PATCH /schools/:id - Deve ser capaz de atualizar uma instituição", async () => {
-    const schoolLogged = await request(app)
-      .post("/login")
-      .send(mockedSchoolLogin);
+    const schoolLogged = await request(app).post("/login").send(mockedSchoolLogin);
 
     const schoolsTobeUpdated = await request(app).get("/schools");
 
@@ -150,11 +140,13 @@ describe("Testando rotas da instituição", () => {
 
   test("PATCH /schools/:id - Não deve ser capaz de atualizar uma instituição com usuario logado com type diferente de school", async () => {
     const school = await request(app).get("/schools");
-    await request(app).post("/teachers").send(mockedTeacher);
-    const userLogged = await request(app)
-      .post("/login")
-      .send(mockedTeacherLogin);
+    const schoolLogged = await request(app).post("/login").send(mockedSchoolLogin);
+    await request(app)
+      .post("/teachers")
+      .set("Authorization", `Bearer ${schoolLogged.body.token}`)
+      .send(mockedTeacher);
 
+    const userLogged = await request(app).post("/login").send(mockedTeacherLogin);
     const response = await request(app)
       .patch(`/schools/${school.body[0].id}`)
       .set("Authorization", `Bearer ${userLogged.body.token}`)
@@ -168,9 +160,7 @@ describe("Testando rotas da instituição", () => {
     const school = await request(app).get("/schools");
     await request(app).post("/schools").send(mockedSchoolInvalidId);
 
-    const userLogged = await request(app)
-      .post("/login")
-      .send(mockedSchoolInvalidIdLogin);
+    const userLogged = await request(app).post("/login").send(mockedSchoolInvalidIdLogin);
 
     const response = await request(app)
       .patch(`/schools/${school.body[0].id}`)
@@ -182,9 +172,7 @@ describe("Testando rotas da instituição", () => {
   });
 
   test("PATCH /schools/:id - Não deve ser capaz de atualizar uma instituição com id inválido", async () => {
-    const schoolLogged = await request(app)
-      .post("/login")
-      .send(mockedSchoolLogin);
+    const schoolLogged = await request(app).post("/login").send(mockedSchoolLogin);
 
     const response = await request(app)
       .patch(`/schools/777-777-777`)
@@ -198,9 +186,7 @@ describe("Testando rotas da instituição", () => {
   test("DELETE /schools/:id - Não deve ser capaz de deletar uma instituição com usuario logado com id diferente do id do parametro", async () => {
     const school = await request(app).get("/schools");
 
-    const userLogged = await request(app)
-      .post("/login")
-      .send(mockedSchoolInvalidIdLogin);
+    const userLogged = await request(app).post("/login").send(mockedSchoolInvalidIdLogin);
 
     const response = await request(app)
       .delete(`/schools/${school.body[0].id}`)
@@ -214,9 +200,7 @@ describe("Testando rotas da instituição", () => {
     const school = await request(app).get("/schools");
     // Talvez não use o post
     /* await request(app).post("/teachers").send(mockedTeacher); */
-    const userLogged = await request(app)
-      .post("/login")
-      .send(mockedTeacherLogin);
+    const userLogged = await request(app).post("/login").send(mockedTeacherLogin);
 
     const response = await request(app)
       .delete(`/schools/${school.body[0].id}`)
@@ -227,9 +211,7 @@ describe("Testando rotas da instituição", () => {
   });
 
   test("DELETE /schools/:id - Não deve ser capaz de deletar uma instituição com o id inválido", async () => {
-    const schoolLogged = await request(app)
-      .post("/login")
-      .send(mockedSchoolLogin);
+    const schoolLogged = await request(app).post("/login").send(mockedSchoolLogin);
 
     const response = await request(app)
       .delete(`/schools/777-777-777`)
@@ -241,9 +223,7 @@ describe("Testando rotas da instituição", () => {
 
   test("DELETE /schools/:id - Deve ser capaz de deletar uma instituição", async () => {
     const school = await request(app).get("/schools");
-    const userLogged = await request(app)
-      .post("/login")
-      .send(mockedSchoolLogin);
+    const userLogged = await request(app).post("/login").send(mockedSchoolLogin);
 
     const response = await request(app)
       .delete(`/schools/${school.body[0].id}`)

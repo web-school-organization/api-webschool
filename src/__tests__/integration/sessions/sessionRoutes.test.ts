@@ -10,6 +10,7 @@ import {
   mockedStudentLogin,
   mockedTeacher,
   mockedTeacherLogin,
+  mockedTeam,
 } from "../../mocks";
 
 describe("/login - Rota responsável por iniciar a sessão do usuário na aplicação", () => {
@@ -33,7 +34,7 @@ describe("/login - Rota responsável por iniciar a sessão do usuário na aplica
     await request(app).post("/schools").send(mockedSchool);
     const response = await request(app).post("/login").send(mockedSchoolLogin);
 
-    expect(response.status).toBe(201);
+    expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("token");
   });
 
@@ -45,10 +46,16 @@ describe("/login - Rota responsável por iniciar a sessão do usuário na aplica
   });
 
   test("POST /login - PROFESSOR - Deve retornar um token de acesso caso o usuário tenha sucesso ao iniciar a sessão", async () => {
-    await request(app).post("/teachers").send(mockedTeacher);
-    const response = await request(app).post("/login").send(mockedTeacherLogin);
+    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
 
-    expect(response.status).toBe(201);
+    await request(app)
+      .post("/teachers")
+      .set("Authorization", `Bearer ${schoolLogin.body.token}`)
+      .send(mockedTeacher);
+    const response = await request(app).post("/login").send(mockedTeacherLogin);
+   
+
+    expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("token");
   });
 
@@ -59,11 +66,20 @@ describe("/login - Rota responsável por iniciar a sessão do usuário na aplica
     expect(response.body).toHaveProperty("message");
   });
 
-  test("POST /login - ALUNO - Deve retornar uma mensagem de erro caso os dados informados sejam inválidos", async () => {
-    await request(app).post("/student").send(mockedStudent);
+  test("POST /login - ALUNO - Deve retornar um token de acesso caso o usuário tenha sucesso ao iniciar a sessão", async () => {
+    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    await request(app)
+      .post("/teams")
+      .set("Authorization", `Bearer ${schoolLogin.body.token}`)
+      .send(mockedTeam);
+    await request(app)
+      .post("/students")
+      .set("Authorization", `Bearer ${schoolLogin.body.token}`)
+      .send(mockedStudent);
+
     const response = await request(app).post("/login").send(mockedStudentLogin);
 
-    expect(response.status).toBe(201);
+    expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("token");
   });
 

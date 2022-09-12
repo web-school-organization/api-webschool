@@ -2,38 +2,40 @@ import { AppDataSource } from "../../data-source";
 import { Teacher } from "../../entities/teachers.entity";
 import { AppError } from "../../errors/app.error";
 import { ITeachersRequest } from "../../interfaces/teachers";
-import bcrypt from "bcryptjs"
+import bcrypt from "bcryptjs";
 import { Feedback } from "../../entities/feedbacks.entity";
 
 const updateTeacherService = async (data: ITeachersRequest, id: string) => {
-    const teacherRepository = AppDataSource.getRepository(Teacher)
-    const feedbackRepository = AppDataSource.getRepository(Feedback)
-    const updateTeacher = await teacherRepository.findOneBy({id})
+  const teacherRepository = AppDataSource.getRepository(Teacher);
+  const feedbackRepository = AppDataSource.getRepository(Feedback);
+  const updateTeacher = await teacherRepository.findOneBy({ id });
 
-    if(updateTeacher?.id === undefined){
-        throw new AppError('Cannot find teacher with this ID', 404)
+  if (updateTeacher?.id === undefined) {
+    throw new AppError("Cannot find teacher with this ID", 404);
+  }
+
+  const { name, email, password, shift, matter } = data;
+
+  if (password) {
+    const comparePassaword = bcrypt.compare(password, updateTeacher.password);
+    if (!comparePassaword) {
+      const newPassword = await bcrypt.hash(password, 10);
+      updateTeacher.password = newPassword;
     }
+  }
 
-    const {name, email, password, shift, matter} = data
+  updateTeacher.name = name || updateTeacher.name;
+  updateTeacher.email = email || updateTeacher.email;
+  updateTeacher.shift = shift || updateTeacher.shift;
+  updateTeacher.matter = matter || updateTeacher.matter;
 
-    if(password){
-        const comparePassaword = bcrypt.compare(password, updateTeacher.password)
-        if(!comparePassaword){
-            const newPassword = await bcrypt.hash(password, 10)
-            updateTeacher.password = newPassword
-        }
-    }
+  await teacherRepository.update(id, updateTeacher);
+  const relationFeedbacks = await teacherRepository.findOne({
+    where: { id: updateTeacher.id },
+    relations: { feedbacks: true },
+  });
 
-    updateTeacher.name = name || updateTeacher.name
-    updateTeacher.email = email || updateTeacher.email
-    updateTeacher.shift = shift || updateTeacher.shift
-    updateTeacher.matter = matter || updateTeacher.matter
-    //updateTeacher.updatedAt = new Date()
+  return relationFeedbacks;
+};
 
-    await teacherRepository.update(id, updateTeacher)
-    const relationFeedbacks = await teacherRepository.findOne({where: {id: updateTeacher.id}, relations: {feedbacks: true}})
-    
-    return relationFeedbacks
-}
-
-export default updateTeacherService
+export default updateTeacherService;
