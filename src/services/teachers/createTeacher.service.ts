@@ -18,20 +18,20 @@ const createTeacherService = async (
 
   const { name, email, password, shift, matter, teams } = data;
 
-  const schoolRepository = AppDataSource.getRepository(Team);
+  const teamsRepository = AppDataSource.getRepository(Team);
 
-  const verifyTeam = await schoolRepository.findOneBy({name:teams[0]});
+  const verifyTeam = await teamsRepository.findOneBy({name:teams[0]});
   if (!verifyTeam) {
-    throw new AppError("Team not found");
+    throw new AppError("Team not found",404);
   }
-
+  
   const verifyEmail = await teacherRepository.findOneBy({ email });
   if (verifyEmail) {
     throw new AppError("This e-mail is alredy in use");
   }
-
+  
   const hashedPassword = await bcrypt.hash(password, 10);
-
+  
   const newTeacher = await teacherRepository.save({
     name,
     email,
@@ -41,11 +41,21 @@ const createTeacherService = async (
     team:verifyTeam
   });
 
+  
+  
+  
+  
+  
   const retorno = await teacherRepository.findOne({
     where: { id: newTeacher.id },
     relations: { feedbacks: true },
   });
-
+  
+  await teamsRepository
+  .createQueryBuilder()
+  .update(Team)
+  .set({teacher:[newTeacher], })
+  .where("name = :name", { name: verifyTeam.name  })
   return retorno!;
 };
 
