@@ -9,7 +9,7 @@ import {
     mockedTeacherLogin, mockedSchool, mockedSchoolLogin, mockedStudent, mockedActivitieUpdate, mockedTeam, mockedTeam2, mockedGrade, mockedStudentLogin, mockedUpdatedGrade
 } from "../../mocks";
 
-    describe("/activities", () => {
+    describe("/grades", () => {
     let connection: DataSource;
 
     beforeAll(async () => {
@@ -67,7 +67,7 @@ import {
         const response = await request(app).post("/grades").send(mockedActivitie)
 
         expect(response.body).toHaveProperty("message");
-        expect(response.status).toBe(401)
+        expect(response.status).toBe(400)
     })
 
     test("POST /grades - Não deve ser capaz de lançar atividade usuários que não sejam professores ou escola", async ()=> {
@@ -75,7 +75,7 @@ import {
         const response = await request(app).post("/grades").set("Authorization", `Bearer ${loginStudent.body.token}`).send(mockedGrade)
 
         expect(response.body).toHaveProperty("message");
-        expect(response.status).toBe(401)
+        expect(response.status).toBe(403)
     })
 
     test("GET /grades/:id - Não deve ser capaz de listar com ID errado", async () => {
