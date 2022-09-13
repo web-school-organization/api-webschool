@@ -17,10 +17,14 @@ describe("Testando rotas de informations", () => {
   beforeAll(async () => {
     await AppDataSource.initialize()
       .then((res) => (connection = res))
-      .catch((err) => console.error("Error during Data Source initialization", err));
+      .catch((err) =>
+        console.error("Error during Data Source initialization", err)
+      );
 
     await request(app).post("/schools").send(mockedSchool);
-    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    const schoolLogin = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
     await request(app)
       .post("/teachers")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`)
@@ -32,7 +36,9 @@ describe("Testando rotas de informations", () => {
   });
 
   test("POST /informations - Deve ser capaz de criar uma nova information", async () => {
-    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    const schoolLogin = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
 
     const response = await request(app)
       .post("/informations")
@@ -47,14 +53,18 @@ describe("Testando rotas de informations", () => {
   });
 
   test("POST /informations - Não deve ser capaz de criar uma nova information sem autorização", async () => {
-    const response = await request(app).post("/informations").send(mockedInformation);
+    const response = await request(app)
+      .post("/informations")
+      .send(mockedInformation);
 
     expect(response.status).toBe(401);
     expect(response.body).toHaveProperty("message");
   });
 
   test("POST /informations - Não deve ser capaz de criar uma nova information com type diferente de school", async () => {
-    const teacherLogin = await request(app).post("/login").send(mockedTeacherLogin);
+    const teacherLogin = await request(app)
+      .post("/login")
+      .send(mockedTeacherLogin);
 
     const response = await request(app)
       .post("/informations")
@@ -66,7 +76,9 @@ describe("Testando rotas de informations", () => {
   });
 
   test("GET /informations - Deve ser capaz de listar todas as informations", async () => {
-    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    const schoolLogin = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
 
     const response = await request(app)
       .get("/informations")
@@ -84,7 +96,9 @@ describe("Testando rotas de informations", () => {
   });
 
   test("GET /informations - Não deve ser capaz de listar todas as informations com type diferent de school", async () => {
-    const teacherLogin = await request(app).post("/login").send(mockedTeacherLogin);
+    const teacherLogin = await request(app)
+      .post("/login")
+      .send(mockedTeacherLogin);
 
     const response = await request(app)
       .get("/informations")
@@ -95,7 +109,9 @@ describe("Testando rotas de informations", () => {
   });
 
   test("GET /informations/:id - Deve ser capaz de pegar uma information", async () => {
-    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    const schoolLogin = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
     const informationList = await request(app)
       .get("/informations")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
@@ -112,24 +128,32 @@ describe("Testando rotas de informations", () => {
   });
 
   test("GET /informations/:id - Não deve ser capaz de pegar uma information sem autorização", async () => {
-    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    const schoolLogin = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
     const informationList = await request(app)
       .get("/informations")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
 
-    const response = await request(app).get(`/informations/${informationList.body[0].id}`);
+    const response = await request(app).get(
+      `/informations/${informationList.body[0].id}`
+    );
 
     expect(response.status).toBe(401);
     expect(response.body).toHaveProperty("message");
   });
 
   test("GET /informations/:id - Não deve ser capaz de de pegar uma information com type diferent de school", async () => {
-    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    const schoolLogin = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
     const informationList = await request(app)
       .get("/informations")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
 
-    const teacherLogin = await request(app).post("/login").send(mockedTeacherLogin);
+    const teacherLogin = await request(app)
+      .post("/login")
+      .send(mockedTeacherLogin);
 
     const response = await request(app)
       .get(`/informations/${informationList.body[0].id}`)
@@ -140,7 +164,9 @@ describe("Testando rotas de informations", () => {
   });
 
   test("DELETE /informations/:id - Não deve ser capaz de remover uma information com id invalido", async () => {
-    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    const schoolLogin = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
     const response = await request(app)
       .get(`/informations/ccfecddf-aed7-4e42-8186-44215669a53c`)
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
@@ -150,7 +176,9 @@ describe("Testando rotas de informations", () => {
   });
 
   test("PATCH /informations/:id - Não deve ser capaz de editar uma information sem autorização", async () => {
-    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    const schoolLogin = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
     const informationList = await request(app)
       .get("/informations")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
@@ -164,12 +192,16 @@ describe("Testando rotas de informations", () => {
   });
 
   test("PATCH /informations/:id - Não deve ser capaz de editar uma information com type diferente de school", async () => {
-    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    const schoolLogin = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
     const informationList = await request(app)
       .get("/informations")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
 
-    const teacherLogin = await request(app).post("/login").send(mockedTeacherLogin);
+    const teacherLogin = await request(app)
+      .post("/login")
+      .send(mockedTeacherLogin);
 
     const response = await request(app)
       .patch(`/informations/${informationList.body[0].id}`)
@@ -181,7 +213,9 @@ describe("Testando rotas de informations", () => {
   });
 
   test("PATCH /informations/:id - Não deve ser capaz de editar uma information com id invalido", async () => {
-    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    const schoolLogin = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
     const response = await request(app)
       .patch(`/informations/ccfecddf-aed7-4e42-8186-44215669a53c`)
       .set("Authorization", `Bearer ${schoolLogin.body.token}`)
@@ -192,7 +226,9 @@ describe("Testando rotas de informations", () => {
   });
 
   test("PATCH /informations/:id - Deve ser capaz de editar uma information", async () => {
-    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    const schoolLogin = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
     const informationList = await request(app)
       .get("/informations")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
@@ -209,24 +245,32 @@ describe("Testando rotas de informations", () => {
   });
 
   test("DELETE /informations/:id - Não deve ser capaz de remover uma information sem autorização", async () => {
-    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    const schoolLogin = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
     const informationList = await request(app)
       .get("/informations")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
 
-    const response = await request(app).delete(`/informations/${informationList.body[0].id}`);
+    const response = await request(app).delete(
+      `/informations/${informationList.body[0].id}`
+    );
 
     expect(response.status).toBe(401);
     expect(response.body).toHaveProperty("message");
   });
 
   test("DELETE /informations/:id - Não deve ser capaz de remover uma information com type diferente de school", async () => {
-    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    const schoolLogin = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
     const informationList = await request(app)
       .get("/informations")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
 
-    const teacherLogin = await request(app).post("/login").send(mockedTeacherLogin);
+    const teacherLogin = await request(app)
+      .post("/login")
+      .send(mockedTeacherLogin);
 
     const response = await request(app)
       .delete(`/informations/${informationList.body[0].id}`)
@@ -237,7 +281,9 @@ describe("Testando rotas de informations", () => {
   });
 
   test("DELETE /informations/:id - Não deve ser capaz de remover uma information com id invalido", async () => {
-    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    const schoolLogin = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
     const response = await request(app)
       .delete(`/informations/ccfecddf-aed7-4e42-8186-44215669a53c`)
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
@@ -247,7 +293,9 @@ describe("Testando rotas de informations", () => {
   });
 
   test("DELETE /informations/:id - Deve ser capaz de remover uma information", async () => {
-    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    const schoolLogin = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
     const informationList = await request(app)
       .get("/informations")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);
