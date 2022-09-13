@@ -226,11 +226,11 @@ export const mockedUpdatedInformation = {
 export const mockedGrade = {
   matter: "Node.js",
   grade: 97.90,
-  student: ["joana@mail.com"]
+  student: "joana@mail.com"
 }
 
 export const mockedUpdatedGrade = {
   matter: "Node.js",
   grade: 99.90,
-  student: ["joana@mail.com"]
+  student: "joana@mail.com"
 }
