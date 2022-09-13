@@ -34,6 +34,7 @@ const studentCreateService = async ({
   student.password = bcrypt.hashSync(password, 10);
   student.registration = registration;
   student.shift = shift;
+  student.team = teamAlreadyExistis
 
   const studentReturned = await studentRepository.save(student);
 

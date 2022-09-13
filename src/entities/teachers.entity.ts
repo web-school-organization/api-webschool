@@ -3,11 +3,16 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { teamSchema } from "../schemas/team.schema";
 import { Feedback } from "./feedbacks.entity";
+import { Team } from "./teams.entiy";
 
 @Entity("teachers")
 export class Teacher {
@@ -32,6 +37,11 @@ export class Teacher {
 
   @Column({ length: 50 })
   matter: string;
+
+
+  @ManyToMany(() => Team, (teams) => teams.teachers)
+  @JoinTable()
+  teams: Team[];
 
   @CreateDateColumn({ type: "date" })
   createdAt: Date;

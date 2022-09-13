@@ -236,7 +236,6 @@ describe("Testando rotas de informations", () => {
     const schoolLogin = await request(app)
       .post("/login")
       .send(mockedSchoolLogin);
-
     const informationList = await request(app)
       .get("/informations")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`);

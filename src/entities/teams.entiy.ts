@@ -5,8 +5,10 @@ import {
   ManyToMany,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
+
 import { School } from "./school.entity";
 import { Student } from "./students.entity";
 import { Teacher } from "./teachers.entity";
@@ -25,10 +27,12 @@ export class Team {
   })
   students: Student[];
 
-  @ManyToMany(() => Teacher, { eager: true, onDelete: "CASCADE" })
-  @JoinTable()
-  teachers: Teacher[];
+  @OneToMany(()=> Teacher, (teacher)=>  teacher.name)
+  teacher: Teacher[];
 
   @ManyToOne(() => School, { onDelete: "CASCADE" })
   school: School;
+
+  @ManyToMany(()=> Teacher, (teachers) => teachers.teams)
+  teachers: Teacher[]
 }
