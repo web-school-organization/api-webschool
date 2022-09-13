@@ -50,7 +50,7 @@ const createTeacherService = async (
     where: { id: newTeacher.id },
     relations: { feedbacks: true, teams: true },
   });
-  console.log(retorno) 
+
   return retorno!;
 };
 
