@@ -5,9 +5,10 @@ import {
   ManyToMany,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { teamSchema } from "../schemas/team.schema";
+
 import { School } from "./school.entity";
 import { Student } from "./students.entity";
 import { Teacher } from "./teachers.entity";
@@ -25,6 +26,9 @@ export class Team {
     onDelete: "CASCADE",
   })
   students: Student[];
+
+  @OneToMany(()=> Teacher, (teacher)=>  teacher.name)
+  teacher: Teacher[];
 
   @ManyToOne(() => School, { onDelete: "CASCADE" })
   school: School;

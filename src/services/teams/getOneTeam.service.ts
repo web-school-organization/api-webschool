@@ -12,7 +12,7 @@ const getOneTeamService = async (
     throw new AppError("User does not have permission", 403);
   }
 
-  const team = await teamRepository.findOneBy({ id: teamId });
+  const team = await teamRepository.findOne({where:{ id: teamId },relations:{teachers:true}});
 
   if (!team) {
     throw new AppError("Team not found", 404);
