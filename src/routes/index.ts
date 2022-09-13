@@ -8,6 +8,7 @@ import teacherRoutes from "./teachers.routes";
 import studentRoutes from "./students.routes";
 import informationRoutes from "./information.routes";
 import activitiesRouters from "./activities.routes";
+import responsibleRoutes from "./responsibles.routes";
 
 const AppRoutes = (app: Express) => {
   app.use("/schools", schoolRoutes());
@@ -18,6 +19,7 @@ const AppRoutes = (app: Express) => {
   app.use("/students", studentRoutes());
   app.use("/informations", informationRoutes());
   app.use("/activities", activitiesRouters());
+  app.use("/responsibles", responsibleRoutes());
 };
 
 export default AppRoutes;
