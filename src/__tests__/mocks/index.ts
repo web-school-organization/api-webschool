@@ -14,6 +14,7 @@ export const mockedTeacher: ITeachersRequest = {
   password: "123456",
   shift: "Matutino",
   matter: "Back-End",
+  teams: ["307", "308"]
 };
 
 export const mockedTeacherUpdate: ITeachersRequest = {
@@ -22,6 +23,7 @@ export const mockedTeacherUpdate: ITeachersRequest = {
   password: "123456",
   shift: "Matutino",
   matter: "Back-End",
+  teams: ["307", "308"]
 };
 
 export const mockedFeedback: IFeedbackRequest = {
@@ -137,6 +139,10 @@ export const mockedInvalidLogin: ISessionRequest = {
 
 export const mockedTeam: ITeamsRequest = {
   name: "307",
+};
+
+export const mockedTeam2: ITeamsRequest = {
+  name: "308",
 };
 
 export const mockedInvalidTeam = {

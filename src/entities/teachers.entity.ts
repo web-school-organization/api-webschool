@@ -5,6 +5,7 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -37,7 +38,8 @@ export class Teacher {
   @Column({ length: 50 })
   matter: string;
 
-  @ManyToMany(() => Team)
+
+  @ManyToMany(() => Team, (teams) => teams.teachers)
   @JoinTable()
   teams: Team[];
 
