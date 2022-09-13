@@ -17,7 +17,7 @@ export class Feedback {
   @Column({ length: 150 })
   name: string;
 
-  @Column({ length: 200, unique: true })
+  @Column({ length: 200 })
   feedback: string;
 
   @CreateDateColumn({ type: "date" })

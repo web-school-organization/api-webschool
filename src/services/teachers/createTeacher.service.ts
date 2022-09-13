@@ -3,7 +3,6 @@ import { Teacher } from "../../entities/teachers.entity";
 import { ITeachersRequest } from "../../interfaces/teachers";
 import { AppError } from "../../errors/app.error";
 import bcrypt from "bcryptjs";
-import { School } from "../../entities/school.entity";
 import { Team } from "../../entities/teams.entiy";
 
 const createTeacherService = async (
@@ -24,7 +23,7 @@ const createTeacherService = async (
   if (verifyEmail) {
     throw new AppError("This e-mail is alredy in use");
   }
-
+  
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const newTeacher = teacherRepository.create({

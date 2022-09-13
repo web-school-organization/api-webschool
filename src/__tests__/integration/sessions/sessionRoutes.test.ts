@@ -11,6 +11,7 @@ import {
   mockedTeacher,
   mockedTeacherLogin,
   mockedTeam,
+  mockedTeam2,
 } from "../../mocks";
 
 describe("/login - Rota responsável por iniciar a sessão do usuário na aplicação", () => {
@@ -46,7 +47,18 @@ describe("/login - Rota responsável por iniciar a sessão do usuário na aplica
   });
 
   test("POST /login - PROFESSOR - Deve retornar um token de acesso caso o usuário tenha sucesso ao iniciar a sessão", async () => {
-    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    const schoolLogin = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
+
+    await request(app)
+      .post("/teams")
+      .set("Authorization", `Bearer ${schoolLogin.body.token}`)
+      .send(mockedTeam);
+    await request(app)
+      .post("/teams")
+      .set("Authorization", `Bearer ${schoolLogin.body.token}`)
+      .send(mockedTeam2);
 
     await request(app)
       .post("/teachers")
@@ -66,7 +78,9 @@ describe("/login - Rota responsável por iniciar a sessão do usuário na aplica
   });
 
   test("POST /login - ALUNO - Deve retornar um token de acesso caso o usuário tenha sucesso ao iniciar a sessão", async () => {
-    const schoolLogin = await request(app).post("/login").send(mockedSchoolLogin);
+    const schoolLogin = await request(app)
+      .post("/login")
+      .send(mockedSchoolLogin);
     await request(app)
       .post("/teams")
       .set("Authorization", `Bearer ${schoolLogin.body.token}`)
