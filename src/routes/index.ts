@@ -6,6 +6,7 @@ import sessionRoutes from "./session.routes";
 import teamsRoutes from "./team.routes";
 import teacherRoutes from "./teachers.routes";
 import studentRoutes from "./students.routes";
+import informationRoutes from "./information.routes";
 import activitiesRouters from "./activities.routes";
 
 const AppRoutes = (app: Express) => {
@@ -15,7 +16,8 @@ const AppRoutes = (app: Express) => {
   app.use("/teams", teamsRoutes());
   app.use("/teachers", teacherRoutes());
   app.use("/students", studentRoutes());
-  app.use("/activities", activitiesRouters())
+  app.use("/informations", informationRoutes());
+  app.use("/activities", activitiesRouters());
 };
 
 export default AppRoutes;
