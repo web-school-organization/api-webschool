@@ -113,7 +113,7 @@ describe("testando feedbacks", () => {
 
     expect(response.body.type).not.toBe("aluno");
     expect(response.body).toHaveProperty("message");
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(403);
   });
 
   test("POST /feedback - tentando criar um feedback sem estar logado", async () => {
