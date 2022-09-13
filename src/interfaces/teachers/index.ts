@@ -4,6 +4,7 @@ export interface ITeachersRequest {
   password: string;
   shift: string;
   matter: string;
+  teams: Array<string>;
 }
 
 export interface ITeacherResponse {

@@ -1,3 +1,4 @@
+import { instanceToPlain } from "class-transformer";
 import { Request, Response } from "express";
 import createTeamService from "../../services/teams/createTeam.service";
 import getOneTeamService from "../../services/teams/getOneTeam.service";
@@ -18,7 +19,7 @@ const listTeamsController = async (req: Request, res: Response) => {
   const type = req.user.type;
   const teamList = await listTeamsService(type);
 
-  return res.status(200).json(teamList);
+  return res.status(200).json(instanceToPlain(teamList));
 };
 
 const getOneTeamController = async (req: Request, res: Response) => {
@@ -26,7 +27,7 @@ const getOneTeamController = async (req: Request, res: Response) => {
   const type = req.user.type;
   const team = await getOneTeamService(type, id);
 
-  return res.status(200).json(team);
+  return res.status(200).json(instanceToPlain(team));
 };
 
 const updateTeamController = async (req: Request, res: Response) => {
@@ -35,7 +36,7 @@ const updateTeamController = async (req: Request, res: Response) => {
   const type = req.user.type;
   const team = await updateTeamService(name, type, id);
 
-  return res.status(200).json(team);
+  return res.status(200).json(instanceToPlain(team));
 };
 
 const removeTeamController = async (req: Request, res: Response) => {
