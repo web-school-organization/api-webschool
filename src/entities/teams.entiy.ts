@@ -7,8 +7,10 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
+import { teamSchema } from "../schemas/team.schema";
 import { School } from "./school.entity";
 import { Student } from "./students.entity";
+import { Teacher } from "./teachers.entity";
 
 @Entity("teams")
 export class Team {
@@ -26,4 +28,7 @@ export class Team {
 
   @ManyToOne(() => School, { onDelete: "CASCADE" })
   school: School;
+
+  @ManyToMany(()=> Teacher, (teachers) => teachers.teams)
+  teachers: Teacher[]
 }

@@ -6,7 +6,7 @@ import {
     mockedActivitie,
     mockedActivitieWithoutEmail,
     mockedTeacher,
-    mockedTeacherLogin, mockedSchool, mockedSchoolLogin, mockedStudent, mockedActivitieUpdate, mockedTeam
+    mockedTeacherLogin, mockedSchool, mockedSchoolLogin, mockedStudent, mockedActivitieUpdate, mockedTeam, mockedTeam2
 } from "../../mocks";
 
     describe("/activities", () => {
@@ -30,20 +30,24 @@ import {
         const schoolResponse = await request(app).post("/schools").send(mockedSchool);
         const loginSchool = await request(app).post("/login").send(mockedSchoolLogin);
         
+        const responseTeams = await request(app)
+            .post("/teams")
+            .set("Authorization", `Bearer ${loginSchool.body.token}`)
+            .send(mockedTeam);
+        const responseTeams2 = await request(app)
+        .post("/teams")
+        .set("Authorization", `Bearer ${loginSchool.body.token}`)
+        .send(mockedTeam2);
+
         const teacherResponse = await request(app)
             .post("/teachers")
             .set("Authorization", `Bearer ${loginSchool.body.token}`)
             .send(mockedTeacher);
 
-        const responseTeams = await request(app)
-        .post("/teams")
-        .set("Authorization", `Bearer ${loginSchool.body.token}`)
-        .send(mockedTeam);
-
         const studentResponse = await request(app)
-        .post("/students")
-        .set("Authorization", `Bearer ${loginSchool.body.token}`)
-        .send(mockedStudent);
+            .post("/students")
+            .set("Authorization", `Bearer ${loginSchool.body.token}`)
+            .send(mockedStudent);
 
         const loginTeacher = await request(app).post("/login").send(mockedTeacherLogin)
         const response = await request(app).post("/activities").set("Authorization", `Bearer ${loginTeacher.body.token}`).send(mockedActivitie)
@@ -112,7 +116,6 @@ import {
             .patch(`/activities/${activitieTobeUpdated.body.id}`)
             .set("Authorization", `Bearer ${teacherLoginResponse.body.token}`)
             .send(mockedActivitieUpdate);
-        console.log(response.body)
         expect(response.body).toHaveProperty("id");
         expect(response.body).toHaveProperty("title");
         expect(response.body).toHaveProperty("url");
