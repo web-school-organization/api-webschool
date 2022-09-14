@@ -13,20 +13,21 @@ const createTeacherController = async (req: Request, res: Response) => {
 
 const deleteTeacherController = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const deletedTeacher = await deleteTeacherService(id, req.user.type);
-  return res.status(204).json(deletedTeacher);
+  await deleteTeacherService(id, req.user.type);
+  return res.status(204).json();
 };
 
 const listTeacherByIDController = async (req: Request, res: Response) => {
   const { id } = req.params;
   const listTeacherByID = await listTeacherByIDService(id);
-  return res.status(200).json(listTeacherByID);
+  return res.status(200).json(instanceToPlain(listTeacherByID));
 };
 
 const listTeacherController = async (req: Request, res: Response) => {
-  const token = req.headers.authorization;
-  const listTeachers = await listTeacherService(token);
-  return res.status(200).json(listTeachers);
+  const type = req.user.type;
+  const listTeachers = await listTeacherService(type);
+
+  return res.status(200).json(instanceToPlain(listTeachers));
 };
 
 const updateTeacherController = async (req: Request, res: Response) => {

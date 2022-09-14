@@ -20,7 +20,8 @@ const updateFeedbackService = async (
   }
 
   await feedbackRepository.update(id, { feedback: feedback });
-  return { message: "User updated" };
+
+  return { message: "Feedback updated" };
 };
 
 export default updateFeedbackService;

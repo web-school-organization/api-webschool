@@ -17,7 +17,7 @@ export class Feedback {
   @Column({ length: 150 })
   name: string;
 
-  @Column({ length: 200, unique: true })
+  @Column({ length: 200 })
   feedback: string;
 
   @CreateDateColumn({ type: "date" })
@@ -26,9 +26,9 @@ export class Feedback {
   @UpdateDateColumn({ type: "date" })
   updatedAt: Date;
 
-  @ManyToOne(() => Teacher, { eager: true })
+  @ManyToOne(() => Teacher, { eager: true, onDelete: "SET NULL" })
   teacher: Teacher;
 
-  @ManyToOne(() => Student)
+  @ManyToOne(() => Student, { onDelete: "SET NULL" })
   student: Student;
 }

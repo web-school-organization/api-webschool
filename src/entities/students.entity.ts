@@ -3,12 +3,16 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { Activities } from "./activities.entity";
 import { Feedback } from "./feedbacks.entity";
+import { Grades } from "./grades.entity";
+import { Responsibles } from "./responsible.entity";
 import { Team } from "./teams.entiy";
 
 @Entity("students")
@@ -41,9 +45,21 @@ export class Student {
   @UpdateDateColumn({ type: "date" })
   updatedAt: Date;
 
-  @ManyToOne(() => Team)
+  @ManyToOne(() => Team, { onDelete: "SET NULL" })
   team: Team;
 
-  @OneToMany(() => Feedback, (feedback: Feedback) => feedback.student, { eager: true })
+  @OneToMany(() => Feedback, (feedback: Feedback) => feedback.student, {
+    eager: true,
+    onDelete: "SET NULL",
+  })
   feedbacks: Feedback[];
+
+  @ManyToOne(() => Responsibles, { onDelete: "SET NULL" })
+  responsibles: Responsibles;
+
+  @ManyToMany(() => Grades, (grades) => grades.student)
+  grades: Grades[];
+
+  @ManyToMany(() => Activities, (activities) => activities.student)
+  activities: Activities[];
 }

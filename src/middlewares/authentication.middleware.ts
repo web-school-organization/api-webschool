@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 import { AppError } from "../errors/app.error";
 
-const authenticationMiddleware = async (req: Request, res: Response, next: NextFunction) => {
+const authenticationMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const bearerToken = req.headers.authorization;
 
   if (!bearerToken) {
