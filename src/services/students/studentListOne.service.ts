@@ -8,6 +8,9 @@ const studentListOneService = async (id: string) => {
     where: { id },
     relations: {
       team: true,
+      responsibles: true,
+      grades: true,
+      activities: true,
     },
   });
 

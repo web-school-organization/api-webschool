@@ -16,6 +16,8 @@ const removeTeamService = async (type: string, teamId: string) => {
   }
 
   await teamRepository.delete(teamId);
+
+  return;
 };
 
 export default removeTeamService;

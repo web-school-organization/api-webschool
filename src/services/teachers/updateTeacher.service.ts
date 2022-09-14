@@ -15,7 +15,10 @@ const updateTeacherService = async (data: ITeachersRequest, id: string) => {
   const { name, email, password, shift, matter } = data;
 
   if (password) {
-    const comparePassaword = await bcrypt.compare(password, updateTeacher.password);
+    const comparePassaword = await bcrypt.compare(
+      password,
+      updateTeacher.password
+    );
 
     if (!comparePassaword) {
       const newPassword = await bcrypt.hash(password, 10);

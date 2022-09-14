@@ -8,6 +8,7 @@ const teacherSchema: SchemaOf<ITeachersRequest> = yup.object().shape({
   password: yup.string().required(),
   matter: yup.string().required(),
   shift: yup.string().required(),
+  teams: yup.array().required()
 });
 
 export { teacherSchema };

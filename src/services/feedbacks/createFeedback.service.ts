@@ -14,7 +14,7 @@ const createFeedbackService = async (
   const studentRepository = AppDataSource.getRepository(Student);
 
   if (type === "student") {
-    throw new AppError("You dont have permition", 401);
+    throw new AppError("You dont have permition", 403);
   }
 
   if (feedback === "" || feedback === undefined || feedback === null) {

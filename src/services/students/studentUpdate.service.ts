@@ -23,7 +23,7 @@ const studentUpdateService = async (
     throw new AppError("Invalid id", 404);
   }
 
-  if (emailExists) {
+  if (email !== student.email && emailExists) {
     throw new AppError("Email already exists", 400);
   }
 
