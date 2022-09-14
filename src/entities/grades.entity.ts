@@ -1,6 +1,5 @@
-
 import {
-    Column,
+  Column,
   CreateDateColumn,
   Entity,
   JoinTable,
@@ -16,10 +15,10 @@ export class Grades {
   readonly id: string;
 
   @Column()
-  matter:string
+  matter: string;
 
-  @Column({ type: 'decimal', precision: 4, scale: 2 })
-  grade:number
+  @Column({ type: "decimal", precision: 4, scale: 2 })
+  grade: number;
 
   @CreateDateColumn({ type: "date" })
   createdAt: Date;
@@ -27,7 +26,10 @@ export class Grades {
   @UpdateDateColumn({ type: "date" })
   updatedAt: Date;
 
-  @ManyToMany(() => Student, { eager: true, onDelete: "CASCADE" })
+  @ManyToMany(() => Student, (student) => student.grades, {
+    eager: true,
+    onDelete: "CASCADE",
+  })
   @JoinTable()
   student: Student[];
 }

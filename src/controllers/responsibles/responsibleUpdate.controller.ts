@@ -2,17 +2,16 @@ import { instanceToPlain } from "class-transformer";
 import { Request, Response } from "express";
 import responsibleUpdateService from "../../services/responsibles/responsibleUpdate.service";
 
+const responsibleUpdateController = async (req: Request, res: Response) => {
+  const { name, email, password, studentEmail } = req.body;
+  const { id } = req.params;
 
-const responsibleUpdateController = async (req:Request,res:Response) => {
+  const responsibleUpdated = await responsibleUpdateService(
+    { name, email, password, studentEmail },
+    id
+  );
 
-    const {name,email,password} = req.body
-    const {id} = req.params
+  return res.status(200).json(instanceToPlain(responsibleUpdated));
+};
 
-    const responsibleUpdated = await responsibleUpdateService({name,email,password},id);
-
-    return res.status(200).json(instanceToPlain(responsibleUpdated));
-
-}
-
-
-export default responsibleUpdateController
+export default responsibleUpdateController;

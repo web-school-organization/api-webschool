@@ -1,5 +1,5 @@
 import {
-    Column,
+  Column,
   CreateDateColumn,
   Entity,
   JoinTable,
@@ -15,10 +15,10 @@ export class Activities {
   readonly id: string;
 
   @Column()
-  title:string
+  title: string;
 
   @Column()
-  url:string
+  url: string;
 
   @CreateDateColumn({ type: "date" })
   createdAt: Date;
@@ -26,7 +26,10 @@ export class Activities {
   @UpdateDateColumn({ type: "date" })
   updatedAt: Date;
 
-  @ManyToMany(() => Student, { eager: true, onDelete: "CASCADE" })
+  @ManyToMany(() => Student, (student) => student.activities, {
+    eager: true,
+    onDelete: "CASCADE",
+  })
   @JoinTable()
   student: Student[];
 }

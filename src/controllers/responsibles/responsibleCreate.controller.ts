@@ -1,17 +1,18 @@
-import {Request,Response} from 'express';
-import responsibleCreateService from '../../services/responsibles/responsibleCreate.service';
+import { Request, Response } from "express";
+import responsibleCreateService from "../../services/responsibles/responsibleCreate.service";
 import { instanceToPlain } from "class-transformer";
 
+const responsibleCreateController = async (req: Request, res: Response) => {
+  const { name, email, password, studentEmail } = req.body;
 
-const responsibleCreateController = async (req:Request,res:Response) => {
+  const responsibleCreated = await responsibleCreateService({
+    name,
+    email,
+    password,
+    studentEmail,
+  });
 
-    const {name,email,password} = req.body
-
-    const responsibleCreated = await responsibleCreateService({name,email,password})
-
-    return res.status(201).json(instanceToPlain(responsibleCreated))
+  return res.status(201).json(instanceToPlain(responsibleCreated));
 };
 
-
-
-export default responsibleCreateController
+export default responsibleCreateController;

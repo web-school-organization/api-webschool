@@ -17,6 +17,13 @@ const studentCreateService = async ({
   const teamRepository = AppDataSource.getRepository(Team);
 
   const emailExists = await studentRepository.findOneBy({ email });
+  const registrationExists = await studentRepository.findOneBy({
+    registration,
+  });
+
+  if (registrationExists) {
+    throw new AppError("Registration already exists", 400);
+  }
 
   if (emailExists) {
     throw new AppError("Email already exists", 400);
@@ -34,12 +41,13 @@ const studentCreateService = async ({
   student.password = bcrypt.hashSync(password, 10);
   student.registration = registration;
   student.shift = shift;
-  student.team = teamAlreadyExistis
+  student.team = teamAlreadyExistis;
 
   const studentReturned = await studentRepository.save(student);
 
-  const createdStudent = await studentRepository.findOneBy({
-    id: studentReturned.id,
+  const createdStudent = await studentRepository.findOne({
+    where: { id: studentReturned.id },
+    relations: { responsibles: true },
   });
 
   return createdStudent;
