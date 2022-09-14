@@ -5,7 +5,7 @@ import { IResponsibleRequest } from "../../interfaces/responsibles";
 import bcrypt from "bcryptjs";
 
 const responsibleUpdateService = async (
-  { name, email, password }: IResponsibleRequest,
+  { name, email, password, studentEmail }: IResponsibleRequest,
   id: string
 ) => {
   const responsiblesRepository = AppDataSource.getRepository(Responsibles);

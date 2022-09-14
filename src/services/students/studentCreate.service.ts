@@ -45,8 +45,9 @@ const studentCreateService = async ({
 
   const studentReturned = await studentRepository.save(student);
 
-  const createdStudent = await studentRepository.findOneBy({
-    id: studentReturned.id,
+  const createdStudent = await studentRepository.findOne({
+    where: { id: studentReturned.id },
+    relations: { responsibles: true },
   });
 
   return createdStudent;

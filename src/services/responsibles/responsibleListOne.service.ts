@@ -1,25 +1,20 @@
-import AppDataSource from "../../data-source"
-import { Responsibles } from "../../entities/responsible.entity"
+import AppDataSource from "../../data-source";
+import { Responsibles } from "../../entities/responsible.entity";
 import { AppError } from "../../errors/app.error";
 
+const responsibleListOneService = async (id: string) => {
+  const responsibleRepository = AppDataSource.getRepository(Responsibles);
 
-const responsibleListOneService = async (id:string) => {
+  const responsible = await responsibleRepository.findOne({
+    where: { id },
+    relations: ["student", "student.grades", "student.activities"],
+  });
 
-    const responsibleRepository = AppDataSource.getRepository(Responsibles);
-    
-    const responsible = await responsibleRepository.findOne({
-        where:{id}
-    })
+  if (!responsible) {
+    throw new AppError("responsible not found", 404);
+  }
 
+  return responsible;
+};
 
-    if(!responsible){
-        throw new AppError('responsible not found',404);
-
-    }
-
-    return responsible
-
-
-}
-
-export default responsibleListOneService
+export default responsibleListOneService;
