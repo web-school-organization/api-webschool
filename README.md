@@ -4,6 +4,36 @@ Essa api tem como função trazer todas as funcionalidades de uma escola com ger
 
 #
 
+## **Login**
+
+#### **POST: /login**
+
+<br>
+
+<hr>
+
+O Corpo da requisição deve ser enviado da seguinte forma:
+
+```json
+{
+  "email": "salesiano@email.com",
+  "password": "123456"
+}
+```
+
+<br>
+Como retorno obteremos a seguinte json:
+
+<br>
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoic2Nob29sIiwiaWF0IjoxNjYyODY3MjE0LCJleHAiOjE2NjI5NTM2MTQsInN1YiI6ImViMzllMGY3LTJlODItNGE3Mi05ZDc4LWQxZDE3ZmNiMzVlMyJ9.1_-fmXrXfq3P1NcGtpmswbO20LhmwM2r1Z7YxSuKROo"
+}
+```
+
+<hr>
+
 ## **Escola**
 
 #### **POST: /schools**
@@ -220,7 +250,6 @@ Deve retornar um array com todas as escolas:
     "id": "ececd226-3f68-4dec-93b0-7bda2ee38c15",
     "name": "Fábio Junior",
     "email": "professor@mail.com",
-    "password": "$2a$10$A8BRbilihOsgjuqhsD69AumA6mbwvJTpyiU4O2xRU0iCeP8no9u16",
     "type": "teacher",
     "shift": "Matutino",
     "matter": "Back-End",
@@ -231,7 +260,6 @@ Deve retornar um array com todas as escolas:
     "id": "9499944e-3c49-4597-97e8-286fde6e6ae7",
     "name": "Fábio Junior",
     "email": "professorr@mail.com",
-    "password": "$2a$10$1U.VaGLsh26ZmKc05kjhgOLdpVl8IrmwAcn8uYhEudnZXdE3GYyqi",
     "type": "teacher",
     "shift": "Matutino",
     "matter": "Back-End",
@@ -253,7 +281,6 @@ Deve retornar um objeto com a escola expecífica:
   "id": "ececd226-3f68-4dec-93b0-7bda2ee38c15",
   "name": "Fábio Junior",
   "email": "professor@mail.com",
-  "password": "$2a$10$A8BRbilihOsgjuqhsD69AumA6mbwvJTpyiU4O2xRU0iCeP8no9u16",
   "type": "teacher",
   "shift": "Matutino",
   "matter": "Back-End",
@@ -474,7 +501,6 @@ Deve retornar um array com todas as escolas:
     "id": "dbeb26c9-1c2e-4826-bb08-8c4ee6e65a25",
     "name": "Janaína",
     "email": "Janaína@mail.com",
-    "password": "$2a$10$1kOnj2wmR6ghWIVGnxLFUOjfaIHHYKIkGB.ugDTSO1uS7QsjMCXWe",
     "type": "student",
     "registration": "468416811118",
     "shift": "matutino",
@@ -486,7 +512,6 @@ Deve retornar um array com todas as escolas:
     "id": "c3c0843d-3655-47aa-b261-96ec25d04fa0",
     "name": "Joana",
     "email": "aluno@mail.com",
-    "password": "$2a$10$MpjZfOlWdb9/ujrS2uoBGObkjjiQmzhnXwvv82AKmwqvOWwBW7edW",
     "type": "student",
     "registration": "4684168111184",
     "shift": "matutino",
@@ -686,9 +711,9 @@ Deve enviar um id, não deve retonar nada
 <hr>
 <br>
 
-## **Login**
+## **Responsáveis**
 
-#### **POST: /login**
+#### **POST: /responsibles**
 
 <br>
 
@@ -698,8 +723,111 @@ O Corpo da requisição deve ser enviado da seguinte forma:
 
 ```json
 {
-  "email": "salesiano@email.com",
-  "password": "123456"
+  "name": "Pai da Joana",
+  "email": "responsaveljoana@mail.com",
+  "password": "123",
+  "studentEmail": "Joana@mail.com"
+}
+```
+
+<br>
+
+Como retorno obteremos a seguinte json:
+
+<br>
+
+```json
+{
+  "id": "9b0e81be-66d1-4311-9a85-c797eb1f0dbb",
+  "name": "Pai da Joana",
+  "email": "responsaveljoana@mail.com",
+  "type": "responsible",
+  "createdAt": "2022-09-14",
+  "updatedAt": "2022-09-14",
+  "student": []
+}
+```
+
+<hr>
+
+#### **GET: /responsibles**
+
+<hr>
+
+Deve retornar um array com todas as escolas:
+
+```json
+[
+  {
+    "id": "1d64e833-7469-42e0-b16a-9e114ad354a8",
+    "name": "Pai do Jano",
+    "email": "responsaveljano@mail.com",
+    "type": "responsible",
+    "createdAt": "2022-09-14",
+    "updatedAt": "2022-09-14",
+    "student": [
+      {
+        "id": "e723b07e-84a1-4b00-b6a0-8aa07c625b03",
+        "name": "Jano",
+        "email": "Jano@mail.com",
+        "type": "student",
+        "registration": "468416811117",
+        "shift": "matutino",
+        "createdAt": "2022-09-14",
+        "updatedAt": "2022-09-14",
+        "feedbacks": []
+      }
+    ]
+  }
+]
+```
+
+<hr>
+
+#### **GET: /responsibles/:id**
+
+<hr>
+Deve retornar um objeto com a escola expecífica:
+
+```json
+{
+  "id": "1d64e833-7469-42e0-b16a-9e114ad354a8",
+  "name": "Pai do Jano",
+  "email": "responsaveljano@mail.com",
+  "type": "responsible",
+  "createdAt": "2022-09-14",
+  "updatedAt": "2022-09-14",
+  "student": [
+    {
+      "id": "e723b07e-84a1-4b00-b6a0-8aa07c625b03",
+      "name": "Jano",
+      "email": "Jano@mail.com",
+      "type": "student",
+      "registration": "468416811117",
+      "shift": "matutino",
+      "createdAt": "2022-09-14",
+      "updatedAt": "2022-09-14",
+      "grades": [],
+      "activities": [],
+      "feedbacks": []
+    }
+  ]
+}
+```
+
+<hr>
+
+#### **PATCH: /responsibles/:id**
+
+<hr>
+
+Deve enviar um objeto com a escola expecífica:
+
+```json
+{
+  "name": "Pai da Jano",
+  "email": "responsaveljano@mail.com",
+  "password": "1234"
 }
 ```
 
@@ -710,8 +838,514 @@ Como retorno obteremos a seguinte json:
 
 ```json
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0eXBlIjoic2Nob29sIiwiaWF0IjoxNjYyODY3MjE0LCJleHAiOjE2NjI5NTM2MTQsInN1YiI6ImViMzllMGY3LTJlODItNGE3Mi05ZDc4LWQxZDE3ZmNiMzVlMyJ9.1_-fmXrXfq3P1NcGtpmswbO20LhmwM2r1Z7YxSuKROo"
+  "id": "1d64e833-7469-42e0-b16a-9e114ad354a8",
+  "name": "Pai da Jano",
+  "email": "responsaveljano@mail.com",
+  "type": "responsible",
+  "createdAt": "2022-09-14",
+  "updatedAt": "2022-09-14",
+  "student": [
+    {
+      "id": "e723b07e-84a1-4b00-b6a0-8aa07c625b03",
+      "name": "Jano",
+      "email": "Jano@mail.com",
+      "type": "student",
+      "registration": "468416811117",
+      "shift": "matutino",
+      "createdAt": "2022-09-14",
+      "updatedAt": "2022-09-14",
+      "feedbacks": []
+    }
+  ]
 }
 ```
 
 <hr>
+
+#### **DELETE: /responsibles/:id**
+
+<hr>
+Deve enviar um id, não deve retonar nada
+
+<br>
+<hr>
+<br>
+
+## **Grades**
+
+#### **POST: /grades**
+
+<br>
+
+<hr>
+
+O Corpo da requisição deve ser enviado da seguinte forma:
+
+```json
+{
+  "matter": "Ciencias",
+  "grade": 10,
+  "student": "Jorje@mail.com"
+}
+```
+
+<br>
+
+Como retorno obteremos a seguinte json:
+
+<br>
+
+```json
+{
+  "matter": "Ciencias",
+  "grade": 10,
+  "student": [
+    {
+      "id": "f9c88d0c-4335-4c35-ae09-b7af9d02a925",
+      "name": "Jorje",
+      "email": "Jorje@mail.com",
+      "type": "student",
+      "registration": "468416811118",
+      "shift": "matutino",
+      "createdAt": "2022-09-12",
+      "updatedAt": "2022-09-12",
+      "feedbacks": [
+        {
+          "id": "87038e1d-f560-435d-af60-bfcb0f943785",
+          "name": "fabio",
+          "feedback": "você não fez a atividade",
+          "createdAt": "2022-09-13",
+          "updatedAt": "2022-09-13",
+          "teacher": {
+            "id": "74f01a3c-c3b0-4e08-8849-cb1ff38bf2a7",
+            "name": "Fábio Junior",
+            "email": "professor@mail.com",
+            "type": "teacher",
+            "shift": "Matutino",
+            "matter": "Back-End",
+            "createdAt": "2022-09-12",
+            "updatedAt": "2022-09-12"
+          }
+        }
+      ]
+    }
+  ],
+  "id": "aa1ebe2d-3e4d-4c9f-94d2-dc2e5ea8d712",
+  "createdAt": "2022-09-14",
+  "updatedAt": "2022-09-14"
+}
+```
+
+<hr>
+
+#### **GET: /grades/:id**
+
+<hr>
+Deve retornar um objeto com a escola expecífica:
+
+```json
+{
+  "id": "5a902555-0792-45be-9e19-10d5b8f36cfc",
+  "matter": "Ciencias",
+  "grade": "10.00",
+  "createdAt": "2022-09-14",
+  "updatedAt": "2022-09-14",
+  "student": [
+    {
+      "id": "f9c88d0c-4335-4c35-ae09-b7af9d02a925",
+      "name": "Jorje",
+      "email": "Jorje@mail.com",
+      "type": "student",
+      "registration": "468416811118",
+      "shift": "matutino",
+      "createdAt": "2022-09-12",
+      "updatedAt": "2022-09-12",
+      "feedbacks": [
+        {
+          "id": "87038e1d-f560-435d-af60-bfcb0f943785",
+          "name": "fabio",
+          "feedback": "você não fez a atividade",
+          "createdAt": "2022-09-13",
+          "updatedAt": "2022-09-13",
+          "teacher": {
+            "id": "74f01a3c-c3b0-4e08-8849-cb1ff38bf2a7",
+            "name": "Fábio Junior",
+            "email": "professor@mail.com",
+            "type": "teacher",
+            "shift": "Matutino",
+            "matter": "Back-End",
+            "createdAt": "2022-09-12",
+            "updatedAt": "2022-09-12"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+<hr>
+
+#### **PATCH: /grades/:id**
+
+<hr>
+
+Deve enviar um objeto com a escola expecífica:
+
+```json
+{
+  "matter": "Ciencias",
+  "grade": 8,
+  "student": "Jorje@mail.com"
+}
+```
+
+<br>
+Como retorno obteremos a seguinte json:
+
+<br>
+
+```json
+{
+  "id": "5a902555-0792-45be-9e19-10d5b8f36cfc",
+  "matter": "Ciencias",
+  "grade": "8.00",
+  "createdAt": "2022-09-14",
+  "updatedAt": "2022-09-14",
+  "student": [
+    {
+      "id": "f9c88d0c-4335-4c35-ae09-b7af9d02a925",
+      "name": "Jorje",
+      "email": "Jorje@mail.com",
+      "type": "student",
+      "registration": "468416811118",
+      "shift": "matutino",
+      "createdAt": "2022-09-12",
+      "updatedAt": "2022-09-12",
+      "feedbacks": [
+        {
+          "id": "87038e1d-f560-435d-af60-bfcb0f943785",
+          "name": "fabio",
+          "feedback": "você não fez a atividade",
+          "createdAt": "2022-09-13",
+          "updatedAt": "2022-09-13",
+          "teacher": {
+            "id": "74f01a3c-c3b0-4e08-8849-cb1ff38bf2a7",
+            "name": "Fábio Junior",
+            "email": "professor@mail.com",
+            "type": "teacher",
+            "shift": "Matutino",
+            "matter": "Back-End",
+            "createdAt": "2022-09-12",
+            "updatedAt": "2022-09-12"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+<hr>
+
+#### **DELETE: /grades/:id**
+
+<hr>
+Deve enviar um id, não deve retonar nada
+
+<br>
+<hr>
+<br>
+
+## **Activities**
+
+#### **POST: /activities**
+
+<br>
+
+<hr>
+
+O Corpo da requisição deve ser enviado da seguinte forma:
+
+```json
+{
+  "title": "Criando banco de dados",
+  "url": "https://canvas.kenzie.com.br/courses/15/pages/s2-01-%7C-aula-bancos-de-dados-introducao?module_item_id=1751",
+  "student": "Jorje@mail.com"
+}
+```
+
+<br>
+
+Como retorno obteremos a seguinte json:
+
+<br>
+
+```json
+{
+  "id": "a0a44c45-9165-4a62-aef0-e69f4c0c9f42",
+  "title": "Criando banco de dados",
+  "url": "https://canvas.kenzie.com.br/courses/15/pages/s2-01-%7C-aula-bancos-de-dados-introducao?module_item_id=1751",
+  "createdAt": "2022-09-14",
+  "updatedAt": "2022-09-14",
+  "student": [
+    {
+      "id": "f9c88d0c-4335-4c35-ae09-b7af9d02a925",
+      "name": "Jorje",
+      "email": "Jorje@mail.com",
+      "type": "student",
+      "registration": "468416811118",
+      "shift": "matutino",
+      "createdAt": "2022-09-12",
+      "updatedAt": "2022-09-12",
+      "feedbacks": [
+        {
+          "id": "87038e1d-f560-435d-af60-bfcb0f943785",
+          "name": "fabio",
+          "feedback": "você não fez a atividade",
+          "createdAt": "2022-09-13",
+          "updatedAt": "2022-09-13",
+          "teacher": {
+            "id": "74f01a3c-c3b0-4e08-8849-cb1ff38bf2a7",
+            "name": "Fábio Junior",
+            "email": "professor@mail.com",
+            "type": "teacher",
+            "shift": "Matutino",
+            "matter": "Back-End",
+            "createdAt": "2022-09-12",
+            "updatedAt": "2022-09-12"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+<hr>
+
+<hr>
+
+#### **GET: /activities/:id**
+
+<hr>
+Deve retornar um objeto com a escola expecífica:
+
+```json
+{
+  "id": "a0a44c45-9165-4a62-aef0-e69f4c0c9f42",
+  "title": "Criando banco de dados",
+  "url": "https://canvas.kenzie.com.br/courses/15/pages/s2-01-%7C-aula-bancos-de-dados-introducao?module_item_id=1751",
+  "createdAt": "2022-09-14",
+  "updatedAt": "2022-09-14",
+  "student": [
+    {
+      "id": "f9c88d0c-4335-4c35-ae09-b7af9d02a925",
+      "name": "Jorje",
+      "email": "Jorje@mail.com",
+      "type": "student",
+      "registration": "468416811118",
+      "shift": "matutino",
+      "createdAt": "2022-09-12",
+      "updatedAt": "2022-09-12",
+      "feedbacks": [
+        {
+          "id": "87038e1d-f560-435d-af60-bfcb0f943785",
+          "name": "fabio",
+          "feedback": "você não fez a atividade",
+          "createdAt": "2022-09-13",
+          "updatedAt": "2022-09-13",
+          "teacher": {
+            "id": "74f01a3c-c3b0-4e08-8849-cb1ff38bf2a7",
+            "name": "Fábio Junior",
+            "email": "professor@mail.com",
+            "type": "teacher",
+            "shift": "Matutino",
+            "matter": "Back-End",
+            "createdAt": "2022-09-12",
+            "updatedAt": "2022-09-12"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+<hr>
+
+#### **PATCH: /activities/:id**
+
+<hr>
+
+Deve enviar um objeto com a escola expecífica:
+
+```json
+{
+  "title": "Criando banco de dados",
+  "url": "https://canvas.kenzie.com.br/courses/15/pages/s2-01-%7C-aula-bancos-de-dados-introducao?module_item_id=1751",
+  "student": "Jorje@mail.com"
+}
+```
+
+<br>
+Como retorno obteremos a seguinte json:
+
+<br>
+
+```json
+{
+  "id": "a0a44c45-9165-4a62-aef0-e69f4c0c9f42",
+  "title": "Criando banco de dados",
+  "url": "https://canvas.kenzie.com.br/courses/15/pages/s2-01-%7C-aula-bancos-de-dados-introducao?module_item_id=1751",
+  "createdAt": "2022-09-14",
+  "updatedAt": "2022-09-14",
+  "student": [
+    {
+      "id": "f9c88d0c-4335-4c35-ae09-b7af9d02a925",
+      "name": "Jorje",
+      "email": "Jorje@mail.com",
+      "type": "student",
+      "registration": "468416811118",
+      "shift": "matutino",
+      "createdAt": "2022-09-12",
+      "updatedAt": "2022-09-12",
+      "feedbacks": [
+        {
+          "id": "87038e1d-f560-435d-af60-bfcb0f943785",
+          "name": "fabio",
+          "feedback": "você não fez a atividade",
+          "createdAt": "2022-09-13",
+          "updatedAt": "2022-09-13",
+          "teacher": {
+            "id": "74f01a3c-c3b0-4e08-8849-cb1ff38bf2a7",
+            "name": "Fábio Junior",
+            "email": "professor@mail.com",
+            "type": "teacher",
+            "shift": "Matutino",
+            "matter": "Back-End",
+            "createdAt": "2022-09-12",
+            "updatedAt": "2022-09-12"
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+<hr>
+
+#### **DELETE: /activities/:id**
+
+<hr>
+Deve enviar um id, não deve retonar nada
+
+<br>
+<hr>
+<br>
+
+## **Salas**
+
+#### **POST: /teams**
+
+<br>
+
+<hr>
+
+O Corpo da requisição deve ser enviado da seguinte forma:
+
+```json
+{
+  "message": "Hello, World"
+}
+```
+
+<br>
+
+Como retorno obteremos a seguinte json:
+
+<br>
+
+```json
+{
+  "id": "97e1bfd2-ef29-48ba-839a-9b1dae98755a",
+  "message": "Hello, World",
+  "createdAt": "2022-09-14",
+  "updatedAt": "2022-09-14"
+}
+```
+
+<hr>
+
+#### **GET: /teams**
+
+<hr>
+
+Deve retornar um array com todas as escolas:
+
+```json
+[
+  {
+    "id": "97e1bfd2-ef29-48ba-839a-9b1dae98755a",
+    "message": "Hello, World",
+    "createdAt": "2022-09-14",
+    "updatedAt": "2022-09-14"
+  }
+]
+```
+
+<hr>
+
+#### **GET: /teams/:id**
+
+<hr>
+Deve retornar um objeto com a escola expecífica:
+
+```json
+{
+  "id": "97e1bfd2-ef29-48ba-839a-9b1dae98755a",
+  "message": "Hello, World",
+  "createdAt": "2022-09-14",
+  "updatedAt": "2022-09-14"
+}
+```
+
+<hr>
+
+#### **PATCH: /teams/:id**
+
+<hr>
+
+Deve enviar um objeto com a escola expecífica:
+
+```json
+{
+  "message": "olá, mundo"
+}
+```
+
+<br>
+Como retorno obteremos a seguinte json:
+
+<br>
+
+```json
+{
+  "id": "97e1bfd2-ef29-48ba-839a-9b1dae98755a",
+  "message": "olá, mundo",
+  "createdAt": "2022-09-14",
+  "updatedAt": "2022-09-14"
+}
+```
+
+<hr>
+
+#### **DELETE: /teams/:id**
+
+<hr>
+Deve enviar um id, não deve retonar nada
+
+<br>
+<hr>
+<br>
